@@ -1,0 +1,184 @@
+\documentclass[a4paper]{article}
+% decent example of doing mathematics and proofs in LaTeX.
+% An Incredible degree of information can be found at
+% http://en.wikibooks.org/wiki/LaTeX/Mathematics
+
+% Use wide margins, but not quite so wide as fullpage.sty
+\marginparwidth 0.25in 
+\oddsidemargin 0.25in 
+\evensidemargin 0.25in 
+\marginparsep 0.25in
+\topmargin 0.25in 
+\textwidth 6in \textheight 8 in
+% That's about enough definitions
+
+\usepackage{setspace}
+
+\renewcommand{\baselinestretch}{1.5} 
+
+\usepackage{amsmath}
+\usepackage{upgreek}
+\usepackage{enumitem}
+\usepackage{MnSymbol}%
+\usepackage{wasysym}%
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{soul}
+
+\usepackage{parskip}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{float}
+
+\begin{document}
+\author{Francisco Girbal Eiras}
+\title{Multi-objective Strategy Synthesis for \\[-0.35cm] Advanced Driver Assistance Systems: Project Proposal \\[0.5cm] \large Supervised by Dr. Morteza Lahijanian and Professor Marta Kwiatkowska \\[0.5cm] Signature: \hspace{100mm} \vspace{10mm}}
+\date{}
+\maketitle
+
+\section{Introduction}
+
+Human safety is an extremely important aspect to consider when analysing possible transportation solutions. According to a study carried out by the National Highway Traffic Safety Administration in the USA, over $90\%$ of all road accidents are mainly attributed to errors of human drivers, caused by distractions, fatigue, alcoholic influence, among other factors \cite{crashes}. In an attempt to reduce these numbers, several car manufacturers have worked on solutions which minimise driver intervention through the introduction of autonomous features. Vehicles where these elements are present are ranked as autonomous vehicles of levels 2 or 3\footnote{Autonomous vehicles are ranked on six differing levels of autonomy, from 0 (not autonomous at all) to 5 (fully autonomous) \cite{wired}.}, and the features are generally described as Advanced Driver Assistance Systems (ADAS). Examples include Tesla's \textit{Autopilot} and Ford's \textit{Co-Pilot 360} \cite{autopilot1, ford}.
+
+While ADAS are more practical for drivers and it appears they increase the safety of the vehicles, it is unclear how safe they actually are due to possible software mistakes caused by human oversight in the implementation of the decision making process of the system. For example, on March 23, 2018, a driver of a Tesla Model X died after the vehicle crashed into a highway divider in California with \textit{Autopilot} engaged \cite{autopilot2}. Due to the sensitive nature of this issue, formal verification - the act of proving or disproving the correctness of intended processes underlying a system with respect to a certain specification \cite{fv-wiki} - is appropriate to guarantee requirements are fulfilled and the systems function correctly. The techniques used in formal verification range from model checking, the process of verifying through exhaustive search whether a model meets a given specification, to strategy synthesis, which corresponds to obtaining a strategy (if it exists) which is guaranteed to satisfy one or multiple requirements \cite{fv-wiki}. With this in mind, the aim of this project is to study the application of such techniques to the verification of models of different profiles of human drivers and design correct-by-construction advanced driver assistance systems using strategy synthesis under multi-objective goals. These generated systems are guaranteed to be correct and optimal up to the level of representation of the model and, therefore, do not fall within the implementation mistakes that humans might. 
+
+\section{Background}
+
+There are several approaches to the study of safety in the context of autonomous and semi-autonomous vehicles. As Nidhi \textit{et al} pointed out in \cite{driving-to-safety}, a logical approach would be to test drive these vehicles in real world situations, create evaluation metrics, make observations on their performance, and apply statistical comparisons against the baseline that is the human driver. However, Nidhi \textit{et al} concluded that this would be infeasible, as the data required to make any statistically relevant conclusions on the safety of the vehicles would take tens, if not hundreds, of years to collect. An alternative solution is through the modelling and simulation of the autonomous vehicle, using frameworks which allow testing under different conditions, as proposed in \cite{sim1, sim2, sim3, sim4}. Several companies developing autonomous cars have turned to this solution as a way of obtaining vast amounts of data on the security and reliability of their vehicles, in order to continuously improve the systems they have designed. Despite this, it is imperative to recognise the shortcomings of simulation in safety evaluation of complex driver assistance systems \cite{challenges1, challenges2}, and which have a direct impact in human lives. In this context, formal verification arises as a complementary approach to simulation, leading to automation and precision in the testing process.
+
+Due to the benefits that formal verification brings to the field, many researchers have used these tools to evaluate control systems in autonomous vehicles, to verify models of human driver behaviour, and study cooperation within fleets of these vehicles \cite{fv4, fv2, fv3, fv1}. In \cite{jason}, Lam models the behaviour of a distracted human driver in a one-way street traffic light scenario (no other vehicles present) and studies how a driver assistance system could improve the safety of vehicle, following the work of \cite{salvucci, curzon}. Despite these advances, there are many open questions in this area, particularly whether real data validates the models constructed and, therefore, results obtained; how to deal with more complex environments and interactions without getting into representation problems such as state explosion (with an increase of the complexity of the system to be modelled, the number of variables required rises and the state space exponentially increases); and whether or not it is possible to represent an arbitrarily generic situation in this context.
+
+In the case of safety in the context of semi-autonomous vehicles, the mentioned techniques are constrained by the accurate modelling of the human driver. The first integrated approaches to this problem, proposed in \cite{boer, liu, salvucci1}, rely on modelling human behaviour through continuous controllers and specifically engineered frameworks. However, these methods lack the human behaviour variability attributed to the discrete nature of the control actions performed by the drivers. With this in mind, in \cite{salvucci2} Salvucci \textit{et al} proposed a proof-of-concept of the introduction of human constrains in the driver model through the use of the cognitive architecture Adaptive Control of Thought~—~Rational (ACT-R). A cognitive architecture is a framework for specifying computational behavioural models of human cognitive performance, embodying both the abilities (e.g. memory storage and recall or perception) and constraints (e.g. limited motor performance or memory decay) of the human system \cite{salvucci}. In \cite{act-r}, Anderson \textit{et al} introduced ACT-R, a cognitive architecture which is divided into a perceptual-motor module (controls the interface with the real world) and a memory module (consisting of factual knowledge - declarative memory - and knowledge related to how humans perform actions - procedural memory). In \cite{salvucci}, Salvucci proposed an updated version of the human driver model initially introduced in \cite{salvucci2}, which was improved using the advances in ACT-R (the model uses version 5.0 of the architecture) and re-designed elements (e.g. lane changing behaviour or distraction) resulting from validation performed by empirical studies. 
+
+\section{Expected Contributions}
+
+This thesis will extend the work of \cite{fv4, jason, salvucci} by considering a 2-lane highway scenario and the interactions that arise for various profiles of drivers (e.g. follow, crash into or overtake another vehicle), with the primary goal of decreasing accident risk through the synthesis of an advanced driver assistance system. The scenario proposed distinguishes itself from previously studied ones due to the high complexity presented. Through this, the project is expected to introduce novel strategies for accurate abstraction of existing models in order to generate finite state space Discrete Time Markov Chain (DTMC) and Markov Decision Process (MDP) representations. The main contribution of this thesis will be the focus on multi-objective synthesis for the advanced driver assistance system, with safety and time efficiency being optimised (e.g. to avoid situations where the system will always slow down instead of overtaking another vehicle), contributing to the practical usefulness of the system for the driver of the vehicle.
+
+\section{Proposed methodology}
+
+The initial goal is to model a human driver appropriately as a DTMC in order to perform formal verification techniques on the result, a fairly intricate task given the complexity of the situation analysed. This is to be achieved through the use of the cognitive architecture ACT-R, as Salvucci presented in \cite{salvucci}. Since the goal of the first phase of the project is to perform model checking on the human driver model, PRISM, a tool for modelling and analysis of probabilistic systems through model checking \cite{prism}, will be ultimately used for this purpose. However, due to the complexity of Salvucci's model and the limitations of PRISM in terms of state space representation, a finite abstraction of the human driver model will be developed in order to allow the use of PRISM. Afterwards, Probabilistic Computation Tree Logic (PCTL) and Linear Temporal Logic (LTL) formulas will be designed in order to verify the probability of compliance with safety and efficiency requirements (e.g. What is the probability a particular type of driver goes from point $A$ to point $B$ without accidents? Starting from point $A$, what is the probability a driver reaches point $B$ in under $t$ seconds?).
+
+After the human driver benchmarks are obtained, the model will be transformed into an MDP by adding a module for the advanced driver assistance system, which will act as an interface between the car and the human. The most appropriate solution in terms of the interference of the module with the human driver can then be determined through the analysis of the several possible placements - whether it should be at the control level (e.g. steering angle or acceleration) or at the decision making level (e.g. indicate a best time to perform an overtake or that the user should decelerate). This will affect the autonomy level of the obtained model. After the driver assistance module is built using the appropriate solution, the safety and efficiency goals designed in the first phase of the project will be used in a multi-objective optimisation setting to synthesise a correct-by-construction strategy for the advanced driver assistance module which satisfies these properties. The objectives will then be re-assessed and improved upon in an iterative process to guarantee the system is robust and flexible towards different types of drivers.
+
+Finally, we will calculate the performance improvement obtained when using this optimal advanced driver assistance system and take conclusions from the overall results.
+
+\section{Draft timetable}
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|m{3cm}|m{3.5cm}|m{5.5cm}|m{3.5cm}|}
+\hline
+\textbf{Main Activities} & \textbf{Task} & \textbf{Description} & \textbf{Timeline} \\ \hline \hline
+Literature Research &  & Study similar research done in this area and understand the main contributions of the project. & Present - End April \\ \hline
+\multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Human Driver \\ Model\end{tabular}} & Problem formulation & Formulate the problem in a concise manner using the ACT-R cognitive model as Salvucci presented in \cite{salvucci}; study appropriate assumptions and abstraction methods to be used in generating the model. & Present - Mid May \\ \cline{2-4} 
+ & Model generation & Program the model for the human driver using the formulation determined in the previous step; analyse the results and change assumptions to approximate the model to human behaviour. & Mid May - End May \\ \cline{2-4}
+ & Metrics design and verification & Construct PCTL formulas for the model checking of the human driver model in terms of safety and efficiency requirements; use these formulas to evaluate the drivers' performance and compliance with the properties defined. & Mid May - End May \\ \hline
+%\begin{tabular}[c]{@{}l@{}}Advanced Driver\\ Assistance System \end{tabular} & Problem formulation & Investigate an appropriate placement of the module in the existing human driver model in terms of possibilities of interference in the driving activities, the consequences of this positioning and applicability to real scenarios. & Beginning June - Mid June \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|m{3cm}|m{3.5cm}|m{5.5cm}|m{3.5cm}|}
+\hline
+\textbf{Main Activities} & \textbf{Task} & \textbf{Description} & \textbf{Timeline} \\ \hline \hline
+%\begin{tabular}[c]{@{}l@{}}Human Driver \\ Model\end{tabular} & Metrics design and verification & Construct PCTL formulas for the model checking of the human driver model in terms of safety and efficiency requirements; use these formulas to evaluate the drivers' performance and compliance with the properties defined. & Mid May - End May \\ \hline
+\multirow{4}{*}{\begin{tabular}[c]{@{}l@{}} Advanced Driver\\ Assistance System\end{tabular}} & Problem formulation & Investigate an  appropriate placement of the module in the existing human driver model in terms of possibilities of interference in the driving activities, the consequences of this positioning and applicability to real scenarios. & Beginning June - Mid June \\ \cline{2-4}
+ & Model generation & Modify the previously obtained DTMC to include the driver assistance module to be  developed under the conditions determined in the formulation step. & Mid June - End June \\ \cline{2-4}
+ & Multi-objective requirements definition & Formulate the multi-objective optimisation problems in terms of the metrics considered in the first phase and define performance evaluation metrics for the comparison of the models with and without the driver assistance system. & Beginning July - Mid July \\ \cline{2-4}
+ & Strategy synthesis and evaluation & Perform strategy synthesis using the objectives defined to obtain an optimal strategy for the model; compare the performance of this new system with the driver assistance module with the one obtained using solely the human driver model. & Mid July - End July \\ \hline
+Writing &  & Take conclusions; write the final version of the dissertation. & August \\ \hline
+\end{tabular}%
+}
+\caption{Proposed timeline of the project}
+\label{draft-timetable}
+\end{table}
+
+\clearpage
+
+\begin{thebibliography}{9}
+\bibitem{crashes}
+Singh, Santokh. C\textit{ritical reasons for crashes investigated in the national motor vehicle crash causation survey.} No. DOT HS 812 115. 2015.
+
+\bibitem{wired}
+Burgess, Matt. \textit{``When Does a Car Become Truly Autonomous? Levels of Self-Driving Technology Explained.''} WIRED, 21 Apr. 2017, www.wired.co.uk/article/autonomous-car-levels-sae-ranking. Accessed 19 Apr. 2018.
+
+\bibitem{autopilot1}
+Autopilot. Tesla UK, www.tesla.com/en\_GB/autopilot. Accessed 18 Apr. 2018
+
+\bibitem{ford}
+Hawkins, Andrew. \textit{``Ford's New Driver-Assist System Isn't Autopilot, but It's a Step in the Right Direction.''} The Verge, 15 Mar. 2018, www.theverge.com/2018/3/15/17126162/ford-driver-assist-technology-copilot-360. Accessed 18 Apr. 2018
+
+\bibitem{autopilot2}
+Lawler, Richard. \textit{``Tesla: Autopilot Was Engaged in Fatal Model X Crash."} Engadget, 31 Mar. 2018, www.engadget.com/2018/03/30/tesla-autopilot-model-x-crash-mountain-view/. Accessed 19 Apr. 2018.
+
+\bibitem{fv-wiki}
+Baier, Christel, and Joost-Pieter Katoen. \textit{Principles of Model Checking}. The MIT Press, 2008.
+
+\bibitem{driving-to-safety}
+Kalra, Nidhi, and Susan M. Paddock. \textit{``Driving to safety: How many miles of driving would it take to demonstrate autonomous vehicle reliability?."} Transportation Research Part A: Policy and Practice 94 (2016): 182-193.
+
+\bibitem{sim1}
+Sportillo, Daniele, et al. \textit{``An immersive Virtual Reality system for semi-autonomous driving simulation: a comparison between realistic and 6-DoF controller-based interaction."} Proceedings of the 9th International Conference on Computer and Automation Engineering. ACM, 2017.
+
+\bibitem{sim2}
+Baltodano, Sonia, et al. \textit{``The RRADS platform: a real road autonomous driving simulator."} Proceedings of the 7th International Conference on Automotive User Interfaces and Interactive Vehicular Applications. ACM, 2015.
+
+\bibitem{sim3}
+Zhou, Mofan, Xiaobo Qu, and Sheng Jin. \textit{``On the impact of cooperative autonomous vehicles in improving freeway merging: a modified intelligent driver model-based approach."} IEEE Transactions on Intelligent Transportation Systems 18.6 (2017): 1422-1428.
+
+\bibitem{sim4}
+Gruber, Andreas, et al. \textit{``Highly scalable radar target simulator for autonomous driving test beds."} Radar Conference (EURAD), 2017 European. IEEE, 2017.
+
+\bibitem{challenges1}
+Koopman, Philip, and Michael Wagner. \textit{``Challenges in autonomous vehicle testing and validation."} SAE International Journal of Transportation Safety 4.1 (2016): 15-24.
+
+\bibitem{challenges2}
+Somers, James. \textit{``The Coming Software Apocalypse."} The Atlantic, 26 Sept. 2017, www.theatlantic.com/technology/archive/2017/09/saving-the-world-from-code/540393/. Accessed 19 Apr. 2018.
+
+\bibitem{fv4}
+Chen, Taolue, et al. \textit{``Synthesis for multi-objective stochastic games: An application to autonomous urban driving."} International Conference on Quantitative Evaluation of Systems. Springer, Berlin, Heidelberg, 2013.
+
+\bibitem{fv2}
+Li, Nan, et al. \textit{``Game theoretic modeling of driver and vehicle interactions for verification and validation of autonomous vehicle control systems."} IEEE Transactions on control systems technology (2017).
+
+\bibitem{fv3}
+Sadigh, Dorsa, et al. \textit{``Data-driven probabilistic modeling and verification of human driver behavior."} (2014): 56-61.
+
+\bibitem{fv1}
+Kamali, Maryam, et al. \textit{``Formal verification of autonomous vehicle platooning."} Science of Computer Programming 148 (2017): 88-106.
+
+\bibitem{jason}
+Lam, Chak Yan. \textit{Driver Assistance Using Cognitive Modelling and Strategy Synthesis.} 2017.
+
+\bibitem{salvucci}
+Salvucci, Dario D. \textit{``Modeling driver behavior in a cognitive architecture."} Human factors 48.2 (2006): 362-380.
+
+\bibitem{curzon}
+Curzon, Paul, Rimvydas Rukšėnas, and Ann Blandford. \textit{"An approach to formal verification of human–computer interaction."} Formal Aspects of Computing 19.4 (2007): 513-550.
+
+\bibitem{boer}
+Boer, Ewin R., and Marika Hoedemaeker. \textit{``Modeling driver behavior with different degrees of automation: A hierarchical decision framework of interacting mental models."} Conference on human decision making and manual control, Valenciennes, December 14-16, 1998. LAMIH, 1998.
+
+\bibitem{liu}
+Liu, Andrew, and Dario Salvucci. \textit{``Modeling and prediction of human driver behavior."} Intl. Conference on HCI. 2001.
+
+\bibitem{salvucci1}
+Salvucci, Dario D., and Andrew Liu. \textit{``The time course of a lane change: Driver control and eye-movement behavior."} Transportation research part F: traffic psychology and behaviour 5.2 (2002): 123-132.
+
+\bibitem{salvucci2}
+Salvucci, Dario, Erwin Boer, and Andrew Liu. \textit{``Toward an integrated model of driver behavior in cognitive architecture."} Transportation Research Record: Journal of the Transportation Research Board 1779 (2001): 9-16.
+
+\bibitem{act-r}
+Anderson, John R., Michael Matessa, and Christian Lebiere. \textit{``ACT-R: A theory of higher level cognition and its relation to visual attention."} Human-Computer Interaction 12.4 (1997): 439-462.
+
+\bibitem{prism}
+Kwiatkowska, Marta, Gethin Norman, and David Parker. \textit{"PRISM 4.0: Verification of probabilistic real-time systems."} International conference on computer aided verification. Springer, Berlin, Heidelberg, 2011.
+
+\end{thebibliography}
+
+\end{document}
