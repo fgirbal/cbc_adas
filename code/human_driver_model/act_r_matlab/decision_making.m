@@ -20,9 +20,17 @@ end
 if old_thw_car < thw_pass && lane == 1
     % attempt to change lanes
     [lane,changing] = try_change_lanes(2, dec_memory, vehicles_pos, x);
+    if changing == 1
+        abs(x - vehicles_pos(1,1))
+        pause
+    end
 elseif old_thw_car < thw_pass && lane == 2
     % attempt to change lanes
     [lane,changing] = try_change_lanes(1, dec_memory, vehicles_pos, x);
+    if changing == 1
+        abs(x - vehicles_pos(2,1))
+        pause
+    end
 end
 
 end
