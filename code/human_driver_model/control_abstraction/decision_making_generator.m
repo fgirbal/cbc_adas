@@ -1,49 +1,32 @@
-% GENERATOR - File that generates the table of a passing and returning to 
-% the initial lane.
+% DECISION_MAKING_GENERATOR - File that generates the decision making table
+% in terms of probability of changing lanes at certain points
 
 % Author: Francisco Girbal Eiras, MSc Computer Science
 % University of Oxford, Department of Computer Science
 % Email: francisco.eiras@cs.ox.ac.uk
-% 16-Apr-2018; Last revision: 24-Apr-2018
+% 24-Apr-2018; Last revision: 24-Apr-2018
 
 %------------- BEGIN CODE --------------
 
 clc
 
-% Car size for collision purposes (both cars are assumed to be of equal dimensions)
-h = 1.9;
-w = 4.8;
-
 % Possible initial distances between the vehicles
 ds = linspace(1,10,10);
-% ds = 10;
 
-% Possible vehicles initial velocity
-vi1s = linspace(15,34,20);
-vi2s = linspace(15,34,20);
-% vi1s = 15;
-% vi2s = 20;
+% Possible vehicle initial velocity
+vs = linspace(15,34,20);
 
-% Road width/length + time intervals for action
-global width len delta_t
-width = 7.4;
-len = 500;
-delta_t = 0.5;
-
-% Code starts
-
-generated_table = zeros(2*length(ds)*length(vi1s)*length(vi2s), 9);
+generated_table = zeros(2*length(ds)*length(vs), 9);
 display(sprintf('Generating table of %d entries', size(generated_table,1)))
 t1 = cputime;
 
 % Simulate all possible combinations
 for lane = 1:2
-for vi2_i = 1:length(vi2s)
-    for vi1_i = 1:length(vi1s)
+    for v_i = 1:length(vs)
         for d_i = 1:length(ds)
             
             d = ds(d_i);
-            vi1 = vi1s(vi1_i);
+            vi1 = vs(v_i);
             vi2 = vi2s(vi2_i);
             
             if lane == 1
@@ -99,7 +82,7 @@ for vi2_i = 1:length(vi2s)
                 t = t + delta_t;
             end
             
-            idx = (2-lane)*length(ds)*length(vi1s)*length(vi2s) + (vi2_i - 1)*length(vi1s)*length(ds) + (vi1_i - 1)*length(ds) + d_i;
+            idx = (2-lane)*length(ds)*length(vs)*length(vi2s) + (vi2_i - 1)*length(vs)*length(ds) + (v_i - 1)*length(ds) + d_i;
          
             generated_table(idx,:) = [3-lane,d,vi1,vi2,col,round(x - (w + d)*(2-lane)),round(vx),round(vehicles_pos(1,1)-(w + d)*(lane-1)),t];
         end
@@ -122,11 +105,11 @@ textHeader = cell2mat(commaHeader); %cHeader in text with commas
 textHeader = textHeader(1:end-1);
 
 %write header to file
-fid = fopen(sprintf('data/gen_table_%d_%d_%d_%d_%d_%d.csv', ds(1), ds(length(ds)),vi1s(1), vi1s(length(vi1s)), vi2s(1), vi2s(length(vi2s))),'w'); 
+fid = fopen(sprintf('data/gen_table_%d_%d_%d_%d_%d_%d.csv', ds(1), ds(length(ds)),vs(1), vs(length(vs)), vi2s(1), vi2s(length(vi2s))),'w'); 
 fprintf(fid,'%s\n',textHeader);
 fclose(fid);
 
 %write data to end of file
-dlmwrite(sprintf('data/gen_table_%d_%d_%d_%d_%d_%d.csv', ds(1), ds(length(ds)),vi1s(1), vi1s(length(vi1s)), vi2s(1), vi2s(length(vi2s))),generated_table,'-append');
+dlmwrite(sprintf('data/gen_table_%d_%d_%d_%d_%d_%d.csv', ds(1), ds(length(ds)),vs(1), vs(length(vs)), vi2s(1), vi2s(length(vi2s))),generated_table,'-append');
 
 %------------- END OF CODE --------------
