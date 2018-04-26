@@ -15,13 +15,13 @@ h = 1.9;
 w = 4.8;
 
 % Possible initial distances between the vehicles
-ds = linspace(1,10,10);
-% ds = 10;
+ds = linspace(1,40,40);
+% ds = 25;
 
 % Possible vehicles initial velocity
 vi1s = linspace(15,34,20);
 vi2s = linspace(15,34,20);
-% vi1s = 15;
+% vi1s = 30;
 % vi2s = 20;
 
 % Road width/length + time intervals for action
@@ -47,7 +47,7 @@ for vi2_i = 1:length(vi2s)
             vi2 = vi2s(vi2_i);
             
             if lane == 1
-                x = w + d;
+                x = d;
             else
                 x = 0;
             end
@@ -58,7 +58,7 @@ for vi2_i = 1:length(vi2s)
             if lane == 1
                 x1 = 0;
             else
-                x1 = w + d;
+                x1 = d;
             end
             y1 = width/4;
             vx1 = vi2;
@@ -78,7 +78,9 @@ for vi2_i = 1:length(vi2s)
             t = 0;
             ay = 100;
 
-            while x < len && ~(abs(ay) < 0.01 && abs(y - (2*lane-1)*width/4) < 0.05)
+            while x < len && ~(abs(ay) < 0.05 && abs(y - (2*lane-1)*width/4) < 0.05)
+                col = check_collision([x,y], vehicles_pos, h, w) || col;
+                
                 [x,y,vx,vy,ay,old_theta_near,old_theta_far,old_thw_car] = control(x,y,vx,vy,lane,old_theta_near,old_theta_far,old_thw_car,vehicles_pos);
                 
 %                 plot(x, y, 'ob')
@@ -88,7 +90,6 @@ for vi2_i = 1:length(vi2s)
 
 %                 plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
 
-                col = check_collision([x,y], vehicles_pos, h, w) || col;
                 t = t + delta_t;
 %                 pause
             end
@@ -101,7 +102,7 @@ for vi2_i = 1:length(vi2s)
             
             idx = (2-lane)*length(ds)*length(vi1s)*length(vi2s) + (vi2_i - 1)*length(vi1s)*length(ds) + (vi1_i - 1)*length(ds) + d_i;
          
-            generated_table(idx,:) = [3-lane,d,vi1,vi2,col,round(x - (w + d)*(2-lane)),round(vx),round(vehicles_pos(1,1)-(w + d)*(lane-1)),t];
+            generated_table(idx,:) = [3-lane,d,vi1,vi2,col,round(x - (d)*(2-lane)),round(vx),round(vehicles_pos(1,1)-(d)*(lane-1)),t];
         end
     end
 end

@@ -16,29 +16,35 @@ ds = linspace(1,80,80);
 % Possible vehicle initial velocity
 vs = linspace(15,34,20);
 
-generated_table = zeros(length(ds)*length(vs), 6);
+generated_table = zeros(3*length(ds)*length(vs), 7);
 display(sprintf('Generating table of %d entries', size(generated_table,1)))
 t1 = cputime;
 
-% Simulate all possible combinations
-for d_i = 1:length(ds)
-    for v_i = 1:length(vs)
-        
-        d = ds(d_i);
-        v = vs(v_i);
-        
-        delta_crash = d/v;
-        
-        idx = (d_i - 1)*length(vs) + v_i;
-        
-        generated_table(idx,:) = [d,v,delta_crash,0,0,0];
+% the model will have a parameter 'driver_type' which is equal to
+% 1 if aggressive, 2 if average or 3 if conservative
+for driver_i = 1:3
+    for d_i = 1:length(ds)
+        for v_i = 1:length(vs)
+
+            d = ds(d_i);
+            v = vs(v_i);
+
+            delta_crash = d/v;
+
+            x = [-3:.1:3];
+            norm = normpdf(x,0,1);
+
+            idx = (driver_i - 1)*length(ds)*length(vs) + (d_i - 1)*length(vs) + v_i;
+
+            generated_table(idx,:) = [driver_i,1,d,v,delta_crash,0,1];
+        end
     end
 end
 
 display(sprintf('Generated in %.3f seconds', cputime - t1))
 
 % Display the table
-header = {'d','v','delta_crash','P_lC','P_dec','P_no_action'};
+header = {'type','lane','d','v','delta_crash','P_lC','P_nlC'};
 xForDisplay = [header; num2cell(generated_table)];
 disp(xForDisplay)
 
