@@ -23,6 +23,8 @@ t1 = cputime;
 mean_dt = [0,2,4];
 std_dt = [0.6,0.3,1];
 
+exp_param_dt = [1,0.3,0.2];
+
 % the model will have a parameter 'driver_type' which is equal to
 % 1 if aggressive, 2 if average or 3 if conservative
 for driver_i = 1:3
@@ -33,8 +35,24 @@ for driver_i = 1:3
             v = vs(v_i);
 
             delta_crash = d/v;
+            
+%             x = 0:0.1:4;
+%             val1 = exp(-1*x);
+%             val2 = exp(-0.3*x);
+%             val3 = exp(-0.2*x);
+%             
+%             figure;
+%             hold on;
+%             plot(x,val1);
+%             plot(x,val2);
+%             plot(x,val3);
+%             
+%             pause
+%             
+%             return
 
-            plC = 2*std_dt(driver_i)*normpdf(delta_crash,mean_dt(driver_i),std_dt(driver_i));
+%             plC = 2*std_dt(driver_i)*normpdf(delta_crash,mean_dt(driver_i),std_dt(driver_i));
+            plC = exp(-exp_param_dt(driver_i)*delta_crash);
 
             idx = (driver_i - 1)*length(ds)*length(vs) + (d_i - 1)*length(vs) + v_i;
 
@@ -46,12 +64,31 @@ end
 mean_dd = [10,40,70];
 std_dd = [20,7,20];
 
+exp_param_dd = [0.05,0.015,0.008];
+
 for driver_i = 1:3
     for d_i = 1:length(ds)
         
         d = ds(d_i);
         
-        plC = 2*std_dd(driver_i)*normpdf(d,mean_dd(driver_i),std_dd(driver_i));
+%         x = 0:1:80;
+%         val1 = exp(-0.05*x);
+%         val2 = exp(-0.015*x);
+%         val3 = exp(-0.008*x);
+% 
+%         figure;
+%         hold on;
+%         plot(x,val1);
+%         plot(x,val2);
+%         plot(x,val3);
+% 
+%         pause
+% 
+%         return
+        
+%         plC = 2*std_dd(driver_i)*normpdf(d,mean_dd(driver_i),std_dd(driver_i));
+
+        plC = exp(-exp_param_dd(driver_i)*d);
         
         idx = 3*length(ds)*length(vs) + (driver_i - 1)*length(ds) + d_i;
 

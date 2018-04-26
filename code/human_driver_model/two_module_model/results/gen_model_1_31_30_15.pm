@@ -18,7 +18,7 @@ global crashed : bool init false;
 global actrState : [1..2] init 1; // active module: 1 = control (both cars), 2 = decision making + monitoring
 global lC : bool init false; // lane changing occuring? 
 global x : [0..length] init 0;
-global v : [15..34] init 15;
+global v : [15..34] init 31;
 global lane : [1..2] init 1;
 
 formula x1 = x1_0 + v1*t;

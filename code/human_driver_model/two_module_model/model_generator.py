@@ -7,27 +7,37 @@
 # Email: francisco.eiras@cs.ox.ac.uk
 # 25-Apr-2018; Last revision: 26-Apr-2018
 
-import sys, csv
+import sys, csv, argparse
 
-if len(sys.argv) < 3:
-	print("Too few arguments. Usage: python3 control_module_generator.py [control_module] [decision_making_module].")
-	exit()
+parser=argparse.ArgumentParser(
+    description='''Tranform the generated tables using generator.m and decision_making.m into a PRISM file with the two modules.''')
+parser.add_argument('control_table', type=str, help='Table for the control module.')
+parser.add_argument('dm_table', type=str, help='Table for the decision making module.')
+parser.add_argument('[driver_type]', type=int, default=2, help='1 = aggressive, 2 = average, 3 = cautious')
+parser.add_argument('[v]', type=int, default=29, help='Initial velocity of the vehicle.')
+parser.add_argument('[v1]', type=int, default=30, help='Initial velocity of the other vehicle.')
+parser.add_argument('[x1_0]', type=int, default=15, help='Initial position of the other vehicle.')
+parser.add_argument('--filename [NAME]', type=str, help='Output name for the file generated.')
+args=parser.parse_args()
 
-f = open("two_component_model.pm", "w")
+if len(sys.argv) == 7:
+	f = open("two_component_model.pm", "w")
+else:
+	f = open("%s.pm"%sys.argv[8], "w")
 
-v1 = "30";
-driver_type = "2"
-x1_0 = "15"
-v = "32"
+driver_type = sys.argv[3]
+v = sys.argv[4]
+v1 = sys.argv[5]
+x1_0 = sys.argv[6]
 
 # Write the beginning of the file
 f.write("//Model automatically built using model_generator.py for v1 = %s and driver_type = %s (to alter this value, run the script again).\n\n"%(v1,driver_type))
 f.write("dtmc\n\n")
 f.write("const int length = 500; // road length\n")
-f.write("const int driver_type = 1; // 1 = aggressive, 2 = average, 3 = conservative drivers\n")
+f.write("const int driver_type = 1; // 1 = aggressive, 2 = average, 3 = cautious drivers\n")
 f.write("const int max_time = 30; // maximum time of experiment\n\n")
 f.write("// Other vehicle\n")
-f.write("const int v1 = %s; // do not alter this!\n"%v1)
+f.write("const int v1 = %s; // do not alter this manually!\n"%v1)
 f.write("const int x1_0 = %s;\n\n"%x1_0)
 f.write("// Environment variables\n")
 f.write("global t : [0..max_time] init 0; // time \n")
@@ -105,11 +115,4 @@ with open(sys.argv[1]) as csvfile:
 
 f.write("\nendmodule")
 
-
-
-
-
-
-
-
-
+f.close()
