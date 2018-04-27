@@ -60,6 +60,9 @@ f.write("	[] actrState = 2 & crashed -> 1:(crashed' = true);\n\n")
 f.write(" 	// If we are in lane 2, but behind the other vehicle, don't try to pass\n")
 f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = false -> 1:(actrState' = 1);\n\n")
 
+f.write("	// If we are in lane 1, and no vehicle is in front, don't change lanes\n")
+f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = true -> 1:(actrState' = 1);\n\n")
+
 # should we change from lane 1 to lane 2? it's based on delta_crash!
 with open(sys.argv[2]) as csvfile:
 	reader = csv.DictReader(csvfile)
