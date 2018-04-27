@@ -1,10 +1,10 @@
-% GENERATOR - File that generates the table of a passing and returning to 
+% LANE_CHANING_GENERATOR - File that generates the table of a passing and returning to 
 % the initial lane.
 
 % Author: Francisco Girbal Eiras, MSc Computer Science
 % University of Oxford, Department of Computer Science
 % Email: francisco.eiras@cs.ox.ac.uk
-% 16-Apr-2018; Last revision: 24-Apr-2018
+% 16-Apr-2018; Last revision: 27-Apr-2018
 
 %------------- BEGIN CODE --------------
 

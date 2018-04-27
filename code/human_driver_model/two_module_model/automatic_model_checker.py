@@ -7,16 +7,29 @@
 # Email: francisco.eiras@cs.ox.ac.uk
 # 26-Apr-2018; Last revision: 27-Apr-2018
 
-import sys, os, subprocess, csv
+import sys, os, subprocess, csv, argparse
+
+parser=argparse.ArgumentParser(
+    description='''Executes the script model_generator.py for some given parameters in order to build the model and perform model checking subquentially.''')
+parser.add_argument('properties_file', type=str, help='File of the properties to be checked (PCTL or LTL).')
+parser.add_argument('[v]', type=int, default=29, help='Initial velocity of the vehicle.')
+parser.add_argument('[v1]', type=int, default=30, help='Initial velocity of the other vehicle.')
+parser.add_argument('[x1_0]', type=int, default=15, help='Initial position of the other vehicle.')
+parser.add_argument('--clean [VALUE]', type=str, help='If [VALUE] = False, then generated files (model and individual results) will be maintained (default = True).')
+args=parser.parse_args()
 
 types = ['aggressive','average','cautious']
 res = {}
 
-cleaning_up = True
-properties_file = 'properties.pctl'
-v = 26
-v1 = 20
-x1_0 = 39
+properties_file = sys.argv[1]
+v = sys.argv[2]
+v1 = sys.argv[3]
+x1_0 = sys.argv[4]
+
+if len(sys.argv) > 5 and sys.argv[5] == "False":
+	cleaning_up = False
+else:
+	cleaning_up = True
 
 num_properties = sum(1 for line in open(properties_file))
 with open(properties_file) as f1:
@@ -31,7 +44,7 @@ for driver_type in range(1,4):
 
 	# Construct the file
 	print('Generating the model...')
-	os.system('python3 model_generator.py model_tables/control_table.csv model_tables/dm_table.csv %s %s %s %s --filename results/%s > /dev/null'%(driver_type,v,v1,x1_0,filename))
+	os.system('python3 model_generator.py model_tables/control_table.csv model_tables/acc_table.csv model_tables/dm_table.csv %s %s %s %s --filename results/%s > /dev/null'%(driver_type,v,v1,x1_0,filename))
 
 	print('Building the model and performing model checking...')
 	subprocess.run("prism results/%s.pm properties.pctl -exportresults results/%s.txt &> /dev/null"%(filename, r_filename), shell=True)

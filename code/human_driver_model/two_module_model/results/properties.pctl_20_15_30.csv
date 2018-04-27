@@ -1,7 +1,0 @@
-type_driver,property,probability
-1,P=? [F crashed],0.4473
-1,P=? [F (x = 500) & (t < 20)],0.0
-2,P=? [F crashed],0.0806
-2,P=? [F (x = 500) & (t < 20)],0.0
-3,P=? [F crashed],0.039599999999999996
-3,P=? [F (x = 500) & (t < 20)],0.0
