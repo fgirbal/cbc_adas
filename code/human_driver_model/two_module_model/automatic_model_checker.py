@@ -26,7 +26,7 @@ v = sys.argv[2]
 v1 = sys.argv[3]
 x1_0 = sys.argv[4]
 
-if len(sys.argv) > 5 and sys.argv[5] == "False":
+if len(sys.argv) > 5 and sys.argv[6] == "False":
 	cleaning_up = False
 else:
 	cleaning_up = True

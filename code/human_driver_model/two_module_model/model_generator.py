@@ -42,7 +42,7 @@ f.write("//Model automatically built using model_generator.py for v1 = %s and dr
 f.write("//Generated on %s.\n\n"%(now.strftime("%d-%m-%Y at %H:%M")))
 f.write("dtmc\n\n")
 f.write("const int length = 500; // road length\n")
-f.write("const int driver_type = 1; // 1 = aggressive, 2 = average, 3 = cautious drivers\n")
+f.write("const int driver_type = 1; // 1 = aggressive, 2 = average, 3 = cautious drivers - do not alter this manually!\n")
 f.write("const int max_time = 30; // maximum time of experiment\n\n")
 f.write("// Other vehicle\n")
 f.write("const int v1 = %s; // do not alter this manually!\n"%v1)
@@ -123,14 +123,16 @@ f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < m
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) < %s & v + a <= 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (crashed' = true) & (actrState' = 2);\n"%crash_dist)	
 
 f.write(" 	// The vehicle is in front of the other driver (positiveDist = true, x > x1)\n")
-f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 1) & (actrState' = 2);\n")
+f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 0) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a >= 34 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a <= 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (actrState' = 2);\n\n")
 
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x > length - v & t < max_time & positiveDist = true -> 1:(x' = length) & (t' = t + 1) & (actrState' = 2);\n\n")
 
 f.write(" 	// If we are in lane 2, and no lane change was decided, continue forward\n")
-f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 1) & (actrState' = 2);\n")
+f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a < 34 & v + a > 15 & positiveDist = true -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 0) & (actrState' = 2);\n")
+f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a < 34 & v + a > 15 & positiveDist = false -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 1) & (actrState' = 2);\n")
+f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x > length - v & t < max_time & v + a < 34 & v + a > 15 -> 1:(x' = length) & (t' = t + 1) & (v' = v + a) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x > length - v & t < max_time & v + a >= 34 -> 1:(x' = length) & (t' = t + 1) & (v' = 34) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x > length - v & t < max_time & v + a <= 15 -> 1:(x' = length) & (t' = t + 1) & (v' = 15) & (actrState' = 2);\n\n")
 
@@ -147,10 +149,18 @@ with open(sys.argv[1]) as csvfile:
 			f.write(line)
 			line = "	[] actrState = 1 & !crashed & lC & lane = %s & dist = %s & v = %s & x > length - %s & t <= max_time - %s -> 1:(crashed' = %s) & (x' = length) & (v' = %s) & (t' = t + %s) & (a' = 0) & (lane' = %s) & (actrState' = 2) & (lC' = false);\n" % (row["o_lane"], row["d"],row["vi1"],row["delta_x1"],row["delta_t"],acc_val,row["vf1"],row["delta_t"],str(3 - int(row["o_lane"])))
 			f.write(line)
+			line = "	[] actrState = 1 & !crashed & lC & lane = %s & dist = %s & v = %s & x <= length - %s & t > max_time - %s -> 1:(crashed' = %s) & (x' = x + %s) & (v' = %s) & (t' = max_time) & (a' = 0) & (lane' = %s) & (actrState' = 2) & (lC' = false);\n" % (row["o_lane"], row["d"],row["vi1"],row["delta_x1"],row["delta_t"],acc_val,row["delta_x1"],row["vf1"],str(3 - int(row["o_lane"])))
+			f.write(line)
+			line = "	[] actrState = 1 & !crashed & lC & lane = %s & dist = %s & v = %s & x > length - %s & t > max_time - %s -> 1:(crashed' = %s) & (x' = length) & (v' = %s) & (t' = max_time) & (a' = 0) & (lane' = %s) & (actrState' = 2) & (lC' = false);\n" % (row["o_lane"], row["d"],row["vi1"],row["delta_x1"],row["delta_t"],acc_val,row["vf1"],str(3 - int(row["o_lane"])))
+			f.write(line)
 		elif row["d"] == max_control_dist and row["vi2"] == v1:
 			line = "	[] actrState = 1 & !crashed & lC & lane = %s & dist >= %s & v = %s & x <= length - %s & t <= max_time - %s -> 1:(crashed' = %s) & (x' = x + %s) & (v' = %s) & (t' = t + %s) & (a' = 0) & (lane' = %s) & (actrState' = 2) & (lC' = false);\n" % (row["o_lane"], row["d"],row["vi1"],row["delta_x1"],row["delta_t"],acc_val,row["delta_x1"],row["vf1"],row["delta_t"],str(3 - int(row["o_lane"])))
 			f.write(line)
 			line = "	[] actrState = 1 & !crashed & lC & lane = %s & dist >= %s & v = %s & x > length - %s & t <= max_time - %s -> 1:(crashed' = %s) & (x' = length) & (v' = %s) & (t' = t + %s) & (a' = 0) & (lane' = %s) & (actrState' = 2) & (lC' = false);\n" % (row["o_lane"], row["d"],row["vi1"],row["delta_x1"],row["delta_t"],acc_val,row["vf1"],row["delta_t"],str(3 - int(row["o_lane"])))
+			f.write(line)
+			line = "	[] actrState = 1 & !crashed & lC & lane = %s & dist >= %s & v = %s & x <= length - %s & t > max_time - %s -> 1:(crashed' = %s) & (x' = x + %s) & (v' = %s) & (t' = max_time) & (a' = 0) & (lane' = %s) & (actrState' = 2) & (lC' = false);\n" % (row["o_lane"], row["d"],row["vi1"],row["delta_x1"],row["delta_t"],acc_val,row["delta_x1"],row["vf1"],str(3 - int(row["o_lane"])))
+			f.write(line)
+			line = "	[] actrState = 1 & !crashed & lC & lane = %s & dist >= %s & v = %s & x > length - %s & t > max_time - %s -> 1:(crashed' = %s) & (x' = length) & (v' = %s) & (t' = max_time) & (a' = 0) & (lane' = %s) & (actrState' = 2) & (lC' = false);\n" % (row["o_lane"], row["d"],row["vi1"],row["delta_x1"],row["delta_t"],acc_val,row["vf1"],str(3 - int(row["o_lane"])))
 			f.write(line)
 
 f.write("\nendmodule")

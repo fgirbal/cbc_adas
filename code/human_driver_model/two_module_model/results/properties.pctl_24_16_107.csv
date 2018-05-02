@@ -1,7 +1,13 @@
 type_driver,property,probability
-1,P=? [F crashed],0.415959376896
-1,P=? [F (x = 500) & (t < 23)],0.7177859257648805
-2,P=? [F crashed],0.0074245248
-2,P=? [F (x = 500) & (t < 23)],0.9414041965777342
-3,P=? [F crashed],0.0009258080726999997
-3,P=? [F (x = 500) & (t < 23)],0.986649239941368
+1,P=? [ F crashed ],0.4066066317599999
+1,P=? [ F crashed | (x=length)],1.0
+1,P=? [ F crashed | (x=length & t < 22) ],0.68351319736
+1,P=? [ F crashed | (x=length & t < 23) ],0.8227792215759999
+2,P=? [ F crashed ],0.00607090176
+2,P=? [ F crashed | (x=length)],1.0
+2,P=? [ F crashed | (x=length & t < 22) ],0.8421017555839998
+2,P=? [ F crashed | (x=length & t < 23) ],0.9619926137049599
+3,P=? [ F crashed ],0.0006313161959999998
+3,P=? [ F crashed | (x=length)],1.0
+3,P=? [ F crashed | (x=length & t < 22) ],0.509020885876
+3,P=? [ F crashed | (x=length & t < 23) ],0.7708761254104

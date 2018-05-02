@@ -30,7 +30,7 @@ for d_i = 1:length(ds)
 
         if delta_crash < 0.3
             a = -1;
-        elseif delta_crash < 1
+        elseif delta_crash <= 1
             a = 0;
         else
             a = 1;

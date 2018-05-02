@@ -24,6 +24,8 @@ mean_dt = [0,2,4];
 std_dt = [0.6,0.3,1];
 
 exp_param_dt = [1,0.3,0.2];
+std_dev = 2;
+l = 20;
 
 % the model will have a parameter 'driver_type' which is equal to
 % 1 if aggressive, 2 if average or 3 if conservative
@@ -37,9 +39,9 @@ for driver_i = 1:3
             delta_crash = d/v;
             
 %             x = 0:0.1:4;
-%             val1 = exp(-1*x);
-%             val2 = exp(-0.3*x);
-%             val3 = exp(-0.2*x);
+%             val1 = exp(-exp_param_dt(1)*x);
+%             val2 = exp(-exp_param_dt(2)*x);
+%             val3 = exp(-exp_param_dt(3)*x);
 %             
 %             figure;
 %             hold on;
@@ -51,11 +53,16 @@ for driver_i = 1:3
 %             
 %             return
 
-%             plC = 2*std_dt(driver_i)*normpdf(delta_crash,mean_dt(driver_i),std_dt(driver_i));
-            plC = exp(-exp_param_dt(driver_i)*delta_crash);
+            x = 1:1:80;
+            dist_small_0 = normcdf(0, d, std_dev);
+            dist_greater_80 = 1 - normcdf(80,d,std_dev);
+            P = normcdf(x + 0.5, d, std_dev) - normcdf(x - 0.5, d, std_dev);
+            P_lC = exp(-exp_param_dt(driver_i)*x/v);
+            
+            plC = P*P_lC' + (dist_small_0 + dist_greater_80)*exp(-exp_param_dt(driver_i)*d/v);
 
             idx = (driver_i - 1)*length(ds)*length(vs) + (d_i - 1)*length(vs) + v_i;
-
+      
             generated_table(idx,:) = [1,driver_i,d,v,round(delta_crash,2),round(plC,2),1-round(plC,2)];
         end
     end
@@ -64,18 +71,18 @@ end
 mean_dd = [10,40,70];
 std_dd = [20,7,20];
 
-exp_param_dd = [0.05,0.015,0.008];
+log_param_dd = [1000,0.5,0.01];
 
 for driver_i = 1:3
     for d_i = 1:length(ds)
         
         d = ds(d_i);
-        
-%         x = 0:1:80;
-%         val1 = exp(-0.05*x);
-%         val2 = exp(-0.015*x);
-%         val3 = exp(-0.008*x);
-% 
+%         
+%         x = 0:0.5:80;
+%         val1 = 1/log(80*1000+1)*log(1000*x+1);
+%         val2 = 1/log(80*0.5+1)*log(0.5*x+1);
+%         val3 = 1/log(80*0.01+1)*log(0.01*x+1);
+%         
 %         figure;
 %         hold on;
 %         plot(x,val1);
@@ -83,12 +90,8 @@ for driver_i = 1:3
 %         plot(x,val3);
 % 
 %         pause
-% 
-%         return
         
-%         plC = 2*std_dd(driver_i)*normpdf(d,mean_dd(driver_i),std_dd(driver_i));
-
-        plC = exp(-exp_param_dd(driver_i)*d);
+        plC = 1/log(80*log_param_dd(driver_i)+1)*log(log_param_dd(driver_i)*d+1);
         
         idx = 3*length(ds)*length(vs) + (driver_i - 1)*length(ds) + d_i;
 
