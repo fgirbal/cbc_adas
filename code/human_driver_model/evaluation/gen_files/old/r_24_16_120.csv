@@ -1,0 +1,19 @@
+type_driver,property,probability
+1,P=? [ F crashed ],0.5332144435199999
+1,P=? [ F crashed | (x=length) | (t=max_time)],1.0
+1,P=? [ F crashed | (x=length & t < 21) ],0.6464968435199999
+1,P=? [ F crashed | (x=length & t < 24) ],0.9985385614873598
+1,P=? [ F crashed | (x=length & t < 27) ],1.0
+1,P=? [ F crashed | (x=length & t < 30) ],1.0
+2,P=? [ F crashed ],0.0104324652432
+2,P=? [ F crashed | (x=length) | (t=max_time)],1.0
+2,P=? [ F crashed | (x=length & t < 21) ],0.17614144996524
+2,P=? [ F crashed | (x=length & t < 24) ],0.9772334887770928
+2,P=? [ F crashed | (x=length & t < 27) ],1.0
+2,P=? [ F crashed | (x=length & t < 30) ],1.0
+3,P=? [ F crashed ],0.0011320152480000002
+3,P=? [ F crashed | (x=length) | (t=max_time)],1.0
+3,P=? [ F crashed | (x=length & t < 21) ],0.034854469125279536
+3,P=? [ F crashed | (x=length & t < 24) ],0.7730930095031835
+3,P=? [ F crashed | (x=length & t < 27) ],1.0
+3,P=? [ F crashed | (x=length & t < 30) ],1.0

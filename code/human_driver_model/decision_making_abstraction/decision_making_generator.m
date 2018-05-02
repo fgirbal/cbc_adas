@@ -23,7 +23,7 @@ t1 = cputime;
 mean_dt = [0,2,4];
 std_dt = [0.6,0.3,1];
 
-exp_param_dt = [1,0.3,0.2];
+exp_param_dt = [1,0.6,0.4];
 std_dev = 2;
 l = 20;
 
