@@ -14,20 +14,21 @@ N = 20
 generate_samples = True
 
 if generate_samples == True:
-	for i in range(1,N):
+	for i in range(1,N+1):
 
 		while 1:
-			v = random.randint(15,34)
 			v1 = random.randint(15,34)
-			x1_0 = random.randint(10,120)
+			v = v1 + random.randint(-4,34-v1)
+			x1_0 = random.randint(10,80)
 
-			if not os.path.exists("gen_files/r_%s_%s_%s.csv"%(v,v1,x1_0)) and (v - v1) > - 6:
+			if not os.path.exists("gen_files/r_%s_%s_%s.csv"%(v,v1,x1_0)):
 				break
 
 		print('[%d/%d]: Evaluating drivers for v = %d, v1 = %d, x1_0 = %d...'%(i,N,v,v1,x1_0))
 		os.system('python3 automatic_model_checker.py properties.pctl %d %d %d > /dev/null'%(v,v1,x1_0))
 
 vals = [[],[],[]]
+t21 = [[],[],[]]
 
 os.chdir("gen_files/")
 for file in glob.glob("*.csv"):
@@ -36,8 +37,19 @@ for file in glob.glob("*.csv"):
     	for row in reader:
     		if row["property"] == "P=? [ F crashed ]":
     			vals[int(row["type_driver"])-1].append(float(row["probability"]))
+    		elif row["property"] == "P=? [ F crashed | (x=length & t < 21) ]":
+    			t21[int(row["type_driver"])-1].append(float(row["probability"]))
 
+plt.figure(1)
 plt.boxplot(vals, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
+plt.ylabel('P=? [ F crashed ]')
+plt.title('Safety property')
+plt.show()
+
+plt.figure(2)
+plt.boxplot(t21, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
+plt.ylabel('P=? [ F crashed | (x=length & t < 21) ]')
+plt.title('Liveness property')
 plt.show()
 
 print('Done.')

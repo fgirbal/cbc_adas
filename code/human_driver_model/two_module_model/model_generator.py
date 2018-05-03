@@ -5,7 +5,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 25-Apr-2018; Last revision: 2-May-2018
+# 25-Apr-2018; Last revision: 3-May-2018
 
 import sys, csv, argparse, datetime
 
@@ -30,8 +30,10 @@ driver_type = sys.argv[4]
 v = sys.argv[5]
 v1 = sys.argv[6]
 x1_0 = sys.argv[7]
+if not (int(v) >= 15 and int(v) <= 34) or not (int(v1) >= 15 and int(v1) <= 34) or not (int(x1_0) >= 1 and int(x1_0) <= 500) or int(driver_type) not in [1,2,3]:
+	raise ValueError("Input out of range.")
 
-max_control_dist = "40"
+max_control_dist = "43"
 max_dm_dist = "80"
 crash_dist = "6"
 
@@ -123,7 +125,7 @@ f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < m
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) < %s & v + a <= 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (crashed' = true) & (actrState' = 2);\n"%crash_dist)	
 
 f.write(" 	// The vehicle is in front of the other driver (positiveDist = true, x > x1)\n")
-f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 0) & (actrState' = 2);\n")
+f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 1) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a >= 34 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a <= 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (actrState' = 2);\n\n")
 

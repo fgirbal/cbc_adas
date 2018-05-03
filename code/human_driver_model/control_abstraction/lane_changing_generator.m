@@ -15,7 +15,7 @@ h = 1.9;
 w = 4.8;
 
 % Possible initial distances between the vehicles
-ds = linspace(1,40,40);
+ds = linspace(1,43,43);
 % ds = 25;
 
 % Possible vehicles initial velocity
