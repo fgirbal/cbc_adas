@@ -5,7 +5,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 26-Apr-2018; Last revision: 27-Apr-2018
+# 26-Apr-2018; Last revision: 3-May-2018
 
 import sys, os, subprocess, csv, argparse
 
@@ -21,6 +21,8 @@ args=parser.parse_args()
 types = ['aggressive','average','cautious']
 res = {}
 
+source_path = ""
+path = "results/"
 properties_file = sys.argv[1]
 v = sys.argv[2]
 v1 = sys.argv[3]
@@ -44,14 +46,14 @@ for driver_type in range(1,4):
 
 	# Construct the file
 	print('Generating the model...')
-	os.system('python3 model_generator.py model_tables/control_table.csv model_tables/acc_table.csv model_tables/dm_table.csv %s %s %s %s --filename results/%s > /dev/null'%(driver_type,v,v1,x1_0,filename))
+	os.system('python3 %smodel_generator.py %smodel_tables/control_table.csv %smodel_tables/acc_table.csv %smodel_tables/dm_table.csv %s %s %s %s --filename %s%s > /dev/null'%(source_path,source_path,source_path,source_path,driver_type,v,v1,x1_0,path,filename))
 
 	print('Building the model and performing model checking...')
-	subprocess.run("prism results/%s.pm properties.pctl -exportresults results/%s.txt &> /dev/null"%(filename, r_filename), shell=True)
+	subprocess.run("prism %s%s.pm properties.pctl -exportresults %s%s.txt &> /dev/null"%(path,filename,path,r_filename), shell=True)
 
 	print('Obtaining the results...')
 
-	f = open("results/%s.txt"%r_filename, "r")
+	f = open("%s%s.txt"%(path,r_filename), "r")
 
 	if num_properties == 1:
 		f.readline()
@@ -81,10 +83,10 @@ for driver_type in range(1,4):
 
 	if cleaning_up == True:
 		print('Cleaning up...')
-		os.system('rm results/%s.pm'%filename)
-		os.system('rm results/%s.txt'%r_filename)
+		os.system('rm %s%s.pm'%(path,filename))
+		os.system('rm %s%s.txt'%(path,r_filename))
 
-with open('results/%s_%s_%s_%s.csv'%(properties_file,v,v1,x1_0), 'w') as csvfile:
+with open('%s%s_%s_%s_%s.csv'%(path,properties_file,v,v1,x1_0), 'w') as csvfile:
     fieldnames = ['type_driver', 'property', 'probability']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
@@ -94,11 +96,3 @@ with open('results/%s_%s_%s_%s.csv'%(properties_file,v,v1,x1_0), 'w') as csvfile
     		writer.writerow({'type_driver': key, 'property': propty[0], 'probability': propty[1]})
 
 print('Done.')
-
-
-
-
-
-
-
-

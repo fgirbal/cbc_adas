@@ -1,0 +1,49 @@
+type_driver,property,probability
+1,P=? [ F crashed ],0.274626
+1,P=? [ F crashed | (x=length) | (t=max_time)],1.0
+1,P=? [ F crashed | (x=length & t < 17) ],0.2746260828696
+1,P=? [ F crashed | (x=length & t < 18) ],0.506826
+1,P=? [ F crashed | (x=length & t < 19) ],0.76919
+1,P=? [ F crashed | (x=length & t < 20) ],0.9881475399999999
+1,P=? [ F crashed | (x=length & t < 21) ],0.9995198536000001
+1,P=? [ F crashed | (x=length & t < 22) ],0.999989557648
+1,P=? [ F crashed | (x=length & t < 23) ],0.9999999496345601
+1,P=? [ F crashed | (x=length & t < 24) ],1.0
+1,P=? [ F crashed | (x=length & t < 25) ],1.0
+1,P=? [ F crashed | (x=length & t < 26) ],1.0
+1,P=? [ F crashed | (x=length & t < 27) ],1.0
+1,P=? [ F crashed | (x=length & t < 28) ],1.0
+1,P=? [ F crashed | (x=length & t < 29) ],1.0
+1,P=? [ F crashed | (x=length & t < 30) ],1.0
+2,P=? [ F crashed ],0.10560000000000001
+2,P=? [ F crashed | (x=length) | (t=max_time)],1.0
+2,P=? [ F crashed | (x=length & t < 17) ],0.105609077165775
+2,P=? [ F crashed | (x=length & t < 18) ],0.38010907716577497
+2,P=? [ F crashed | (x=length & t < 19) ],0.7174590771657751
+2,P=? [ F crashed | (x=length & t < 20) ],0.9496855771657751
+2,P=? [ F crashed | (x=length & t < 21) ],0.9934895221657749
+2,P=? [ F crashed | (x=length & t < 22) ],0.999412460415775
+2,P=? [ F crashed | (x=length & t < 23) ],0.999970493018275
+2,P=? [ F crashed | (x=length & t < 24) ],1.0
+2,P=? [ F crashed | (x=length & t < 25) ],1.0
+2,P=? [ F crashed | (x=length & t < 26) ],1.0
+2,P=? [ F crashed | (x=length & t < 27) ],1.0
+2,P=? [ F crashed | (x=length & t < 28) ],1.0
+2,P=? [ F crashed | (x=length & t < 29) ],1.0
+2,P=? [ F crashed | (x=length & t < 30) ],1.0
+3,P=? [ F crashed ],0.04161499999999999
+3,P=? [ F crashed | (x=length) | (t=max_time)],1.0
+3,P=? [ F crashed | (x=length & t < 17) ],0.04248806764091599
+3,P=? [ F crashed | (x=length & t < 18) ],0.20178806764091597
+3,P=? [ F crashed | (x=length & t < 19) ],0.488044067640916
+3,P=? [ F crashed | (x=length & t < 20) ],0.763069277640916
+3,P=? [ F crashed | (x=length & t < 21) ],0.9123491753409159
+3,P=? [ F crashed | (x=length & t < 22) ],0.976023638859916
+3,P=? [ F crashed | (x=length & t < 23) ],0.995877966252736
+3,P=? [ F crashed | (x=length & t < 24) ],1.0
+3,P=? [ F crashed | (x=length & t < 25) ],1.0
+3,P=? [ F crashed | (x=length & t < 26) ],1.0
+3,P=? [ F crashed | (x=length & t < 27) ],1.0
+3,P=? [ F crashed | (x=length & t < 28) ],1.0
+3,P=? [ F crashed | (x=length & t < 29) ],1.0
+3,P=? [ F crashed | (x=length & t < 30) ],1.0
