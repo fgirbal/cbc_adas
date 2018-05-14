@@ -66,7 +66,7 @@ f.write("formula positiveDist = (x < length)?x > x1:true;\n\n")
 # Decision making + monitoring module
 f.write("module Decision_Making_Monitoring\n\n")
 f.write(" 	// If a crash occurs, then nothing else can happen\n")
-f.write("	[] actrState = 2 & crashed -> 1:(crashed' = true);\n\n")
+f.write("	//[] actrState = 2 & crashed -> 1:(crashed' = true);\n\n")
 
 f.write(" 	// If we are in lane 2, but behind the other vehicle, don't try to pass\n")
 f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = false -> 1:(actrState' = 1);\n\n")
