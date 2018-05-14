@@ -4,7 +4,7 @@
 % Author: Francisco Girbal Eiras, MSc Computer Science
 % University of Oxford, Department of Computer Science
 % Email: francisco.eiras@cs.ox.ac.uk
-% 16-Apr-2018; Last revision: 27-Apr-2018
+% 16-Apr-2018; Last revision: 12-May-2018
 
 %------------- BEGIN CODE --------------
 
@@ -35,6 +35,8 @@ delta_t = 0.5;
 generated_table = zeros(2*length(ds)*length(vi1s)*length(vi2s), 9);
 display(sprintf('Generating table of %d entries', size(generated_table,1)))
 t1 = cputime;
+
+other_table = zeros(2*length(ds)*length(vi1s)*length(vi2s), 14);
 
 % Simulate all possible combinations
 for lane = 1:2
@@ -77,32 +79,50 @@ for vi2_i = 1:length(vi2s)
             col = false;
             t = 0;
             ay = 100;
+            
+            x_y_t = zeros(16,3);
+            x_y_t(1,:) = [0,x,y];
+            idx = 2;
 
             while x < len && ~(abs(ay) < 0.05 && abs(y - (2*lane-1)*width/4) < 0.05)
                 col = check_collision([x,y], vehicles_pos, h, w) || col;
                 
                 [x,y,vx,vy,ay,old_theta_near,old_theta_far,old_thw_car] = control(x,y,vx,vy,lane,old_theta_near,old_theta_far,old_thw_car,vehicles_pos);
-                
-%                 plot(x, y, 'ob')
 
                 vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
                 vehicles_pos(1,2) = vehicles_pos(1,2) + vy1*delta_t;
 
-%                 plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
-
                 t = t + delta_t;
-%                 pause
+                
+                x_y_t(idx,:) = [t, x, y];
+                idx = idx + 1;
+                
+%                 plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
             end
             
             while floor(t) ~= t
                 x = x + vx*delta_t;
                 vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
                 t = t + delta_t;
+                
+                x_y_t(idx,:) = [t, x, y];
+                idx = idx + 1;
             end
+                        
+%             plot(x_y_t(:,1), x_y_t(:,2),'ob')
+            
+            p_x = polyfit(x_y_t(:,1),x_y_t(:,2),2);
+            p_y = polyfit(x_y_t(:,1),x_y_t(:,3),6);
+%             x1 = linspace(0,8);
+%             y1 = polyval(p_x,x1);
+%             plot(x1,y1)
+            
+%             pause
             
             idx = (2-lane)*length(ds)*length(vi1s)*length(vi2s) + (vi2_i - 1)*length(vi1s)*length(ds) + (vi1_i - 1)*length(ds) + d_i;
          
             generated_table(idx,:) = [3-lane,d,vi1,vi2,col,round(x - (d)*(2-lane)),round(vx),round(vehicles_pos(1,1)-(d)*(lane-1)),t];
+            other_table(idx,:) = [3-lane,d,vi1,vi2,p_x,p_y];
         end
     end
 end
@@ -113,6 +133,10 @@ display(sprintf('Generated in %.3f seconds', cputime - t1))
 % Display the table
 header = {'o_lane','d','vi1','vi2','Acc?','delta_x1','vf1','delta_x2','delta_t'};
 xForDisplay = [header; num2cell(generated_table)];
+disp(xForDisplay)
+
+header_1 = {'o_lane','d','vi1','vi2','p_x(1)','p_x(2)','p_x(3)','p_y(1)','p_y(2)','p_y(3)','p_y(4)','p_y(5)','p_y(6)','p_y(7)'};
+xForDisplay = [header_1; num2cell(other_table)];
 disp(xForDisplay)
 
 % Save the table generated to a CSV file with a header
@@ -129,5 +153,20 @@ fclose(fid);
 
 %write data to end of file
 dlmwrite(sprintf('data/gen_table_%d_%d_%d_%d_%d_%d.csv', ds(1), ds(length(ds)),vi1s(1), vi1s(length(vi1s)), vi2s(1), vi2s(length(vi2s))),generated_table,'-append');
+
+% Save the other table as well
+cHeader = header_1;
+commaHeader = [cHeader;repmat({','},1,numel(cHeader))]; %insert commaas
+commaHeader = commaHeader(:)';
+textHeader = cell2mat(commaHeader); %cHeader in text with commas
+textHeader = textHeader(1:end-1);
+
+%write header to file
+fid = fopen('data/other_table.csv','w'); 
+fprintf(fid,'%s\n',textHeader);
+fclose(fid);
+
+%write data to end of file
+dlmwrite('data/other_table.csv',other_table,'-append');
 
 %------------- END OF CODE --------------
