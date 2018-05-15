@@ -108,15 +108,20 @@ for vi2_i = 1:length(vi2s)
                 x_y_t(idx,:) = [t, x, y];
                 idx = idx + 1;
             end
-                        
-%             plot(x_y_t(:,1), x_y_t(:,2),'ob')
             
+            if lane == 1
+                sub_mat = d*[zeros(size(x_y_t,1), 1), ones(size(x_y_t,1),1), zeros(size(x_y_t,1), 1)];
+                x_y_t = x_y_t - sub_mat;
+            end
+            
+%             plot(x_y_t(:,1), x_y_t(:,2),'ob')
+%             
             p_x = polyfit(x_y_t(:,1),x_y_t(:,2),2);
             p_y = polyfit(x_y_t(:,1),x_y_t(:,3),6);
 %             x1 = linspace(0,8);
 %             y1 = polyval(p_x,x1);
 %             plot(x1,y1)
-            
+%             
 %             pause
             
             idx = (2-lane)*length(ds)*length(vi1s)*length(vi2s) + (vi2_i - 1)*length(vi1s)*length(ds) + (vi1_i - 1)*length(ds) + d_i;
