@@ -35,6 +35,15 @@ def render_centered(screen, text, color):
 	size = crashed_font.size(text)
 	screen.blit(label, (500 - size[0]/2.0, 200 - size[1]/2.0))
 
+def detect_crash(x1, y1, x2, y2, w, h):
+	x = max(x1 - w/2, x2 - w/2)
+	y = max(y1 - h/2, y2 - h/2)
+	w_new = min(x1 + w/2, x2 + w/2) - x
+	h_new = min(y1 + h/2, y2 + h/2) - y
+	if w_new <= 0 or h_new <= 0:
+		return False
+	return True
+
 # Main code
 
 if len(sys.argv) > 3:
@@ -103,6 +112,7 @@ y = y_init
 
 update_action = False
 permanent = False
+force_crash = False
 
 while True:
 	for event in pygame.event.get():
@@ -142,7 +152,7 @@ while True:
 	y_label = myfont.render("y Position: 1.8m", 1, (0,0,0))
 	screen.blit(y_label, (475, 65))
 
-	if crashed == True:
+	if detect_crash(x,y,(x0 + t*v0),1.8,4.8,1.9) == True or force_crash == True:
 		render_centered(screen, "Crashed", (0,0,0))
 		permanent = True
 
@@ -157,28 +167,33 @@ while True:
 				y = (y_coeffs[0]*curr_t**6 + y_coeffs[1]*curr_t**5 + y_coeffs[2]*curr_t**4 + y_coeffs[3]*curr_t**3 + y_coeffs[4]*curr_t**2 + y_coeffs[5]*curr_t + y_coeffs[6])
 
 		if t >= t_end:
-			try:
-				comm = next(reader)
-			except:
-				print('Done')
-				break
+			if crashed == True:
+				permanent = True
+				force_crash = True
+			else:
+				try:
+					comm = next(reader)
+				except:
+					print('Done')
+					break
 
-			# Read the next command
-			t_init = t
-			x_init = x
-			y_init = y
-			t_end = int(comm['t_end'])
-			type_comm = int(comm['type'])
-			curr_v = int(comm['v'])
-			crashed = bool(int(comm['crashed']))
-			x_coeffs = [float(comm['x_t_1']), float(comm['x_t_2']), float(comm['x_t_3'])]
-			y_coeffs = [float(comm['y_t_1']), float(comm['y_t_2']), float(comm['y_t_3']), float(comm['y_t_4']), float(comm['y_t_5']), float(comm['y_t_6']), float(comm['y_t_7'])]
+				# Read the next command
+				t_init = t
+				x_init = x
+				y_init = y
+				t_end = int(comm['t_end'])
+				type_comm = int(comm['type'])
+				curr_v = int(comm['v'])
+				crashed = bool(int(comm['crashed']))
+				x_coeffs = [float(comm['x_t_1']), float(comm['x_t_2']), float(comm['x_t_3'])]
+				y_coeffs = [float(comm['y_t_1']), float(comm['y_t_2']), float(comm['y_t_3']), float(comm['y_t_4']), float(comm['y_t_5']), float(comm['y_t_6']), float(comm['y_t_7'])]
 
 		if x >= 500 or t >= 30:
 			update_action = False
 			permanent = True
 
 		t = t + deltaT
+
 	elif crashed == False and update_action == False and permanent == False:
 		if x == 0:
 			render_centered(screen, "Press SPACE to start", (0,0,0))

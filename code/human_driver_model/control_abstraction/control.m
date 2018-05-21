@@ -1,16 +1,18 @@
 function [x,y,vx,vy,ay,old_theta_near,old_theta_far,old_thw_car] = control( x, y, vx, vy, lane, old_theta_near, old_theta_far, old_thw_car, vehicles_pos )
 %CONTROL ACT-R control module
 
-global delta_t len width;
+global delta_t width;
 
 % Constants
-k_far = 15.0;%15;
+k_far = 15;%15;
 k_near = 3;%3;
 k_i = 5;%5;
 theta_nmax = 1.57;
-k_car = 0.03;%4;
-k_follow = 0.01;
+k_car = 3;%4;
+k_follow = 1;
 max_speed = 34; % approximately 120 km/h
+
+std_dev = 2;
 
 if lane == 1
     y_follow = width/4;
@@ -33,10 +35,10 @@ Delta_varphi = k_far*Delta_theta_far + k_near*Delta_theta_near + k_i*min(theta_n
 % car position and far point; the timeheadway corresponds to the
 % timeheadway to the closest vehicle (or the end of the road)
 
-min_timeheadway = (len + 1000 - x)/vx;
+min_timeheadway = 3 + normrnd(0,std_dev); % the maximum timeheadway
 for i = 1:size(vehicles_pos,1)
     if vehicles_pos(i,1) > x && abs(vehicles_pos(i,2) - y) < 0.2
-        th = (vehicles_pos(i,1) - x)/vx;
+        th = (vehicles_pos(i,1) - x + normrnd(0,std_dev))/vx;
         min_timeheadway = min(min_timeheadway, th);
     end
 end
@@ -44,7 +46,7 @@ time_headway = min_timeheadway;
 
 Delta_time_headway = time_headway - old_thw_car;
 
-Delta_psi = k_car*Delta_time_headway + k_follow*(time_headway - 4)*delta_t;
+Delta_psi = k_car*Delta_time_headway + k_follow*(time_headway - 1)*delta_t;
 
 ax = Delta_psi;
 if Delta_varphi ~= 0

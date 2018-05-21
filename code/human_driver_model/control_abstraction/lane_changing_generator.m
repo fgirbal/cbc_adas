@@ -9,6 +9,7 @@
 %------------- BEGIN CODE --------------
 
 clc
+warning('off','all')
 
 % Car size for collision purposes (both cars are assumed to be of equal dimensions)
 h = 1.9;
@@ -29,6 +30,7 @@ global width len delta_t
 width = 7.4;
 len = 500;
 delta_t = 0.5;
+n_iter = 100;
 
 % Code starts
 
@@ -38,8 +40,10 @@ t1 = cputime;
 
 other_table = zeros(2*length(ds)*length(vi1s)*length(vi2s), 14);
 
+textprogressbar('Progress: ')
+
 % Simulate all possible combinations
-for lane = 1:2
+for lane = 2:-1:1
 for vi2_i = 1:length(vi2s)
     for vi1_i = 1:length(vi1s)
         for d_i = 1:length(ds)
@@ -48,65 +52,79 @@ for vi2_i = 1:length(vi2s)
             vi1 = vi1s(vi1_i);
             vi2 = vi2s(vi2_i);
             
-            if lane == 1
-                x = d;
-            else
-                x = 0;
-            end
-            y = (-2*lane + 5)*width/4;
-            vx = vi1;
-            vy = 0;
-
-            if lane == 1
-                x1 = 0;
-            else
-                x1 = d;
-            end
-            y1 = width/4;
-            vx1 = vi2;
-            vy1 = 0;
-
-            old_theta_near = 0;
-            old_theta_far = 0;
-            old_thw_car = (x1 - x)/vx;
-
-            vehicles_pos = [x1,y1];
-
+            sum_x = 0;
+            sum_vx = 0;
+            sum_t = 0;
+            sum_col = 0;
+            
+            x_y_t = zeros(13*n_iter,3);
+            
 %             f = figure(1);
 %             hold on;
-%             axis([0,len,0,width])
-
-            col = false;
-            t = 0;
-            ay = 100;
             
-            x_y_t = zeros(16,3);
-            x_y_t(1,:) = [0,x,y];
-            idx = 2;
+            for j=1:n_iter
+                
+                if lane == 1
+                    x = d;
+                else
+                    x = 0;
+                end
+                y = (-2*lane + 5)*width/4;
+                vx = vi1;
+                vy = 0;
 
-            while x < len && ~(abs(ay) < 0.05 && abs(y - (2*lane-1)*width/4) < 0.05)
-                col = check_collision([x,y], vehicles_pos, h, w) || col;
-                
-                [x,y,vx,vy,ay,old_theta_near,old_theta_far,old_thw_car] = control(x,y,vx,vy,lane,old_theta_near,old_theta_far,old_thw_car,vehicles_pos);
+                if lane == 1
+                    x1 = 0;
+                else
+                    x1 = d;
+                end
+                y1 = width/4;
+                vx1 = vi2;
+                vy1 = 0;
 
-                vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
-                vehicles_pos(1,2) = vehicles_pos(1,2) + vy1*delta_t;
+                old_theta_near = 0;
+                old_theta_far = 0;
+                old_thw_car = (x1 - x)/vx;
 
-                t = t + delta_t;
+                vehicles_pos = [x1,y1];
+
+                col = false;
+                t = 0;
+                ay = 100;
+
+                x_y_t(13*(j - 1) + 1,:) = [0,x,y];
+                idx_sub = 2;
+
+                while x < len && ~(abs(y - (2*lane-1)*width/4) < 0.02)
+                    col = check_collision([x,y], vehicles_pos, h, w) || col;
+
+                    [x,y,vx,vy,ay,old_theta_near,old_theta_far,old_thw_car] = control(x,y,vx,vy,lane,old_theta_near,old_theta_far,old_thw_car,vehicles_pos);
+
+                    vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
+                    vehicles_pos(1,2) = vehicles_pos(1,2) + vy1*delta_t;
+
+                    t = t + delta_t;
+
+                    x_y_t(13*(j - 1) + idx_sub,:) = [t, x, y];
+                    idx_sub = idx_sub + 1;
+
+%                     plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
+                end
+
+                while floor(t) ~= t
+                    x = x + vx*delta_t;
+                    vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
+                    t = t + delta_t;
+
+                    x_y_t(13*(j - 1) + idx_sub,:) = [t, x, y];
+                    idx_sub = idx_sub + 1;
+%                     plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
+                end
                 
-                x_y_t(idx,:) = [t, x, y];
-                idx = idx + 1;
-                
-%                 plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
-            end
-            
-            while floor(t) ~= t
-                x = x + vx*delta_t;
-                vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
-                t = t + delta_t;
-                
-                x_y_t(idx,:) = [t, x, y];
-                idx = idx + 1;
+%                 sum_x = sum_x + x;
+                sum_vx = sum_vx + vx;
+                sum_t = sum_t + t;
+                sum_col = sum_col + col;
             end
             
             if lane == 1
@@ -114,35 +132,46 @@ for vi2_i = 1:length(vi2s)
                 x_y_t = x_y_t - sub_mat;
             end
             
-%             plot(x_y_t(:,1), x_y_t(:,2),'ob')
-%             
             p_x = polyfit(x_y_t(:,1),x_y_t(:,2),2);
             p_y = polyfit(x_y_t(:,1),x_y_t(:,3),6);
-%             x1 = linspace(0,8);
-%             y1 = polyval(p_x,x1);
-%             plot(x1,y1)
-%             
-%             pause
             
+%             plot(x_y_t(:,2), x_y_t(:,3),'ob')
+%             p_xy = polyfit(x_y_t(:,2),x_y_t(:,3),5);
+%             x1 = linspace(0,max(x_y_t(:,2)));
+%             y1 = polyval(p_xy,x1);
+%             plot(x1,y1)
+%             axis([0,max(x1),0,max(y1)])
+            
+%             est_x1 = round(sum_x/n_iter)
+            est_vx = round(sum_vx/n_iter);
+            est_t = round(sum_t/n_iter);
+            est_x = round(polyval(p_x,est_t));
+            est_col = sum_col/n_iter;
+                                    
             idx = (2-lane)*length(ds)*length(vi1s)*length(vi2s) + (vi2_i - 1)*length(vi1s)*length(ds) + (vi1_i - 1)*length(ds) + d_i;
-         
-            generated_table(idx,:) = [3-lane,d,vi1,vi2,col,round(x - (d)*(2-lane)),round(vx),round(vehicles_pos(1,1)-(d)*(lane-1)),t];
+            
+%             generated_table(idx,:) = [3-lane,d,vi1,vi2,col,round(x - (d)*(2-lane)),round(vx),round(vehicles_pos(1,1)-(d)*(lane-1)),t];
+            generated_table(idx,:) = [3-lane,d,vi1,vi2,est_col,round(est_x - (d)*(2-lane)),est_vx,round(vi2*est_t-(d)*(lane-1)),est_t];
             other_table(idx,:) = [3-lane,d,vi1,vi2,p_x,p_y];
+            
+            textprogressbar(100*idx/(2*length(ds)*length(vi1s)*length(vi2s)))
         end
     end
 end
 end
+
+textprogressbar('Done')
 
 display(sprintf('Generated in %.3f seconds', cputime - t1))
 
 % Display the table
 header = {'o_lane','d','vi1','vi2','Acc?','delta_x1','vf1','delta_x2','delta_t'};
 xForDisplay = [header; num2cell(generated_table)];
-disp(xForDisplay)
+% disp(xForDisplay)
 
 header_1 = {'o_lane','d','vi1','vi2','p_x(1)','p_x(2)','p_x(3)','p_y(1)','p_y(2)','p_y(3)','p_y(4)','p_y(5)','p_y(6)','p_y(7)'};
 xForDisplay = [header_1; num2cell(other_table)];
-disp(xForDisplay)
+% disp(xForDisplay)
 
 % Save the table generated to a CSV file with a header
 cHeader = header;
