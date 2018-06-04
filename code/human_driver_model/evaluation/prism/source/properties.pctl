@@ -1,0 +1,8 @@
+P=? [ F crashed ]
+P=? [ F crashed | (x=length) | (t=max_time)]
+P=? [ F crashed | (x=length & t < 16) ]
+P=? [ F crashed | (x=length & t < 17) ]
+P=? [ F crashed | (x=length & t < 18) ]
+P=? [ F crashed | (x=length & t < 20) ]
+P=? [ F crashed | (x=length & t < 23) ]
+P=? [ F crashed | (x=length & t < 26) ]
