@@ -18,6 +18,7 @@ parser.add_argument('[v]', type=int, default=29, help='Initial velocity of the v
 parser.add_argument('[v1]', type=int, default=30, help='Initial velocity of the other vehicle.')
 parser.add_argument('[x1_0]', type=int, default=15, help='Initial position of the other vehicle.')
 parser.add_argument('--clean [VALUE]', type=str, help='If [VALUE] = False, then generated files (model and individual results) will be maintained (default = True).')
+parser.add_argument('--path [PATH]', type=str, help='Generated file will be saved in PATH.')
 args=parser.parse_args()
 
 types = ['aggressive','average','cautious']
@@ -27,13 +28,17 @@ properties_file = sys.argv[1]
 v = sys.argv[2]
 v1 = sys.argv[3]
 x1_0 = sys.argv[4]
+path = "gen_files"
 
 progress = True
 
-if len(sys.argv) > 5 and sys.argv[6] == "False":
+if len(sys.argv) > 5 and sys.argv[5] == "--clean" and sys.argv[6] == "False":
 	cleaning_up = False
 else:
 	cleaning_up = True
+
+if len(sys.argv) > 5 and sys.argv[5] == "--path":
+	path = sys.argv[6]
 
 if progress == True:
 	toolbar_width = 9
@@ -80,7 +85,14 @@ for driver_type in range(1,4):
 		prop = first_line[24:first_line.find('...')-1]
 		val = second_line[29:second_line.find('\\n')]
 
-		probability = float(val)
+		try:
+			probability = float(val)
+		except ValueError:
+			print('----------------------------------\n\n')
+			print(output)
+			os.system('rm source/%s.pm'%filename)
+			exit()
+
 		if not driver_type in res.keys():
 			res[driver_type] = [[prop, probability]]
 		else:
@@ -101,7 +113,7 @@ for driver_type in range(1,4):
 if progress == True:
 	sys.stdout.write("\n")
 
-with open('gen_files/r_%s_%s_%s.csv'%(v,v1,x1_0), 'w') as csvfile:
+with open('%s/r_%s_%s_%s.csv'%(path,v,v1,x1_0), 'w') as csvfile:
     fieldnames = ['type_driver', 'property', 'probability']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 

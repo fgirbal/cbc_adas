@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 # Parameters
 N = 100
-generate_samples = True
+generate_samples = False
 
 if generate_samples == True:
 	for i in range(1,N+1):
