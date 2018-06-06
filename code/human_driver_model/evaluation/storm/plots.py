@@ -138,7 +138,7 @@ def safety_plots(p, v1_in, x1_0_in):
 
 
 def safety_3D_plots(p):
-	generate_combination_samples(np.linspace(20, 30, 11), np.linspace(15, 25, 11), [50],p)
+	# generate_combination_samples(np.linspace(20, 30, 11), np.linspace(15, 25, 11), [50],p)
 
 	x = [];
 	y = [];
@@ -155,15 +155,13 @@ def safety_3D_plots(p):
 				if row["property"] == 'P=? [F crashed]':
 					z[int(row["type_driver"])-1].append(float(row["probability"]))
 
-	labels = ["Aggressive", "Average", "Cautious"]
-
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
 
-	# for i in range(0,3):
-	line = ax.plot_trisurf(x, y, z[0], label="Aggressive", linewidth=0.2, antialiased=True, cmap=cm.coolwarm)
+	line = ax.plot_trisurf(x, y, z[0], label="Aggressive", linewidth=0.2, antialiased=True, cmap=cm.viridis)
+	line = ax.plot_trisurf(x, y, z[1], label="Average", linewidth=0.2, antialiased=True, cmap=cm.plasma)
+	line = ax.plot_trisurf(x, y, z[2], label="Cautious", linewidth=0.2, antialiased=True, cmap=cm.inferno)
 	
-	# plt.legend(loc='upper left')
 	ax.xaxis._axinfo['label']['space_factor'] = 3.0
 	ax.yaxis._axinfo['label']['space_factor'] = 3.0
 	ax.zaxis._axinfo['label']['space_factor'] = 3.0
@@ -175,7 +173,79 @@ def safety_3D_plots(p):
 	ax.set_zticks(np.arange(np.min(z)+0.1, np.max(z), 0.1))
 	plt.show()
 
-# safety_plots('plot1', 20, 50)
-safety_3D_plots('plot3')
+def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
+	x = [[],[],[]];
+	y = [[],[],[]];
 
+	with open("%s/r_%s_%s_%s.csv"%(p,v_in,v1_in,x1_0_in)) as csvfile:
+		reader = csv.DictReader(csvfile)
+		for row in reader:
+			if 'P=? [F ((x = 500) & (t <' in row["property"]:
+				x_val = int(row["property"][25:27])
+				x[int(row["type_driver"])-1].append(x_val)
+				y[int(row["type_driver"])-1].append(float(row["probability"]))
+
+	labels = ["Aggressive", "Average", "Cautious"]
+
+	for i in range(0,3):
+		new_x, new_y = zip(*sorted(zip(x[i], y[i])))
+
+		line = plt.plot(new_x, new_y, label=labels[i], marker="s")
+	
+	plt.legend(loc='upper left')
+
+	plt.ylabel('P$_=?$ [F ((x = 500) \& (t $<$ T)) $||$ F (x = 500)]')
+	plt.xlabel('T [s]')
+	plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
+	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
+	plt.show()
+
+def safety_box_plot():
+	props_dict = read_files_to_dict('gen_files')
+
+	vals = [[],[],[]]
+	vals[0] = props_dict[0]['P=? [F crashed]']
+	vals[1] = props_dict[1]['P=? [F crashed]']
+	vals[2] = props_dict[2]['P=? [F crashed]']
+
+	plt.boxplot(vals, labels=["Aggressive", "Average", "Cautious"], whis=2.5)
+	plt.ylabel('P$_{=?}$ [F crashed]')
+	plt.title('Safety property')
+	plt.show()
+
+def liveness_box_plot(T):
+	props_dict = [{},{},{}]
+
+	os.chdir("gen_files/")
+	for file in glob.glob("*.csv"):
+		v = int(str(file).split('_')[1])
+		if np.ceil(500/v) < T:
+			continue
+
+		with open(file) as csvfile:
+			reader = csv.DictReader(csvfile)
+			for row in reader:
+				if row["probability"] != "inf" and row["property"] in props_dict[int(row["type_driver"])-1].keys():
+					props_dict[int(row["type_driver"])-1][row["property"]].append(float(row["probability"]))
+				elif row["probability"] != "inf":
+					props_dict[int(row["type_driver"])-1][row["property"]] = [float(row["probability"])]
+
+	ts = [[],[],[]]
+	time_val = T
+	ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+
+	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
+	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d)) $||$ F (x = 500)]'%time_val)
+	plt.title('Liveness property')
+	plt.show()
+
+# safety_plots('plot1', 20, 50)
+# safety_3D_plots('plot3')
+# liveness_2D_plot('plot4', 28, 26, 15)
+# liveness_2D_plot('plot4', 18, 15, 68)
+# safety_box_plot()
+# box_plots(18)
+liveness_box_plot(22)
 
