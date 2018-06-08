@@ -59,7 +59,7 @@ f.write("global actrState : [1..2] init 1; // active module: 1 = control (both c
 f.write("global lC : bool init false; // lane changing occuring? \n")
 f.write("global x : [0..length] init 0;\n")
 f.write("global v : [15..34] init %s;\n"%v)
-f.write("global a : [-1..1] init 0;\n")
+f.write("global a : [-2..3] init 0;\n")
 f.write("global lane : [1..2] init 1;\n\n")
 f.write("formula x1 = x1_0 + v1*t;\n")
 f.write("formula dist = x1>x?(x1 - x):(x - x1);\n")

@@ -4,7 +4,7 @@
 % Author: Francisco Girbal Eiras, MSc Computer Science
 % University of Oxford, Department of Computer Science
 % Email: francisco.eiras@cs.ox.ac.uk
-% 24-Apr-2018; Last revision: 27-Apr-2018
+% 24-Apr-2018; Last revision: 6-Jun-2018
 
 %------------- BEGIN CODE --------------
 
@@ -57,11 +57,11 @@ textHeader = cell2mat(commaHeader); %cHeader in text with commas
 textHeader = textHeader(1:end-1);
 
 %write header to file
-fid = fopen('data/acceleration_table.csv','w'); 
+fid = fopen('data/mod_acceleration_table.csv','w'); 
 fprintf(fid,'%s\n',textHeader);
 fclose(fid);
 
 %write data to end of file
-dlmwrite('data/acceleration_table.csv',generated_table,'-append');
+dlmwrite('data/mod_acceleration_table.csv',generated_table,'-append');
 
 %------------- END OF CODE --------------

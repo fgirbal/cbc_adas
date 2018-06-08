@@ -30,7 +30,7 @@ global width len delta_t
 width = 7.4;
 len = 500;
 delta_t = 0.5;
-n_iter = 100;
+n_iter = 250;
 
 % Code starts
 
@@ -97,7 +97,7 @@ for vi2_i = 1:length(vi2s)
 
                 while x < len && ~(abs(y - (2*lane-1)*width/4) < 0.02)
                     col = check_collision([x,y], vehicles_pos, h, w) || col;
-
+                    
                     [x,y,vx,vy,ay,old_theta_near,old_theta_far,old_thw_car] = control(x,y,vx,vy,lane,old_theta_near,old_theta_far,old_thw_car,vehicles_pos);
 
                     vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
@@ -143,7 +143,7 @@ for vi2_i = 1:length(vi2s)
 %             axis([0,max(x1),0,max(y1)])
             
 %             est_x1 = round(sum_x/n_iter)
-            est_vx = round(sum_vx/n_iter);
+            est_vx = max(round(sum_vx/n_iter), vi1);
             est_t = round(sum_t/n_iter);
             est_x = round(polyval(p_x,est_t));
             est_col = sum_col/n_iter;
@@ -166,11 +166,11 @@ display(sprintf('Generated in %.3f seconds', cputime - t1))
 
 % Display the table
 header = {'o_lane','d','vi1','vi2','Acc?','delta_x1','vf1','delta_x2','delta_t'};
-xForDisplay = [header; num2cell(generated_table)];
+% xForDisplay = [header; num2cell(generated_table)];
 % disp(xForDisplay)
 
 header_1 = {'o_lane','d','vi1','vi2','p_x(1)','p_x(2)','p_x(3)','p_y(1)','p_y(2)','p_y(3)','p_y(4)','p_y(5)','p_y(6)','p_y(7)'};
-xForDisplay = [header_1; num2cell(other_table)];
+% xForDisplay = [header_1; num2cell(other_table)];
 % disp(xForDisplay)
 
 % Save the table generated to a CSV file with a header

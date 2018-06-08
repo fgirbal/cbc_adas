@@ -1,0 +1,13 @@
+Pmin=? [F crashed];
+Pmax=? [F (x=length) & (t < 15)];
+Pmax=? [F (x=length) & (t < 16)];
+Pmax=? [F (x=length) & (t < 17)];
+Pmax=? [F (x=length) & (t < 18)];
+Pmax=? [F (x=length) & (t < 19)];
+Pmax=? [F (x=length) & (t < 20)];
+Pmax=? [F (x=length) & (t < 21)];
+Pmax=? [F (x=length) & (t < 22)];
+Pmax=? [F (x=length) & (t < 23)];
+Pmax=? [F (x=length) & (t < 24)];
+Pmax=? [F (x=length) & (t < 25)];
+Pmax=? [F (x=length) & (t < 26)]
