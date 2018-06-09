@@ -128,7 +128,7 @@ f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < m
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) < %s & v + a <= 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (crashed' = true) & (actrState' = 2);\n"%crash_dist)	
 
 f.write(" 	// The vehicle is in front of the other driver (positiveDist = true, x > x1)\n")
-f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 1) & (actrState' = 2);\n")
+f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 0) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a >= 34 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = true & v + a <= 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (actrState' = 2);\n\n")
 
@@ -139,7 +139,7 @@ f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < m
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a >= 34 & positiveDist = true -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (a' = 0) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a <= 15 & positiveDist = true -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (a' = 0) & (actrState' = 2);\n\n")
 
-f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a < 34 & v + a > 15 & positiveDist = false -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 1) & (actrState' = 2);\n")
+f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a < 34 & v + a > 15 & positiveDist = false -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = 0) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a >= 34 & positiveDist = false -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (a' = 0) & (actrState' = 2);\n")
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 2 & x <= length - v & t < max_time & v + a <= 15 & positiveDist = false -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (a' = 0) & (actrState' = 2);\n\n")
 

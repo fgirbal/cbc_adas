@@ -28,14 +28,28 @@ for d_i = 1:length(ds)
 
         delta_crash = d/v;
 
-        if delta_crash < 0.3
+%         if delta_crash < 0.3
+%             a = -1;
+%         elseif delta_crash <= 1
+%             a = 0;
+%         else
+%             a = 1;
+%         end
+
+        if delta_crash <= 0.2
+            a = -2;
+        elseif delta_crash <= 0.4
             a = -1;
         elseif delta_crash <= 1
             a = 0;
-        else
+        elseif delta_crash <= 1.75
             a = 1;
+        elseif delta_crash <= 2.5
+            a = 2;
+        else
+            a = 3;
         end
-
+        
         idx = (d_i - 1)*length(vs) + v_i;
 
         generated_table(idx,:) = [d,v,round(delta_crash,2),a];

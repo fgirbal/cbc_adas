@@ -1,0 +1,15 @@
+P=? [ F crashed ];
+P=? [ F crashed | (x=length) | (t=max_time)];
+P=? [ F (x=length & t < 16) ];
+P=? [ F (x=length & t < 17) ];
+P=? [ F (x=length & t < 18) ];
+P=? [ F (x=length & t < 19) ];
+P=? [ F (x=length & t < 20) ];
+P=? [ F (x=length & t < 21) ];
+P=? [ F (x=length & t < 22) ];
+P=? [ F (x=length & t < 23) ];
+P=? [ F (x=length & t < 24) ];
+P=? [ F (x=length & t < 25) ];
+P=? [ F (x=length & t < 26) ];
+P=? [ F (x=length & t < 27) ];
+P=? [ F (x=length & t < 28) ]

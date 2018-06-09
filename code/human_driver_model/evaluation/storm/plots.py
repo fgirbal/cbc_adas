@@ -4,13 +4,14 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 5-Jun-2018; Last revision: 6-Jun-2018
+# 5-Jun-2018; Last revision: 9-Jun-2018
 
 import sys, os, random, glob, csv, subprocess, itertools
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
+import matplotlib as mpl
 
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
@@ -139,7 +140,7 @@ def safety_plots(p, v1_in, x1_0_in):
 
 
 def safety_3D_plots(p):
-	generate_combination_samples(np.linspace(20, 30, 11), np.linspace(15, 25, 11), [50],p)
+	# generate_combination_samples(np.linspace(20, 30, 11), np.linspace(15, 25, 11), [50],p)
 
 	x = [];
 	y = [];
@@ -171,12 +172,17 @@ def safety_3D_plots(p):
 	ax.set_ylabel('v$_1$ [m/s]')
 	ax.set_zlabel('P$_{=?}$ [F crashed]')
 
-	ax.set_zticks(np.arange(np.min(z)+0.1, np.max(z), 0.1))
+	fake2Dline1 = mpl.lines.Line2D([0],[0], linestyle="none", c='b', marker = 'o')
+	fake2Dline2 = mpl.lines.Line2D([0],[0], linestyle="none", c='b', marker = 'o')
+	fake2Dline3 = mpl.lines.Line2D([0],[0], linestyle="none", c='b', marker = 'o')
+	ax.legend([fake2Dline1, fake2Dline2, fake2Dline3], ['Aggressive', 'Average', 'Cautious'], numpoints = 1)
+
+	# ax.set_zticks(np.arange(np.min(z)+0.1, np.max(z), 0.1))
 	plt.show()
 
 
 def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
-	generate_samples(1, v=v_in, v1=v1_in, x1_0=x1_0_in, path=p)
+	# generate_samples(1, v=v_in, v1=v1_in, x1_0=x1_0_in, path=p)
 
 	x = [[],[],[]];
 	y = [[],[],[]];
@@ -198,15 +204,15 @@ def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
 	
 	plt.legend(loc='upper left')
 
-	plt.ylabel('P$_=?$ [F ((x = 500) \& (t $<$ T)) $||$ F (x = 500)]')
+	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ T)) $||$ F (x = 500)]')
 	plt.xlabel('T [s]')
 	plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
 	plt.show()
 
 
-def safety_box_plot():
-	props_dict = read_files_to_dict('box_plots')
+def safety_box_plot(p):
+	props_dict = read_files_to_dict(p)
 
 	vals = [[],[],[]]
 	vals[0] = props_dict[0]['P=? [F crashed]']
@@ -219,39 +225,10 @@ def safety_box_plot():
 	plt.show()
 
 
-def liveness_box_plot(T, decision_dict):
-	props_dict = [{},{},{}]
-
-	# os.chdir("box_plots/")
-	for file in glob.glob("*.csv"):
-		v = int(str(file).split('_')[1])
-		if not (T >= decision_dict[v] and T <= decision_dict[v] + 3):
-			continue
-
-		with open(file) as csvfile:
-			reader = csv.DictReader(csvfile)
-			for row in reader:
-				if row["probability"] != "inf" and 'P=? [F ((x = 500) & (t <' in row["property"] and row["property"] in props_dict[int(row["type_driver"])-1].keys():
-					props_dict[int(row["type_driver"])-1][row["property"]].append(float(row["probability"]))
-				elif row["probability"] != "inf" and 'P=? [F ((x = 500) & (t <' in row["property"]:
-					props_dict[int(row["type_driver"])-1][row["property"]] = [float(row["probability"])]
-
-	ts = [[],[],[]]
-	time_val = T
-	ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
-	ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
-	ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
-
-	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
-	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d)) $||$ F (x = 500)]'%time_val)
-	plt.title('Liveness property')
-	plt.show()
-
-
-def analysis():
+def analysis(p):
 	data = {}
 
-	os.chdir("box_plots/")
+	os.chdir("%s/"%p)
 	for file in glob.glob("*.csv"):
 		v = int(str(file).split('_')[1])
 
@@ -277,27 +254,53 @@ def analysis():
 		y.append(np.floor(np.mean(data[k])))
 		ret_d[k] = np.floor(np.mean(data[k]))
 
-	# new_x, new_y = zip(*sorted(zip(x, y)))
-
-	# line = plt.plot(new_x, new_y, marker="*")
-	
-	# # plt.legend(loc='upper left')
-
-	# # plt.ylabel('P$_=?$ [F ((x = 500) \& (t $<$ T)) $||$ F (x = 500)]')
-	# # plt.xlabel('T [s]')
-	# # plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
-	# plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
-	# plt.show()
 	return ret_d
 
-# safety_plots('plot1', 20, 50)
+
+def liveness_box_plot(T, p):
+	decision_dict = analysis(p)
+
+	props_dict = [{},{},{}]
+
+	for file in glob.glob("*.csv"):
+		v = int(str(file).split('_')[1])
+		if not (T >= decision_dict[v] and T <= decision_dict[v] + 3):
+			continue
+
+		with open(file) as csvfile:
+			reader = csv.DictReader(csvfile)
+			for row in reader:
+				if row["probability"] != "inf" and 'P=? [F ((x = 500) & (t <' in row["property"] and row["property"] in props_dict[int(row["type_driver"])-1].keys():
+					props_dict[int(row["type_driver"])-1][row["property"]].append(float(row["probability"]))
+				elif row["probability"] != "inf" and 'P=? [F ((x = 500) & (t <' in row["property"]:
+					props_dict[int(row["type_driver"])-1][row["property"]] = [float(row["probability"])]
+
+	ts = [[],[],[]]
+	time_val = T
+	# Conditional properties
+	ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+
+	# Unconditional properties
+	# ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	# ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	# ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+
+	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
+	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d)) $||$ F (x = 500)]'%time_val)
+	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d))]'%time_val)
+	plt.title('Liveness property')
+	plt.show()
+
+
+# safety_plots('plot1', 20, 35)
 # safety_plots('plot2', 22, 40)
 # safety_3D_plots('plot3')
 # liveness_2D_plot('plot4', 21, 19, 70)
 # liveness_2D_plot('plot4', 26, 22, 45)
 # generate_samples(250, path="box_plots")
-# safety_box_plot()
-decision_dict = analysis()
-# print(decision_dict)
-liveness_box_plot(20, decision_dict)
+# safety_box_plot("box_plots")
+# liveness_box_plot(21, "box_plots")
+liveness_box_plot(23, "box_plots")
 
