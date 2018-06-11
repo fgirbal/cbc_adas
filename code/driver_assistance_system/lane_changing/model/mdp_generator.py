@@ -1,36 +1,32 @@
-# MODEL_GENERATOR - Tranform the generated tables using
-# generator.m and decision_making.m into a PRISM file 
-# with the modules.
+# MDP_GENERATOR - Transform the tables into the MDP
+# in order to perform multi-objective synthesis.
 
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 25-Apr-2018; Last revision: 9-Jun-2018
+# 6-Jun-2018; Last revision: 9-Jun-2018
 
 import sys, csv, argparse, datetime
 
 parser=argparse.ArgumentParser(
-    description='''Tranform the generated tables using generator.m and decision_making.m into a PRISM file with the two modules.''')
+    description='''Transform the tables into the MDP in order to perform multi-objective synthesis.''')
 parser.add_argument('lane_change_table', type=str, help='Table for the lane change part of the control module.')
 parser.add_argument('acc_table', type=str, help='Table for the linear accelaration part of the control module.')
-parser.add_argument('dm_table', type=str, help='Table for the decision making module.')
-parser.add_argument('[driver_type]', type=int, default=2, help='1 = aggressive, 2 = average, 3 = cautious')
 parser.add_argument('[v]', type=int, default=29, help='Initial velocity of the vehicle.')
 parser.add_argument('[v1]', type=int, default=30, help='Initial velocity of the other vehicle.')
 parser.add_argument('[x1_0]', type=int, default=15, help='Initial position of the other vehicle.')
 parser.add_argument('--filename [NAME]', type=str, help='Output name for the file generated.')
 args=parser.parse_args()
 
-if len(sys.argv) == 8:
-	f = open("two_component_model.pm", "w")
+if len(sys.argv) == 6:
+	f = open("mdp_model.pm", "w")
 else:
-	f = open("%s.pm"%sys.argv[9], "w")
+	f = open("%s.pm"%sys.argv[8], "w")
 
-driver_type = sys.argv[4]
-v = sys.argv[5]
-v1 = sys.argv[6]
-x1_0 = sys.argv[7]
-if not (int(v) >= 15 and int(v) <= 34) or not (int(v1) >= 15 and int(v1) <= 34) or not (int(x1_0) >= 1 and int(x1_0) <= 500) or int(driver_type) not in [1,2,3]:
+v = sys.argv[3]
+v1 = sys.argv[4]
+x1_0 = sys.argv[5]
+if not (int(v) >= 15 and int(v) <= 34) or not (int(v1) >= 15 and int(v1) <= 34) or not (int(x1_0) >= 1 and int(x1_0) <= 500):
 	raise ValueError("Input out of range.")
 
 max_control_dist = "43"
@@ -39,14 +35,11 @@ crash_dist = "6"
 
 now = datetime.datetime.now()
 
-print('---------------------------------------\nNon-deterministic control version of model_generator.py.\n---------------------------------------')
-
 # Write the beginning of the file
-f.write("//Model automatically built using model_generator.py for v1 = %s and driver_type = %s (to alter these values, run the script again).\n"%(v1,driver_type))
+f.write("//MDP automatically built using mdp_generator.py for v1 = %s (to alter this value, run the script again).\n"%v1)
 f.write("//Generated on %s.\n\n"%(now.strftime("%d-%m-%Y at %H:%M")))
-f.write("dtmc\n\n")
+f.write("mdp\n\n")
 f.write("const int length = 500; // road length\n")
-f.write("const int driver_type = 1; // 1 = aggressive, 2 = average, 3 = cautious drivers - do not alter this manually!\n")
 f.write("const int max_time = 30; // maximum time of experiment\n\n")
 f.write("// Other vehicle\n")
 f.write("const int v1 = %s; // do not alter this manually!\n"%v1)
@@ -75,25 +68,11 @@ f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = false -> 1:(ac
 
 f.write("	// If we are in lane 1, and no vehicle is in front, don't change lanes\n")
 f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = true -> 1:(actrState' = 1);\n\n")
+f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false -> 1:(lC' = true) & (actrState' = 1);\n")
+f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false -> 1:(lC' = false) & (actrState' = 1);\n\n")
 
-with open(sys.argv[3]) as csvfile:
-	reader = csv.DictReader(csvfile)
-	for row in reader:
-		# should we change from lane 1 to lane 2? it's based on delta_crash!
-		if row["type"] == driver_type and row["lane"] == "1" and row["d"] != max_dm_dist:
-			line = "	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false & dist = %s & v = %s -> %s:(actrState' = 1) & (lC' = true) + %s:(actrState' = 1) & (lC' = false);\n" % (row["d"],row["v"],row["P_lC"],row["P_nlC"])
-			f.write(line)
-		elif row["type"] == driver_type and row["lane"] == "1" and row["d"] == max_dm_dist:
-			line = "	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false & dist >= %s & v = %s -> %s:(actrState' = 1) & (lC' = true) + %s:(actrState' = 1) & (lC' = false);\n" % (row["d"],row["v"],row["P_lC"],row["P_nlC"])
-			f.write(line)
-
-		# should we go back to lane 1 from lane 2? it's based on the distance we are at!
-		if row["type"] == driver_type and row["lane"] == "2" and row["d"] != max_dm_dist:
-			line = "	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true & dist = %s -> %s:(actrState' = 1) & (lC' = true) + %s:(actrState' = 1) & (lC' = false);\n" % (row["d"],row["P_lC"],row["P_nlC"])
-			f.write(line)
-		elif row["type"] == driver_type and row["lane"] == "2" and row["d"] == max_dm_dist:
-			line = "	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true & dist >= %s -> %s:(actrState' = 1) & (lC' = true) + %s:(actrState' = 1) & (lC' = false);\n" % (row["d"],row["P_lC"],row["P_nlC"])
-			f.write(line)
+f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true -> 1:(lC' = true) & (actrState' = 1);\n")
+f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true -> 1:(lC' = false) & (actrState' = 1);\n\n")
 
 f.write("endmodule\n\n")
 

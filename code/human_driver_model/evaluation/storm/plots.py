@@ -278,18 +278,18 @@ def liveness_box_plot(T, p):
 	ts = [[],[],[]]
 	time_val = T
 	# Conditional properties
-	ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
-	ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
-	ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	# ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	# ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	# ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
 
 	# Unconditional properties
-	# ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d))]'%time_val]
-	# ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d))]'%time_val]
-	# ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d))]'%time_val]
 
 	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
-	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d)) $||$ F (x = 500)]'%time_val)
-	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d))]'%time_val)
+	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d)) $||$ F (x = 500)]'%time_val)
+	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d))]'%time_val)
 	plt.title('Liveness property')
 	plt.show()
 
@@ -301,6 +301,6 @@ def liveness_box_plot(T, p):
 # liveness_2D_plot('plot4', 26, 22, 45)
 # generate_samples(250, path="box_plots")
 # safety_box_plot("box_plots")
-# liveness_box_plot(21, "box_plots")
-liveness_box_plot(23, "box_plots")
+liveness_box_plot(20, "uncond_plots")
+# liveness_box_plot(23, "box_plots")
 
