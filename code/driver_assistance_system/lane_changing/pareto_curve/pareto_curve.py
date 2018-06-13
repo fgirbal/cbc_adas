@@ -13,8 +13,6 @@ import numpy as np
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 from matplotlib import cm
-from datetime import datetime
-startTime = datetime.now()
 
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
@@ -48,7 +46,7 @@ if len(sys.argv) > 4 and sys.argv[4] == "--path":
 def obtain_curve():
 	# Construct the file
 	print('Generating the model...')
-	os.system('python3 model/mdp_generator.py model/model_tables/control_table.csv model/model_tables/acc_table.csv %s %s %s > /dev/null'%(v,v1,x1_0))
+	os.system('python3 ../model/mdp_generator.py ../model/model_tables/control_table.csv ../model/model_tables/acc_table.csv %s %s %s > /dev/null'%(v,v1,x1_0))
 
 	# ------------- Verification -------------
 	print('Building the model and performing verification...')
@@ -94,11 +92,18 @@ def obtain_curve():
 
 	proc = subprocess.Popen('storm --prism mdp_model.pm --prop "%s" --multiobjective:precision 0.01 --multiobjective:exportplot results/r_%s_%s_%s'%(multi_obj_query,v,v1,x1_0), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
 	output = str(proc.stdout.read())
-	return Tmin
 
-def draw_curve(Tmin):
+	f = open("results/r_%s_%s_%s/time.txt"%(v,v1,x1_0), "w")
+	f.write(str(Tmin))
+	f.close()
+
+def draw_curve():
 	x = []
 	y = []
+
+	f = open("results/r_%s_%s_%s/time.txt"%(v,v1,x1_0), "r")
+	Tmin = int(f.readline())
+	f.close()
 
 	with open("results/r_%s_%s_%s/paretopoints.csv"%(v,v1,x1_0)) as csvfile:
 		reader = csv.DictReader(csvfile)
@@ -134,11 +139,11 @@ def draw_curve(Tmin):
 	plt.show()
 
 
-Tmin = obtain_curve()
-draw_curve(Tmin)
-print('Done.')
-# print(datetime.now() - startTime)
+if not os.path.exists("results/r_%s_%s_%s/paretopoints.csv"%(v,v1,x1_0)) or not os.path.exists("results/r_%s_%s_%s/time.txt"%(v,v1,x1_0)):
+	obtain_curve()
 
+draw_curve()
+print('Done.')
 
 
 
