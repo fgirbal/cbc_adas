@@ -12,18 +12,22 @@ import random
 
 parser=argparse.ArgumentParser(
     description='''Given a PRISM model, obtain a sample trace and modify it.''')
-parser.add_argument('[v]', type=int, default=29, help='Initial velocity of the vehicle.')
-parser.add_argument('[v1]', type=int, default=30, help='Initial velocity of the other vehicle.')
-parser.add_argument('[x1_0]', type=int, default=15, help='Initial position of the other vehicle.')
+parser.add_argument('v', type=int, default=29, help='Initial velocity of the vehicle.')
+parser.add_argument('v1', type=int, default=30, help='Initial velocity of the other vehicle.')
+parser.add_argument('x1_0', type=int, default=15, help='Initial position of the other vehicle.')
+parser.add_argument('-n', '--name', type=str, default="gen_trace.csv", help='Name of the generated .csv file (path included).')
+parser.add_argument('-p', '--path', type=str, help='Force a read/save of generated data to a certain path.')
 args=parser.parse_args()
 
 cleaning_up = True
 
-v_in = int(sys.argv[1])
-v1_in = int(sys.argv[2])
-x1_0_in = int(sys.argv[3])
+v_in = args.v
+v1_in = args.v1
+x1_0_in = args.x1_0
 
-def build_and_synthesis(v, v1, x1_0):
+def build_and_synthesis(v, v1, x1_0, *args, **kwargs):
+	path = kwargs.get('path', "built_models/r_%d_%d_%d"%(v,v1,x1_0))
+
 	# Construct the file
 	print('Generating the model...')
 	os.system('python3 ../model/mdp_generator.py ../model/model_tables/control_table.csv ../model/model_tables/acc_table.csv %d %d %d > /dev/null'%(v,v1,x1_0))
@@ -66,13 +70,17 @@ def build_and_synthesis(v, v1, x1_0):
 		output = output[idx3+4:]
 
 	# ------------- Synthesis -------------
-	multi_obj_query = "multi(Pmax=? [F x=length | t = max_time], Pmax=? [F x=length & t < %d])"%Tmin
+	# multi_obj_query = "multi(Pmax=? [F x=length | t = max_time], P>=1 [F x=length & t < %d])"%Tmin
+	multi_obj_query = "multi(Pmax=? [F x=length & t < %d], P>=1 [F x=length | t = max_time])"%Tmin
+	# multi_obj_query = "Pmax=? [F x=length & t < %d]"%Tmin
+	# multi_obj_query = "Pmax=? [F x=length | t = max_time]"
+	# multi_obj_query = "Pmin=? [F crashed]"
 	print('Synthesis using the query "%s"'%multi_obj_query)
 
-	os.system("mkdir built_models/r_%d_%d_%d > /dev/null"%(v,v1,x1_0))
+	os.system("mkdir %s > /dev/null"%path)
 
-	proc = subprocess.Popen('prism mdp_model.pm -exportmodel built_models/r_%d_%d_%d/out.all -pctl "%s" -exportadvmdp built_models/r_%d_%d_%d/adv.tra'%(v,v1,x1_0,multi_obj_query,v,v1,x1_0), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-	output = str(proc.stdout.read())
+	os.system('prism mdp_model.pm -exportmodel %s/out.all -pctl "%s" -exportadvmdp %s/adv.tra -s'%(path,multi_obj_query,path))
+
 	return Tmin
 
 def generate_sample_path(state_file, transition_file, label_file, result_file):
@@ -177,11 +185,11 @@ def generate_sample_path(state_file, transition_file, label_file, result_file):
 
 	f.close()
 
-def generate_trace_from_file(file, v1, x1_0):
+def generate_trace_from_file(file, v1, x1_0, out):
 	# Read the generated text file
 	print('Read the generated file and modify the trace file to become readable in simulation...')
 
-	csvfile = open("gen_trace.csv", 'w')
+	csvfile = open(out, 'w')
 	fieldnames = ['t_end','type','v','crashed','lane','x_t_1','x_t_2','x_t_3','y_t_1','y_t_2','y_t_3','y_t_4','y_t_5','y_t_6','y_t_7']
 	writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
@@ -231,13 +239,23 @@ def generate_trace_from_file(file, v1, x1_0):
 
 				next_change_lanes = False
 
-if not os.path.exists("built_models/r_%d_%d_%d/adv1.tra"%(v_in,v1_in,x1_0_in)):
-	build_and_synthesis(v_in, v1_in, x1_0_in)
+if not args.path:
+	path = "built_models/r_%d_%d_%d"%(v_in,v1_in,x1_0_in)
+else:
+	path = args.path
 
-path = "built_models/r_%d_%d_%d"%(v_in,v1_in,x1_0_in)
-generate_sample_path('%s/out.sta'%path, '%s/adv1.tra'%path, '%s/out.lab'%path, 'path1.txt')
-generate_trace_from_file('path1.txt', v1_in, x1_0_in)
-# os.system('rm path1.txt')
+if not os.path.exists("%s/adv.tra"%path) and not os.path.exists("%s/adv1.tra"%path):
+	build_and_synthesis(v_in, v1_in, x1_0_in, path=path)
+
+txt_name = "%s/%s_path.txt"%(path, args.name[:-4])
+
+if os.path.exists("%s/adv.tra"%path):
+	generate_sample_path('%s/out.sta'%path, '%s/adv.tra'%path, '%s/out.lab'%path, txt_name)
+elif os.path.exists("%s/adv1.tra"%path):
+	generate_sample_path('%s/out.sta'%path, '%s/adv1.tra'%path, '%s/out.lab'%path, txt_name)
+
+generate_trace_from_file(txt_name, v1_in, x1_0_in, "%s/%s"%(path, args.name))
+
 
 
 

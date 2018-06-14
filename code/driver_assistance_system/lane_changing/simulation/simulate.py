@@ -12,10 +12,13 @@ import numpy as np
 
 parser=argparse.ArgumentParser(
     description='''Given some initial conditions, obtain a sample trace and simulate it.''')
-parser.add_argument('[v]', type=int, default=29, help='Initial velocity of the vehicle.')
-parser.add_argument('[v1]', type=int, default=30, help='Initial velocity of the other vehicle.')
-parser.add_argument('[x1_0]', type=int, default=15, help='Initial position of the other vehicle.')
-parser.add_argument('-x [VALUE]', type=str, help='Execution is [VALUE] times faster.')
+parser.add_argument('v', type=int, default=29, help='Initial velocity of the vehicle.')
+parser.add_argument('v1', type=int, default=30, help='Initial velocity of the other vehicle.')
+parser.add_argument('x1_0', type=int, default=15, help='Initial position of the other vehicle.')
+parser.add_argument('-n', '--name', type=str, default="gen_trace.csv", help='Name of the generated .csv file (path excluded).')
+parser.add_argument('-p', '--path', type=str, help='Path where the all the files will be generated.')
+parser.add_argument('-x', '--times', type=float, default=1, help='Execution is X times faster.')
+parser.add_argument('-r', '--read', action="store_true", help='Read an existing trace.')
 args=parser.parse_args()
 
 # Helper functions
@@ -49,17 +52,19 @@ def detect_crash(x1, y1, x2, y2, w, h):
 
 # Main code
 
-v = int(sys.argv[1])
-v1 = int(sys.argv[2])
-x1_0 = int(sys.argv[3])
+v = args.v
+v1 = args.v1
+x1_0 = args.x1_0
 
-if len(sys.argv) > 5:
-	speed = float(sys.argv[4])
+speed = args.times
+
+if not args.read:
+	if not args.path:
+		subprocess.run("python3 get_trace.py %d %d %d -n %s"%(v, v1, x1_0, args.name), shell=True)
+	else:
+		subprocess.run("python3 get_trace.py %d %d %d -n %s -p %s"%(v, v1, x1_0, args.name, args.path), shell=True)
 else:
-	speed = 1
-
-# Generate the trace
-subprocess.run("python3 get_trace.py %d %d %d"%(v, v1, x1_0), shell=True)
+	print("Reading existing trace...")
 
 pygame.init()
 pygame.display.set_caption('Sample Path Simulation')
@@ -68,7 +73,12 @@ myfont = pygame.font.SysFont("monospaced", 20)
 crashed_font = pygame.font.SysFont("monospaced", 45)
 time_font = pygame.font.SysFont("monospaced", 60)
 
-csvfile = open('gen_trace.csv')
+if not args.path:
+	filename = "built_models/r_%d_%d_%d/%s"%(v, v1, x1_0, args.name)
+else:
+	filename = "%s/%s"%(args.path, args.name)
+
+csvfile = open(filename)
 reader = csv.DictReader(csvfile)
 comm = next(reader)
 
@@ -145,16 +155,7 @@ while True:
 
 	# Main vehicle
 	if update_action == True and permanent == False:
-		if t < t_end:
-			if type_comm == 1:
-				x = x + curr_v*deltaT
-			elif type_comm == 2:
-				curr_t = t - t_init
-				x = x_init + (x_coeffs[0]*curr_t**2 + x_coeffs[1]*curr_t + x_coeffs[2])
-				y = (y_coeffs[0]*curr_t**6 + y_coeffs[1]*curr_t**5 + y_coeffs[2]*curr_t**4 + y_coeffs[3]*curr_t**3 + y_coeffs[4]*curr_t**2 + y_coeffs[5]*curr_t + y_coeffs[6])
-
-		if int(np.floor(t)) == t_end:
-			print(x)
+		if int(np.floor(round(t,2))) == t_end:
 			if crashed == True:
 				permanent = True
 				force_crash = True
@@ -175,6 +176,14 @@ while True:
 				crashed = bool(int(comm['crashed']))
 				x_coeffs = [float(comm['x_t_1']), float(comm['x_t_2']), float(comm['x_t_3'])]
 				y_coeffs = [float(comm['y_t_1']), float(comm['y_t_2']), float(comm['y_t_3']), float(comm['y_t_4']), float(comm['y_t_5']), float(comm['y_t_6']), float(comm['y_t_7'])]
+		
+		if int(np.floor(round(t,2))) < t_end:
+			if type_comm == 1:
+				x = x + curr_v*deltaT
+			elif type_comm == 2:
+				curr_t = t - t_init
+				x = x_init + (x_coeffs[0]*curr_t**2 + x_coeffs[1]*curr_t + x_coeffs[2])
+				y = (y_coeffs[0]*curr_t**6 + y_coeffs[1]*curr_t**5 + y_coeffs[2]*curr_t**4 + y_coeffs[3]*curr_t**3 + y_coeffs[4]*curr_t**2 + y_coeffs[5]*curr_t + y_coeffs[6])
 
 		if x >= 500 or t >= 30:
 			update_action = False
