@@ -15,7 +15,7 @@ parser.add_argument('[v1]', type=int, help='Initial velocity of the other vehicl
 parser.add_argument('[x1_0]', type=int, help='Initial position of the other vehicle.')
 args=parser.parse_args()
 
-cleaning_up = True
+cleaning_up = False
 
 v1 = int(sys.argv[2])
 x1_0 = int(sys.argv[3])

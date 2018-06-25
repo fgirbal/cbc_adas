@@ -1,5 +1,5 @@
 //MDP automatically built using mdp_generator.py for v1 = 18 (to alter this value, run the script again).
-//Generated on 14-06-2018 at 17:01.
+//Generated on 25-06-2018 at 10:48.
 
 mdp
 
@@ -32,16 +32,16 @@ module Decision_Making_Monitoring
 	//[] actrState = 2 & crashed -> 1:(crashed' = true);
 
  	// If we are in lane 2, but behind the other vehicle, don't try to pass
-	[] actrState = 2 & !crashed & lane = 2 & positiveDist = false -> 1:(actrState' = 1);
+	[] actrState = 2 & !crashed & lane = 2 & positiveDist = false & x < length -> 1:(actrState' = 1);
 
 	// If we are in lane 1, and no vehicle is in front, don't change lanes
-	[] actrState = 2 & !crashed & lane = 1 & positiveDist = true -> 1:(actrState' = 1);
+	[] actrState = 2 & !crashed & lane = 1 & positiveDist = true & x < length -> 1:(actrState' = 1);
 
-	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false -> 1:(lC' = true) & (actrState' = 1);
-	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false -> 1:(lC' = false) & (actrState' = 1);
+	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false & x < length -> 1:(lC' = true) & (actrState' = 1);
+	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false & x < length -> 1:(lC' = false) & (actrState' = 1);
 
-	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true -> 1:(lC' = true) & (actrState' = 1);
-	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true -> 1:(lC' = false) & (actrState' = 1);
+	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true & x < length -> 1:(lC' = true) & (actrState' = 1);
+	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true & x < length -> 1:(lC' = false) & (actrState' = 1);
 
 endmodule
 

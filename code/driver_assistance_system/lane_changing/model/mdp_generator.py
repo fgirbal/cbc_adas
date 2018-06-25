@@ -64,15 +64,15 @@ f.write(" 	// If a crash occurs, then nothing else can happen\n")
 f.write("	//[] actrState = 2 & crashed -> 1:(crashed' = true);\n\n")
 
 f.write(" 	// If we are in lane 2, but behind the other vehicle, don't try to pass\n")
-f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = false -> 1:(actrState' = 1);\n\n")
+f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = false & x < length -> 1:(actrState' = 1);\n\n")
 
 f.write("	// If we are in lane 1, and no vehicle is in front, don't change lanes\n")
-f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = true -> 1:(actrState' = 1);\n\n")
-f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false -> 1:(lC' = true) & (actrState' = 1);\n")
-f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false -> 1:(lC' = false) & (actrState' = 1);\n\n")
+f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = true & x < length -> 1:(actrState' = 1);\n\n")
+f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false & x < length -> 1:(lC' = true) & (actrState' = 1);\n")
+f.write("	[] actrState = 2 & !crashed & lane = 1 & positiveDist = false & x < length -> 1:(lC' = false) & (actrState' = 1);\n\n")
 
-f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true -> 1:(lC' = true) & (actrState' = 1);\n")
-f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true -> 1:(lC' = false) & (actrState' = 1);\n\n")
+f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true & x < length -> 1:(lC' = true) & (actrState' = 1);\n")
+f.write("	[] actrState = 2 & !crashed & lane = 2 & positiveDist = true & x < length -> 1:(lC' = false) & (actrState' = 1);\n\n")
 
 f.write("endmodule\n\n")
 
