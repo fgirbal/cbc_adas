@@ -1,2 +1,6 @@
 *.m~
+*.aux
+*.syntex.gz
+*.log
+*.toc
 .DS_Store
