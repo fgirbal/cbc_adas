@@ -1,0 +1,14 @@
+Pmin=? [ F crashed ];
+Pmax=? [ F (x=length & t < 16) || F x=length ];
+Pmax=? [ F (x=length & t < 17) || F x=length ];
+Pmax=? [ F (x=length & t < 18) || F x=length ];
+Pmax=? [ F (x=length & t < 19) || F x=length ];
+Pmax=? [ F (x=length & t < 20) || F x=length ];
+Pmax=? [ F (x=length & t < 21) || F x=length ];
+Pmax=? [ F (x=length & t < 22) || F x=length ];
+Pmax=? [ F (x=length & t < 23) || F x=length ];
+Pmax=? [ F (x=length & t < 24) || F x=length ];
+Pmax=? [ F (x=length & t < 25) || F x=length ];
+Pmax=? [ F (x=length & t < 26) || F x=length ];
+Pmax=? [ F (x=length & t < 27) || F x=length ];
+Pmax=? [ F (x=length & t < 28) || F x=length ]

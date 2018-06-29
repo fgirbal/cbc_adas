@@ -1,0 +1,21 @@
+In the case of the ADAS previously synthesised, it is assumed that humans will not only follow all the suggestions, but they will follow them as soon as they are received (within the same ACT-R cycle in the decision making).
+
+It is a fact that people are more prone to following suggestions when these align with their interests/original plans.
+
+With this in mind, we design a new model which more accurately represents the suggestive decision making considered in this section.
+
+In the perfect decision making MDP, we had that, in each state of the decision making (actrState = 2) the set A of actions available is described as:
+
+A = {!lC & a = a_p | lC | !lC & a = -1}
+
+In the original DTMC, a single action was available for a set of conditions, such that at any state s where actrState = 2 we would have a defined p with:
+
+s' = p: (lC) + (1 - p): (!lC & a = a_p)
+
+It is worth noticing that the a of s' is the same as the s in the case where !lC. 
+
+Consider a factor \gamma \in [0,1] which corresponds to how responsive a driver is to the suggestions given. We can thus write the following rule for each of the actions of the MDP:
+
+s'_i = \gamma: A_i + (1-\gamma)*p:(lC) + (1-\gamma)*(1-p):(!lC & a = a_p)
+
+Given that \gamma, p \in [0,1], the transitions are guaranteed to sum up to one for every case. The perfect decision making case corresponds to \gamma = 1.
