@@ -1,10 +1,13 @@
 # MDP_GENERATOR - Transform the tables into the MDP
 # in order to perform multi-objective synthesis.
-
+#
+# VERSION: 
+#	- decision making: lane change or not change
+#
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 6-Jun-2018; Last revision: 9-Jun-2018
+# 6-Jun-2018; Last revision: 26-Jun-2018
 
 import sys, csv, argparse, datetime
 
@@ -38,6 +41,8 @@ now = datetime.datetime.now()
 # Write the beginning of the file
 f.write("//MDP automatically built using mdp_generator.py for v1 = %s (to alter this value, run the script again).\n"%v1)
 f.write("//Generated on %s.\n\n"%(now.strftime("%d-%m-%Y at %H:%M")))
+f.write("//Version: decision making, lane change or not\n\n")
+
 f.write("mdp\n\n")
 f.write("const int length = 500; // road length\n")
 f.write("const int max_time = 30; // maximum time of experiment\n\n")

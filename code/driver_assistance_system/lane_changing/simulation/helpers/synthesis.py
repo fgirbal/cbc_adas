@@ -72,7 +72,7 @@ def build_and_synthesis(v, v1, x1_0, *args, **kwargs):
 
 		# ------------- Synthesis -------------
 		# multi_obj_query = "multi(Pmax=? [F x=length | t = max_time], P>=1 [F x=length & t < %d])"%Tmin
-		multi_obj_query = "multi(Pmax=? [F x=length & t < %d], P>=1 [F x=length | t = max_time])"%Tmin
+		multi_obj_query = "multi(Pmax=? [F x=length & t < %d], P>=1 [F x=length])"%Tmin
 		# multi_obj_query = "Pmax=? [F x=length & t < %d & lane=1]"%Tmin
 		# multi_obj_query = "Pmax=? [F x=length | t = max_time]"
 		# multi_obj_query = "Pmin=? [F crashed]"
