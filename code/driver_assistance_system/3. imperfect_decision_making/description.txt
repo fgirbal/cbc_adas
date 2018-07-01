@@ -8,13 +8,11 @@ In the perfect decision making MDP, we had that, in each state of the decision m
 
 A = {!lC & a = a_p | lC | !lC & a = -1}
 
-In the original DTMC, a single action was available for a set of conditions, such that at any state s where actrState = 2 we would have a defined p with:
+In the original DTMC, a single action was available for a set of conditions, such that at any state s where actrState = 2 we would have a defined p with (considering the previous acceleration to be a_p):
 
 s' = p: (lC) + (1 - p): (!lC & a = a_p)
 
-It is worth noticing that the a of s' is the same as the s in the case where !lC. 
-
-Consider a factor \gamma \in [0,1] which corresponds to how responsive a driver is to the suggestions given. We can thus write the following rule for each of the actions of the MDP:
+Consider a factor \gamma \in [0,1] which corresponds to how responsive a driver is to the suggestions given. We can write the following rule for each of the actions of the MDP:
 
 s'_i = \gamma: A_i + (1-\gamma)*p:(lC) + (1-\gamma)*(1-p):(!lC & a = a_p)
 
