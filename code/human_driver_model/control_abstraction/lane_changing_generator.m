@@ -30,7 +30,7 @@ global width len delta_t
 width = 7.4;
 len = 500;
 delta_t = 0.5;
-n_iter = 250;
+n_iter = 100;
 
 % Code starts
 
@@ -38,7 +38,7 @@ generated_table = zeros(2*length(ds)*length(vi1s)*length(vi2s), 9);
 display(sprintf('Generating table of %d entries', size(generated_table,1)))
 t1 = cputime;
 
-other_table = zeros(2*length(ds)*length(vi1s)*length(vi2s), 14);
+other_table = zeros(2*length(ds)*length(vi1s)*length(vi2s), 24);
 
 textprogressbar('Progress: ')
 
@@ -61,6 +61,10 @@ for vi2_i = 1:length(vi2s)
             
 %             f = figure(1);
 %             hold on;
+
+            n_write = 1;
+            bad_run_example = zeros(13,3);
+            temp = zeros(13,3);
             
             for j=1:n_iter
                 
@@ -92,7 +96,7 @@ for vi2_i = 1:length(vi2s)
                 t = 0;
                 ay = 100;
 
-                x_y_t(13*(j - 1) + 1,:) = [0,x,y];
+                temp(1,:) = [0,x,y];
                 idx_sub = 2;
 
                 while x < len && ~(abs(y - (2*lane-1)*width/4) < 0.02)
@@ -105,7 +109,7 @@ for vi2_i = 1:length(vi2s)
 
                     t = t + delta_t;
 
-                    x_y_t(13*(j - 1) + idx_sub,:) = [t, x, y];
+                    temp(idx_sub,:) = [t, x, y];
                     idx_sub = idx_sub + 1;
 
 %                     plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
@@ -116,7 +120,7 @@ for vi2_i = 1:length(vi2s)
                     vehicles_pos(1,1) = vehicles_pos(1,1) + vx1*delta_t;
                     t = t + delta_t;
 
-                    x_y_t(13*(j - 1) + idx_sub,:) = [t, x, y];
+                    temp(idx_sub,:) = [t, x, y];
                     idx_sub = idx_sub + 1;
 %                     plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
                 end
@@ -125,22 +129,50 @@ for vi2_i = 1:length(vi2s)
                 sum_vx = sum_vx + vx;
                 sum_t = sum_t + t;
                 sum_col = sum_col + col;
+                                
+                if col == 0
+                    x_y_t(13*(n_write - 1) + 1:13*n_write,:) = temp;
+                    n_write = n_write + 1;
+                else
+                    bad_run_example = temp;
+                end
             end
             
             if lane == 1
                 sub_mat = d*[zeros(size(x_y_t,1), 1), ones(size(x_y_t,1),1), zeros(size(x_y_t,1), 1)];
                 x_y_t = x_y_t - sub_mat;
+                sub_mat = d*[zeros(size(bad_run_example,1), 1), ones(size(bad_run_example,1),1), zeros(size(bad_run_example,1), 1)];
+                bad_run_example = bad_run_example - sub_mat;
             end
             
+            if n_write ~= 1
+                x_y_t = x_y_t(1:13*(n_write-1),:);
+            else
+                x_y_t = [0,0,0];
+            end
+            
+            if sum_col/n_iter == 0
+                bad_run_example = [0,0,0];
+            end
+                                    
             p_x = polyfit(x_y_t(:,1),x_y_t(:,2),2);
             p_y = polyfit(x_y_t(:,1),x_y_t(:,3),6);
             
+            bad_p_x = polyfit(bad_run_example(:,1),bad_run_example(:,2),2);
+            bad_p_y = polyfit(bad_run_example(:,1),bad_run_example(:,3),6);
+            
 %             plot(x_y_t(:,2), x_y_t(:,3),'ob')
+%             plot(bad_run_example(:,2), bad_run_example(:,3),'*r')
 %             p_xy = polyfit(x_y_t(:,2),x_y_t(:,3),5);
+%             bad_p_xy = polyfit(bad_run_example(:,2),bad_run_example(:,3),5);
 %             x1 = linspace(0,max(x_y_t(:,2)));
 %             y1 = polyval(p_xy,x1);
-%             plot(x1,y1)
-%             axis([0,max(x1),0,max(y1)])
+%             plot(x1,y1,'b')
+%             x1 = linspace(0,max(bad_run_example(:,2)));
+%             y1 = polyval(bad_p_xy,x1);
+%             plot(x1,y1,'r')
+%             
+%             pause
             
 %             est_x1 = round(sum_x/n_iter)
             est_vx = max(round(sum_vx/n_iter), vi1);
@@ -152,7 +184,7 @@ for vi2_i = 1:length(vi2s)
             
 %             generated_table(idx,:) = [3-lane,d,vi1,vi2,col,round(x - (d)*(2-lane)),round(vx),round(vehicles_pos(1,1)-(d)*(lane-1)),t];
             generated_table(idx,:) = [3-lane,d,vi1,vi2,est_col,round(est_x - (d)*(2-lane)),est_vx,round(vi2*est_t-(d)*(lane-1)),est_t];
-            other_table(idx,:) = [3-lane,d,vi1,vi2,p_x,p_y];
+            other_table(idx,:) = [3-lane,d,vi1,vi2,p_x,p_y,bad_p_x,bad_p_y];
             
             textprogressbar(100*idx/(2*length(ds)*length(vi1s)*length(vi2s)))
         end
@@ -169,7 +201,7 @@ header = {'o_lane','d','vi1','vi2','Acc?','delta_x1','vf1','delta_x2','delta_t'}
 % xForDisplay = [header; num2cell(generated_table)];
 % disp(xForDisplay)
 
-header_1 = {'o_lane','d','vi1','vi2','p_x(1)','p_x(2)','p_x(3)','p_y(1)','p_y(2)','p_y(3)','p_y(4)','p_y(5)','p_y(6)','p_y(7)'};
+header_1 = {'o_lane','d','vi1','vi2','p_x(1)','p_x(2)','p_x(3)','p_y(1)','p_y(2)','p_y(3)','p_y(4)','p_y(5)','p_y(6)','p_y(7)','bad_p_x(1)','bad_p_x(2)','bad_p_x(3)','bad_p_y(1)','bad_p_y(2)','bad_p_y(3)','bad_p_y(4)','bad_p_y(5)','bad_p_y(6)','bad_p_y(7)'};
 % xForDisplay = [header_1; num2cell(other_table)];
 % disp(xForDisplay)
 
@@ -181,12 +213,12 @@ textHeader = cell2mat(commaHeader); %cHeader in text with commas
 textHeader = textHeader(1:end-1);
 
 %write header to file
-fid = fopen(sprintf('data/gen_table_%d_%d_%d_%d_%d_%d.csv', ds(1), ds(length(ds)),vi1s(1), vi1s(length(vi1s)), vi2s(1), vi2s(length(vi2s))),'w'); 
+fid = fopen('data/new/control_table.csv','w'); 
 fprintf(fid,'%s\n',textHeader);
 fclose(fid);
 
 %write data to end of file
-dlmwrite(sprintf('data/gen_table_%d_%d_%d_%d_%d_%d.csv', ds(1), ds(length(ds)),vi1s(1), vi1s(length(vi1s)), vi2s(1), vi2s(length(vi2s))),generated_table,'-append');
+dlmwrite('data/new/control_table.csv',generated_table,'-append');
 
 % Save the other table as well
 cHeader = header_1;
@@ -196,11 +228,11 @@ textHeader = cell2mat(commaHeader); %cHeader in text with commas
 textHeader = textHeader(1:end-1);
 
 %write header to file
-fid = fopen('data/other_table.csv','w'); 
+fid = fopen('data/new/other_table.csv','w'); 
 fprintf(fid,'%s\n',textHeader);
 fclose(fid);
 
 %write data to end of file
-dlmwrite('data/other_table.csv',other_table,'-append');
+dlmwrite('data/new/other_table.csv',other_table,'-append');
 
 %------------- END OF CODE --------------
