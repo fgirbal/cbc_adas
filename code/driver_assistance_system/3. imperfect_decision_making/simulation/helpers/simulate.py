@@ -45,13 +45,9 @@ def render_centered(screen, text, crashed_font, color):
 	screen.blit(label, (500 - size[0]/2.0, 200 - size[1]/2.0))
 
 def detect_crash(x1, y1, x2, y2, w, h):
-	x = max(x1 - w/2, x2 - w/2)
-	y = max(y1 - h/2, y2 - h/2)
-	w_new = min(x1 + w/2, x2 + w/2) - x
-	h_new = min(y1 + h/2, y2 + h/2) - y
-	if w_new <= 0 or h_new <= 0:
-		return False
-	return True
+	top1 = [x1 - w/2, y1 - h/2]
+	top2 = [x2 - w/2, y2 - h/2]
+	return not (top1[0] + w < top2[0] or top1[1] + h < top2[1] or top1[0] > top2[0] + w or top1[1] > top2[1] + h)
 
 # Main
 
@@ -135,10 +131,15 @@ while True:
 
 	if detect_crash(x,y,(x0 + t*v0),1.8,4.8,1.9) == True or force_crash == True:
 		render_centered(screen, "Crashed", crashed_font, (0,0,0))
+		update_action == False
 		permanent = True
 
 	# Main vehicle
 	if update_action == True and permanent == False:
+		top1 = [x - 4.8/2, y - 1.9/2]
+		top2 = [(x0 + t*v0) - 4.8/2, 1.8 - 1.9/2]
+		print('(' + str(abs(top1[0]-top2[0]) < 4.8) + ", " + str(abs(top1[1]-top2[1]) < 1.9) + ')')
+
 		if int(np.floor(round(t,2))) == t_end:
 			if crashed == True:
 				permanent = True

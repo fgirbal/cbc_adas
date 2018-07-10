@@ -177,6 +177,11 @@ def multi_generate_sample_path(new_states_f, adv_f, new_labels, result_file):
 		step = step + 1
 		f.write(str(step) + "," + sta[curr_state][1:-1] + "\n")
 
+	if not curr_state in tra.keys():
+		print("------------------------------------")
+		print("ERROR in adversary file: end state not in deadlock, but no transition found.")
+		print("------------------------------------")
+
 	f.close()
 
 def multi_generate_trace_from_file(file, v1, x1_0, out):
@@ -218,6 +223,11 @@ def multi_generate_trace_from_file(file, v1, x1_0, out):
 			if row['actrState'] == "2" and next_change_lanes == True:
 				lane = int(row['lane'])
 				o_lane = 3 - lane
+				if row['actrState'] == "2" and row['crashed'] == 'true':
+					lane = o_lane
+					o_lane = 3 - lane
+				# print(str(lane) + ", " + str(min(abs(x1_0 + v1*curr_t - curr_x), 43)) + ", " + str(curr_v) + ", " + str(v1))
+				
 				idx_line = (2-lane)*20*20*43 + (v1 - 15)*20*43 + (curr_v - 15)*43 + min(abs(x1_0 + v1*curr_t - curr_x), 43)
 
 				infile = open("helpers/data/other_table.csv")
@@ -226,10 +236,12 @@ def multi_generate_trace_from_file(file, v1, x1_0, out):
 					next(r)
 				this_row = next(r)
 
+				print(this_row)
+
 				if row['crashed'] == 'false':
 					writer.writerow({'t_end': row['t'], 'type': '2', 'v': row['v'], 'crashed': '0', 'lane': o_lane, 'x_t_1': this_row['p_x(1)'], 'x_t_2': this_row['p_x(2)'], 'x_t_3': this_row['p_x(3)'], 'y_t_1': this_row['p_y(1)'], 'y_t_2': this_row['p_y(2)'], 'y_t_3': this_row['p_y(3)'], 'y_t_4': this_row['p_y(4)'], 'y_t_5': this_row['p_y(5)'], 'y_t_6': this_row['p_y(6)'], 'y_t_7': this_row['p_y(7)']})
 				else:
-					writer.writerow({'t_end': row['t'], 'type': '2', 'v': row['v'], 'crashed': '1', 'lane': o_lane, 'x_t_1': this_row['p_x(1)'], 'x_t_2': this_row['p_x(2)'], 'x_t_3': this_row['p_x(3)'], 'y_t_1': this_row['p_y(1)'], 'y_t_2': this_row['p_y(2)'], 'y_t_3': this_row['p_y(3)'], 'y_t_4': this_row['p_y(4)'], 'y_t_5': this_row['p_y(5)'], 'y_t_6': this_row['p_y(6)'], 'y_t_7': this_row['p_y(7)']})
+					writer.writerow({'t_end': str(int(row['t']) + 6), 'type': '2', 'v': row['v'], 'crashed': '1', 'lane': o_lane, 'x_t_1': this_row['bad_p_x(1)'], 'x_t_2': this_row['bad_p_x(2)'], 'x_t_3': this_row['bad_p_x(3)'], 'y_t_1': this_row['bad_p_y(1)'], 'y_t_2': this_row['bad_p_y(2)'], 'y_t_3': this_row['bad_p_y(3)'], 'y_t_4': this_row['bad_p_y(4)'], 'y_t_5': this_row['bad_p_y(5)'], 'y_t_6': this_row['bad_p_y(6)'], 'y_t_7': this_row['bad_p_y(7)']})
 
 				next_change_lanes = False
 

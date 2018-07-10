@@ -1,0 +1,5 @@
+step,t,crashed,actrState,lC,x,v,a,lane,_da,__da
+0,0,false,1,false,0,30,0,1,0,2
+1,1,false,2,false,30,30,0,1,0,2
+2,1,false,1,true,30,30,0,1,0,2
+3,1,true,2,false,30,30,0,1,0,1

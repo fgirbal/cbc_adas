@@ -5,7 +5,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 9-Jun-2018; Last revision: 29-Jun-2018
+# 9-Jun-2018; Last revision: 10-Jul-2018
 
 import sys, os, subprocess, csv, argparse
 import matplotlib.pyplot as plt
@@ -20,28 +20,24 @@ plt.rc('font', size=13)
 
 parser=argparse.ArgumentParser(
     description='''Generate the model, perform verification to obtain the appropriate multi-objective synthesis problem and perform synthesis to obtain the pareto curve desired.''')
-parser.add_argument('[v]', type=int, default=29, help='Initial velocity of the vehicle.')
-parser.add_argument('[v1]', type=int, default=30, help='Initial velocity of the other vehicle.')
-parser.add_argument('[x1_0]', type=int, default=15, help='Initial position of the other vehicle.')
-parser.add_argument('--clean [VALUE]', type=str, help='If [VALUE] = False, then generated files (model and individual results) will be maintained (default = True).')
-parser.add_argument('--path [PATH]', type=str, help='Generated file will be saved in PATH.')
+parser.add_argument('v', type=int, default=29, help='Initial velocity of the vehicle.')
+parser.add_argument('v1', type=int, default=30, help='Initial velocity of the other vehicle.')
+parser.add_argument('x1_0', type=int, default=15, help='Initial position of the other vehicle.')
+parser.add_argument('--cond', '-c', action="store_true", help='If set, conditional probabilities will be displayed.')
+parser.add_argument('--clean', action="store_true", help='If set, then generated files (model and individual results) will be cleared.')
+parser.add_argument('--path', '-p', type=str, default="results", help='Generated file will be saved in PATH.')
 args=parser.parse_args()
 
 res = []
 
-v = sys.argv[1]
-v1 = sys.argv[2]
-x1_0 = sys.argv[3]
+v = args.v
+v1 = args.v1
+x1_0 = args.x1_0
+path = args.path
+cleaning_up = args.clean
+cond = args.cond
 properties_file = "properties/verification.pctl"
-path = "results"
 
-if len(sys.argv) > 4 and sys.argv[4] == "--clean" and sys.argv[5] == "False":
-	cleaning_up = False
-else:
-	cleaning_up = True
-
-if len(sys.argv) > 4 and sys.argv[4] == "--path":
-	path = sys.argv[6]
 
 def obtain_curve():
 	# Construct the file
@@ -121,9 +117,13 @@ def draw_curve():
 		new_x = [0]
 		new_y = [1]
 
+	if cond:
+		for i in range(len(new_y)):
+			new_y[i] = min(new_y[i]/(1-new_x[i]),1)
+
 	plt.plot(new_x, new_y, marker = 'o', color='g')
 
-	if len(new_x) != 1:
+	if len(new_x) > 1:
 		new_x.append(max(x))
 		new_y.append(0)
 
@@ -139,7 +139,10 @@ def draw_curve():
 		ax.add_collection(p)
 
 	plt.xlabel('P$_{min=?}$ [F crashed]')
-	plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s))]'%Tmin)
+	if not cond:
+		plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s))]'%Tmin)
+	else:
+		plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s)) $|$ F (x=500)]'%Tmin)
 
 	plt.show()
 

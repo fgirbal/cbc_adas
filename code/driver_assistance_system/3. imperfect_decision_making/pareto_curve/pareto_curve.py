@@ -6,7 +6,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 29-Jun-2018; Last revision: 29-Jun-2018
+# 29-Jun-2018; Last revision: 10-Jul-2018
 
 import sys, os, subprocess, csv, argparse
 import matplotlib.pyplot as plt
@@ -14,6 +14,7 @@ import numpy as np
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 from matplotlib import cm
+from matplotlib.ticker import FormatStrFormatter
 
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
@@ -25,7 +26,8 @@ parser.add_argument('driver_type', type=int, default=2, help='1 = aggressive, 2 
 parser.add_argument('v', type=int, default=29, help='Initial velocity of the vehicle.')
 parser.add_argument('v1', type=int, default=30, help='Initial velocity of the other vehicle.')
 parser.add_argument('x1_0', type=int, default=15, help='Initial position of the other vehicle.')
-parser.add_argument('--output', '-o', type=str, default="paretopoints", help='Name of the generated file')
+parser.add_argument('--cond', '-c', action="store_true", help='If set, conditional probabilities will be displayed.')
+parser.add_argument('--output', '-o', type=str, default="default", help='Name of the generated file')
 parser.add_argument('--query', '-q', type=str, default="", help='Query to build the Pareto curve on.')
 parser.add_argument('--path', '-p', type=str, default="results", help='Generated file will be saved in PATH.')
 args=parser.parse_args()
@@ -37,6 +39,7 @@ x1_0 = args.x1_0
 path = args.path
 output = args.output
 query = args.query
+cond = args.cond
 
 
 def build_model(ex_path):
@@ -98,7 +101,7 @@ def synthesis(ex_path, query, output):
 	f.close()
 
 
-def draw_curve(ex_path, input_file):
+def draw_curve(ex_path, input_file, cond):
 	x = []
 	y = []
 
@@ -113,6 +116,9 @@ def draw_curve(ex_path, input_file):
 	query = query.replace("<", "$<$")
 	query = query.replace(">", "$>$")
 
+	xlabel = query.split(',')[0][6:]
+	ylabel = query.split(',')[1][:-1]
+
 	f = open("%s/%s.txt"%(ex_path,input_file), "r")
 	arr_val = f.readline()[2:-1]
 	new_arr = arr_val.split(', (')
@@ -125,6 +131,12 @@ def draw_curve(ex_path, input_file):
 	new_x, new_y = zip(*sorted(zip(x, y)))
 	new_x = [xs for xs in new_x]
 	new_y = [ys for ys in new_y]
+
+	if cond:
+		for i in range(len(new_y)):
+			new_y[i] = min(new_y[i]/(1-new_x[i]),1)
+
+		ylabel = "%s $|$ F (x=500)]"%ylabel[:-1]
 
 	fig, ax = plt.subplots()
 
@@ -145,9 +157,6 @@ def draw_curve(ex_path, input_file):
 
 		ax.add_collection(p)
 
-	xlabel = query.split(',')[0][6:]
-	ylabel = query.split(',')[1][:-1]
-
 	plt.xlabel(xlabel)
 	plt.ylabel(ylabel)
 	# plt.title(query)
@@ -162,7 +171,7 @@ if not os.path.exists("%s/res.txt"%def_path):
 if not os.path.exists("%s/%s.txt"%(def_path,output)):
 	synthesis(def_path, query, output)
 
-draw_curve(def_path, output)
+draw_curve(def_path, output, cond)
 print('Done.')
 
 

@@ -6,7 +6,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 26-Jun-2018; Last revision: 29-Jun-2018
+# 26-Jun-2018; Last revision: 10-Jul-2018
 
 import sys, os, subprocess, csv, argparse
 import matplotlib.pyplot as plt
@@ -24,6 +24,7 @@ parser=argparse.ArgumentParser(
 parser.add_argument('v', type=int, default=29, help='Initial velocity of the vehicle.')
 parser.add_argument('v1', type=int, default=30, help='Initial velocity of the other vehicle.')
 parser.add_argument('x1_0', type=int, default=15, help='Initial position of the other vehicle.')
+parser.add_argument('--cond', '-c', action="store_true", help='If set, conditional probabilities will be displayed.')
 parser.add_argument('--path', '-p', type=str, default="results", help='Generated file will be saved in PATH.')
 args=parser.parse_args()
 
@@ -31,6 +32,8 @@ v = args.v
 v1 = args.v1
 x1_0 = args.x1_0
 path = args.path
+cond = args.cond
+
 
 def obtain_curve():
 	ex_path = "results/r_%s_%s_%s"%(v,v1,x1_0)
@@ -99,6 +102,10 @@ def draw_curve():
 	new_x = [xs for xs in new_x]
 	new_y = [ys for ys in new_y]
 
+	if cond:
+		for i in range(len(new_y)):
+			new_y[i] = min(new_y[i]/(1-new_x[i]),1)
+
 	fig, ax = plt.subplots()
 
 	plt.plot(new_x, new_y, marker = 'o', color='g')
@@ -119,7 +126,10 @@ def draw_curve():
 		ax.add_collection(p)
 
 	plt.xlabel('P$_{min=?}$ [F crashed]')
-	plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s))]'%Tmin)
+	if not cond:
+		plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s))]'%Tmin)
+	else:
+		plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s)) $|$ F (x=500)]'%Tmin)
 
 	plt.show()
 
