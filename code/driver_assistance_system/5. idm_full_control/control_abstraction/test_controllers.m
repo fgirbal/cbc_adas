@@ -17,7 +17,7 @@ w = 4.8;
 d = 20;
 vi1 = 15;
 vi2 = 15;
-lane = 1;
+lane = 2;
 
 global width len delta_t
 width = 7.4;

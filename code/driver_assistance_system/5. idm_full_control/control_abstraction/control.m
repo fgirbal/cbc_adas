@@ -12,7 +12,7 @@ k_car = 3;%4;
 k_follow = 1;
 max_speed = 34; % approximately 120 km/h
 
-std_dev = 2;
+std_dev = 0;
 
 if lane == 1
     y_follow = width/4;

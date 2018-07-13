@@ -1,1 +1,1 @@
-multi(Pmin=? [F crashed], Pmax=? [F (x=500) & (t<18)])
+multi(Pmin=? [F crashed], Pmax=? [F (x=500) & (t<19)])

@@ -8,7 +8,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 1-Jul-2018; Last revision: 1-Jul-2018
+# 1-Jul-2018; Last revision: 11-Jul-2018
 
 import sys, csv, argparse, datetime
 
@@ -127,35 +127,30 @@ f.write("endmodule\n\n")
 # Control module
 f.write("module Control\n\n")
 
+a_vals = [-1, 0, 1]
+
 f.write(" 	// If we are in lane 1, and no lane change was decided, continue forward (which might result in crash)\n")
 f.write(" 	// The vehicle is behind the other driver (positiveDist = false, x < x1)\n")
-# with open(args.acc_table) as csvfile:
-# 	reader = csv.DictReader(csvfile)
-# 	for row in reader:
-# 		if row["d"] != max_dm_dist:
-# 			line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a < 34 & v + a > 15 & dist = %s & v = %s  -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = %s) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"])
-# 			f.write(line)
-# 			line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a >= 34 & dist = %s & v = %s -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (a' = %s) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"])
-# 			f.write(line)
-# 			line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a <= 15 & dist = %s & v = %s -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (a' = %s) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"])
-# 			f.write(line)
-# 		elif row["d"] == max_dm_dist:
-# 			line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a < 34 & v + a > 15 & dist >= %s & v = %s  -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = %s) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"])
-# 			f.write(line)
-# 			line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a >= 34 & dist >= %s & v = %s -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (a' = %s) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"])
-# 			f.write(line)
-# 			line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a <= 15 & dist >= %s & v = %s -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (a' = %s) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"])
-# 			f.write(line)
+with open(args.acc_table) as csvfile:
+	reader = csv.DictReader(csvfile)
+	for row in reader:
+		if row["d"] != max_dm_dist:
+			for delta_a in a_vals:
+				line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a < 34 & v + a > 15 & dist = %s & v = %s & %s + %d <= 3 & %s + %d >= -3 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = %s + %d) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"],delta_a,row["a"],delta_a,row["a"],delta_a)
+				f.write(line)
+				line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a >= 34 & dist = %s & v = %s & %s + %d <= 3 & %s + %d >= -3 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (a' = %s + %d) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"],delta_a,row["a"],delta_a,row["a"],delta_a)
+				f.write(line)
+				line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a <= 15 & dist = %s & v = %s & %s + %d <= 3 & %s + %d >= -3 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (a' = %s + %d) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"],delta_a,row["a"],delta_a,row["a"],delta_a)
+				f.write(line)
+		elif row["d"] == max_dm_dist:
+			for delta_a in a_vals:
+				line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a < 34 & v + a > 15 & dist >= %s & v = %s & %s + %d <= 3 & %s + %d >= -3 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = %s + %d) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"],delta_a,row["a"],delta_a,row["a"],delta_a)
+				f.write(line)
+				line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a >= 34 & dist >= %s & v = %s & %s + %d <= 3 & %s + %d >= -3 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (a' = %s + %d) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"],delta_a,row["a"],delta_a,row["a"],delta_a)
+				f.write(line)
+				line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a <= 15 & dist >= %s & v = %s & %s + %d <= 3 & %s + %d >= -3 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (a' = %s + %d) & (actrState' = 2);\n" % (crash_dist,row["d"],row["v"],row["a"],delta_a,row["a"],delta_a,row["a"],delta_a)
+				f.write(line)
 
-a_vals = [-3, -2, -1, 0, 1, 2, 3]
-
-for a_val in a_vals:
-	line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a < 34 & v + a > 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = v + a) & (a' = %d) & (actrState' = 2);\n"%(crash_dist, a_val)
-	f.write(line)
-	line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a >= 34 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 34) & (a' = %d) & (actrState' = 2);\n"%(crash_dist, a_val)
-	f.write(line)
-	line = "	[] actrState = 1 & !crashed & !lC & lane = 1 & x <= length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s & v + a <= 15 -> 1:(x' = x + v) & (t' = t + 1) & (v' = 15) & (a' = %d) & (actrState' = 2);\n"%(crash_dist, a_val)
-	f.write(line)
 
 f.write("\n	[] actrState = 1 & !crashed & !lC & lane = 1 & x > length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) >= %s -> 1:(x' = length) & (t' = t + 1) & (actrState' = 2);\n"%crash_dist)
 f.write("	[] actrState = 1 & !crashed & !lC & lane = 1 & x > length - v & t < max_time & positiveDist = false & (x1 + v1 - x - v) < %s -> 1:(x' = length) & (t' = t + 1) & (crashed' = true) & (actrState' = 2);\n\n"%crash_dist)
