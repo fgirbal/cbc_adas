@@ -1,0 +1,7 @@
+type_driver,property,probability
+1,Pmin=? [ F crashed ],0.08939177664866871
+1,Pmax=? [ F (x=500 & t < 16) ],0.0
+2,Pmin=? [ F crashed ],0.018441552776661714
+2,Pmax=? [ F (x=500 & t < 16) ],0.0
+3,Pmin=? [ F crashed ],0.0036028874920793364
+3,Pmax=? [ F (x=500 & t < 16) ],0.0

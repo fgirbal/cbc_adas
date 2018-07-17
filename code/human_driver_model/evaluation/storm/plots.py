@@ -4,7 +4,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 5-Jun-2018; Last revision: 9-Jun-2018
+# 5-Jun-2018; Last revision: 17-Jul-2018
 
 import sys, os, random, glob, csv, subprocess, itertools
 import matplotlib.pyplot as plt
@@ -204,7 +204,7 @@ def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
 	
 	plt.legend(loc='upper left')
 
-	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ T)) $||$ F (x = 500)]')
+	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ T) $|$ F (x = 500)]')
 	plt.xlabel('T [s]')
 	plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
@@ -278,19 +278,20 @@ def liveness_box_plot(T, p):
 	ts = [[],[],[]]
 	time_val = T
 	# Conditional properties
-	# ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
-	# ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
-	# ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
+	ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d)) || F (x = 500)]'%time_val]
 
 	# Unconditional properties
-	ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d))]'%time_val]
-	ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d))]'%time_val]
-	ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	# ts[0] = props_dict[0]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	# ts[1] = props_dict[1]['P=? [F ((x = 500) & (t < %d))]'%time_val]
+	# ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d))]'%time_val]
 
 	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
-	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d)) $||$ F (x = 500)]'%time_val)
-	plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d))]'%time_val)
+	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ %d) $|$ F (x = 500)]'%time_val)
+	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d))]'%time_val)
 	plt.title('Liveness property')
+	plt.ylim(-0.05,1.05)
 	plt.show()
 
 
@@ -301,6 +302,6 @@ def liveness_box_plot(T, p):
 # liveness_2D_plot('plot4', 26, 22, 45)
 # generate_samples(250, path="box_plots")
 # safety_box_plot("box_plots")
-# liveness_box_plot(20, "uncond_plots")
-# liveness_box_plot(23, "box_plots")
+# liveness_box_plot(21, "box_plots")
+liveness_box_plot(22, "box_plots")
 

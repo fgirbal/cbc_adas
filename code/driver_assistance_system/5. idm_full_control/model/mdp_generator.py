@@ -4,11 +4,12 @@
 # VERSION: 
 #	- imperfect decision making (gamma)
 #	- linear acceleration assistance
+#	- steering control assistance
 #
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 1-Jul-2018; Last revision: 11-Jul-2018
+# 1-Jul-2018; Last revision: 16-Jul-2018
 
 import sys, csv, argparse, datetime
 
@@ -45,7 +46,7 @@ now = datetime.datetime.now()
 # Write the beginning of the file
 f.write("//MDP automatically built using mdp_generator.py for v1 = %s (to alter this value, run the script again).\n"%v1)
 f.write("//Generated on %s.\n\n"%(now.strftime("%d-%m-%Y at %H:%M")))
-f.write("//Version: imperfect decision making, gamma = %.2f; linear acceleration assistance\n\n"%gamma)
+f.write("//Version: imperfect decision making, gamma = %.2f; linear acceleration assistance; lane changing assistance; \n\n"%gamma)
 
 f.write("mdp\n\n")
 f.write("const int length = 500; // road length\n")
