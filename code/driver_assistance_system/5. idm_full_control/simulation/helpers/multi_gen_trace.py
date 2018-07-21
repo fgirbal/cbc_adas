@@ -5,7 +5,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 13-Jul-2018; Last revision: 13-Jul-2018
+# 13-Jul-2018; Last revision: 18-Jul-2018
 
 import sys, os, subprocess, csv, argparse
 import random
@@ -226,9 +226,10 @@ def multi_generate_trace_from_file(file, v1, x1_0, out):
 				if row['actrState'] == "2" and row['crashed'] == 'true':
 					lane = o_lane
 					o_lane = 3 - lane
+
 				# print(str(lane) + ", " + str(min(abs(x1_0 + v1*curr_t - curr_x), 43)) + ", " + str(curr_v) + ", " + str(v1))
 				
-				idx_line = (2-lane)*20*20*43*3 + (v1 - 15)*20*43*3 + (curr_v - 15)*43*3 + min(abs(x1_0 + v1*curr_t - curr_x)*3 + int(row['k_chosen']), 43)
+				idx_line = (2-lane)*20*20*43*3 + (v1 - 15)*20*43*3 + (curr_v - 15)*43*3 + (min(abs(x1_0 + v1*curr_t - curr_x), 43) - 1)*3 + int(row['k_chosen'])
 
 				infile = open("helpers/data/other_table.csv")
 				r = csv.DictReader(infile)

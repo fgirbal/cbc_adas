@@ -146,8 +146,9 @@ while True:
 				try:
 					comm = next(reader)
 				except:
-					print('Done')
-					break
+					update_action = False
+					permanent = True
+					continue
 
 				# Read the next command
 				t_init = t

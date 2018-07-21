@@ -1,0 +1,17 @@
+step,t,crashed,actrState,lC,x,v,a,lane,_da,__da
+0,0,false,1,false,0,30,0,1,0,2
+1,1,false,2,false,30,30,0,1,0,2
+2,1,false,1,true,30,30,0,1,0,2
+3,7,false,2,false,201,30,0,2,0,2
+4,7,false,1,false,201,30,0,2,0,2
+5,8,false,2,false,231,30,0,2,0,2
+6,8,false,1,false,231,30,0,2,0,2
+7,9,false,2,false,261,30,0,2,0,2
+8,9,false,1,false,261,30,0,2,0,2
+9,10,false,2,false,291,30,0,2,0,2
+10,10,false,1,true,291,30,0,2,0,2
+11,16,false,2,false,443,30,0,1,0,2
+12,16,false,1,false,443,30,0,1,0,2
+13,17,false,2,false,473,30,0,1,0,2
+14,17,false,1,false,473,30,0,1,0,2
+15,18,false,2,false,500,30,0,1,1,2

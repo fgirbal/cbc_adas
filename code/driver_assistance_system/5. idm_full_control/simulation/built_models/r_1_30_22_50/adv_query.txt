@@ -1,1 +1,1 @@
-multi(Pmax=? [F x=500 & t < 18], P<=0.18 [F crashed])
+multi(Pmax=? [F x=400 & t < 16], P<=0.18 [F crashed])

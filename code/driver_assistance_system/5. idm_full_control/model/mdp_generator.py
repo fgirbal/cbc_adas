@@ -9,7 +9,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 1-Jul-2018; Last revision: 16-Jul-2018
+# 1-Jul-2018; Last revision: 18-Jul-2018
 
 import sys, csv, argparse, datetime
 
@@ -40,6 +40,7 @@ max_control_dist = "43"
 max_dm_dist = "80"
 crash_dist = "6"
 gamma = 0.10
+length = 500
 
 now = datetime.datetime.now()
 
@@ -49,7 +50,7 @@ f.write("//Generated on %s.\n\n"%(now.strftime("%d-%m-%Y at %H:%M")))
 f.write("//Version: imperfect decision making, gamma = %.2f; linear acceleration assistance; lane changing assistance; \n\n"%gamma)
 
 f.write("mdp\n\n")
-f.write("const int length = 500; // road length\n")
+f.write("const int length = %d; // road length\n"%length)
 f.write("const int max_time = 35; // maximum time of experiment\n")
 f.write("const double gamma = %.2f; // gamma value\n\n"%gamma)
 f.write("// Other vehicle\n")

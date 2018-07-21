@@ -1,1 +1,0 @@
-multi(Pmax<=1 [F x=500 & t < 18], P<=0.18 [F crashed])

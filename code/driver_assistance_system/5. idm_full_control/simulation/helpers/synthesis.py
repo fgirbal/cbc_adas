@@ -34,7 +34,7 @@ def build_model(ex_path):
 
 	# Construct the file
 	print('Generating the model...')
-	os.system('python3 ../model/mdp_generator.py ../model/model_tables/control_table.csv ../model/model_tables/acc_table.csv ../model/model_tables/dm_table.csv %s %s %s %s > /dev/null'%(driver_type,v,v1,x1_0))
+	os.system('python3 model/mdp_generator.py model/model_tables/control_table.csv model/model_tables/acc_table.csv model/model_tables/dm_table.csv %s %s %s %s > /dev/null'%(driver_type,v,v1,x1_0))
 
 	# ------------- Verification -------------
 	print('Building the model and performing verification (could take awhile - no longer than 10 minutes)...')
@@ -53,8 +53,8 @@ def build_model(ex_path):
 
 		print(prop + ' : ' + probability)
 
-		if 'Pmax=? [ F (x=500&t<' in prop and float(probability) > 0.001:
-			T = int(prop[20:22])
+		if 'Pmax=? [ F (x=length&t<' in prop and float(probability) > 0.001:
+			T = int(prop[23:25])
 			Tmin = min(T, Tmin)
 
 		f.readline()
@@ -72,7 +72,7 @@ def synthesis(ex_path, query, output):
 		f = open("%s/time.txt"%ex_path, "r")
 		Tmin = int(f.readline())
 		f.close()
-		multi_obj_query = "multi(Pmax=? [F x=500 & t < %d], P<=0.18 [F crashed])"%Tmin
+		multi_obj_query = "multi(Pmax=? [F x=400 & t < %d], P<=0.18 [F crashed])"%Tmin
 	else:
 		multi_obj_query = query
 
