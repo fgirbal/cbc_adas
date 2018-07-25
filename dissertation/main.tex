@@ -4,16 +4,70 @@
 
 %load any additional packages
 \usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{float}
+
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstset
+{
+    language={[LaTeX]TeX},
+    %alsolanguage={PGF/TikZ},
+    frame=single,
+    framesep=\fboxsep,
+    framerule=\fboxrule,
+    rulecolor=\color{gray},
+    xleftmargin=\dimexpr\fboxsep+\fboxrule,
+    xrightmargin=\dimexpr\fboxsep+\fboxrule,
+    breaklines=true,
+    basicstyle=\small\tt,
+    keywordstyle=\color{blue}\sf,
+    identifierstyle=\color{black},
+    commentstyle=\color{cyan},
+    backgroundcolor=\color{white},
+    tabsize=2,
+    columns=flexible,
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{defi/}{Definition}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\newenvironment{defi}
+  {\renewcommand{\qedsymbol}{$\blacksquare$}%
+   \pushQED{\qed}\begin{defi/}}
+  {\popQED\end{defi/}}
+
+\newcommand{\bigmid}{\:\mid\:}
+
+\graphicspath{ {figures/} }
+\usepackage{caption}
+\usepackage{subcaption}
 
 %input macros (i.e. write your own macros file called mymacros.tex 
 %and uncomment the next line)
 %\include{mymacros}
 
-\title{Multi-objective Strategy Synthesis     %your thesis title,
-        for Advanced Driver Assistance Systems}   %note \\[1ex] is a line break in the title
+% Provably Correct Advanced Driver Assistance Systems: Cognitive Modelling, Abstraction, Verification and Synthesis
+
+\title{Helping Humans Drive Better: Building Provably-Correct Driver Assistance Systems using Cognitive Modelling}
+
+%\title{Multi-objective Strategy Synthesis     %your thesis title,
+%      for Advanced Driver Assistance Systems}   %note \\[1ex] is a line break in the title
 
 \author{Francisco Girbal Eiras}             %your name
 \college{Linacre College}  %your college
+\supervisor{Dr. Morteza Lahijanian and Prof. Marta Kwiatkowska}
 
 %\renewcommand{\submittedtext}{change the default text here if needed}
 \degree{Master of Science in Computer Science}     %the degree
@@ -25,38 +79,45 @@
 %this baselineskip gives sufficient line spacing for an examiner to easily
 %markup the thesis with comments
 \baselineskip=18pt plus1pt
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
 
 %set the number of sectioning levels that get number and appear in the contents
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 
 
-\maketitle                  % create a title page from the preamble info
+{\setlength{\parskip}{0em} \maketitle}                  % create a title page from the preamble info
 % \include{dedication}        % include a dedication.tex file
 \include{acknowledgements}  % include an acknowledgements.tex file
 \include{abstract}          % include the abstract
 
 \begin{romanpages}          % start roman page numbering
-\tableofcontents            % generate and include a table of contents
-\listoffigures              % generate and include a list of figures
+{\setlength{\parskip}{1pt} \tableofcontents }            % generate and include a table of contents
+{\setlength{\parskip}{1pt} \listoffigures }              % generate and include a list of figures
 \end{romanpages}            % end roman page numbering
 
-%now include the files of latex for each of the chapters etc
+\include{introduction}
+
+%now include the files of latex for each of the chapters etcL
 \include{chapter1}
 \include{chapter2}
-\include{conclusions}
+\include{chapter3}
+\include{chapter4}
+\include{conclusion}
 
 %now enable appendix numbering format and include any appendices
 \appendix
 \include{appendix1}
 \include{appendix2}
+\include{appendix3}
 
 %next line adds the Bibliography to the contents page
 \addcontentsline{toc}{chapter}{Bibliography}
 %uncomment next line to change bibliography name to references
 %\renewcommand{\bibname}{References}
-\bibliography{refs}        %use a bibtex bibliography file refs.bib
-\bibliographystyle{plain}  %use the plain bibliography style
+{\setlength{\parskip}{0pt}\bibliography{refs} 	       %use a bibtex bibliography file refs.bib
+\bibliographystyle{plain}  %use the plain bibliography style}
 
 \end{document}
 

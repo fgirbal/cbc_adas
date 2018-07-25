@@ -1,0 +1,114 @@
+\begin{thebibliography}{10}
+
+\bibitem{prism_example}
+{PRISM} {Manual} $\mid$ {The} {PRISM} {Language} $\mid$ {Example} 1, Dec 2010.
+
+\bibitem{actr_1}
+John~R Anderson.
+\newblock {\em The {Architecture} of {Cognition}}.
+\newblock Psychology Press, 2013.
+
+\bibitem{actr_2}
+John~R Anderson, Michael Matessa, and Christian Lebiere.
+\newblock {ACT-R}: A theory of higher level cognition and its relation to
+  visual attention.
+\newblock {\em Human-Computer Interaction}, 12(4):439--462, 1997.
+
+\bibitem{bk08}
+Christel Baier and Joost-Pieter Katoen.
+\newblock {\em Principles of model checking}.
+\newblock MIT press, 2008.
+
+\bibitem{actr_4}
+Tina Balke and Nigel Gilbert.
+\newblock How do agents make decisions? {A} survey.
+\newblock {\em Journal of Artificial Societies and Social Simulation},
+  17(4):13, 2014.
+
+\bibitem{older_2}
+Ewin~R Boer and Marika Hoedemaeker.
+\newblock Modeling driver behavior with different degrees of automation: A
+  hierarchical decision framework of interacting mental models.
+\newblock In {\em Proceedings of the 17th European annual conference on human
+  decision making and manual control}, pages 63--72, 1998.
+
+\bibitem{pareto}
+Taolue Chen, Vojt{\v{e}}ch Forejt, Marta Kwiatkowska, Aistis Simaitis, and
+  Clemens Wiltsche.
+\newblock On stochastic games with multiple objectives.
+\newblock In {\em International Symposium on Mathematical Foundations of
+  Computer Science}, pages 266--277. Springer, 2013.
+
+\bibitem{storm}
+Christian Dehnert, Sebastian Junges, Joost-Pieter Katoen, and Matthias Volk.
+\newblock A storm is coming: {A} modern probabilistic model checker.
+\newblock In {\em International Conference on Computer Aided Verification},
+  pages 592--600. Springer, 2017.
+
+\bibitem{fknp11}
+Vojt{\v{e}}ch Forejt, Marta Kwiatkowska, Gethin Norman, and David Parker.
+\newblock Automated verification techniques for probabilistic systems.
+\newblock In {\em International School on Formal Methods for the Design of
+  Computer, Communication and Software Systems}, pages 53--113. Springer, 2011.
+
+\bibitem{cog_arch_1}
+Iuliia Kotseruba and John~K Tsotsos.
+\newblock A review of 40 years of cognitive architecture research: Core
+  cognitive abilities and practical applications.
+\newblock {\em arXiv preprint arXiv:1610.08602}, 2016.
+
+\bibitem{prism_1}
+Marta Kwiatkowska, Gethin Norman, and David Parker.
+\newblock Prism: Probabilistic symbolic model checker.
+\newblock In {\em International Conference on Modelling Techniques and Tools
+  for Computer Performance Evaluation}, pages 200--204. Springer, 2002.
+
+\bibitem{kp07}
+Marta Kwiatkowska, Gethin Norman, and David Parker.
+\newblock Stochastic model checking.
+\newblock In {\em International School on Formal Methods for the Design of
+  Computer, Communication and Software Systems}, pages 220--270. Springer,
+  2007.
+
+\bibitem{prism}
+Marta Kwiatkowska, Gethin Norman, and David Parker.
+\newblock Prism 4.0: Verification of probabilistic real-time systems.
+\newblock In {\em International conference on computer aided verification},
+  pages 585--591. Springer, 2011.
+
+\bibitem{lam}
+Chak Lam.
+\newblock Driver assistance using cognitive modelling and strategy synthesis.
+
+\bibitem{older_1}
+Andrew Liu and Dario Salvucci.
+\newblock Modeling and prediction of human driver behavior.
+\newblock In {\em Intl. Conference on HCI}, 2001.
+
+\bibitem{salvucci_0}
+Dario Salvucci, Erwin Boer, and Andrew Liu.
+\newblock Toward an integrated model of driver behavior in cognitive
+  architecture.
+\newblock {\em Transportation Research Record: Journal of the Transportation
+  Research Board}, (1779):9--16, 2001.
+
+\bibitem{salvucci_1}
+Dario~D Salvucci.
+\newblock Modeling driver behavior in a cognitive architecture.
+\newblock {\em Human factors}, 48(2):362--380, 2006.
+
+\bibitem{older_3}
+Dario~D Salvucci and Andrew Liu.
+\newblock The time course of a lane change: Driver control and eye-movement
+  behavior.
+\newblock {\em Transportation research part F: traffic psychology and
+  behaviour}, 5(2):123--132, 2002.
+
+\bibitem{cog_arch_2}
+Ron Sun.
+\newblock The importance of cognitive architectures: An analysis based on
+  {CLARION}.
+\newblock {\em Journal of Experimental \& Theoretical Artificial Intelligence},
+  19(2):159--193, 2007.
+
+\end{thebibliography}

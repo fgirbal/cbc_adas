@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: main.aux
+A level-1 auxiliary file: acknowledgements.aux
+A level-1 auxiliary file: abstract.aux
+A level-1 auxiliary file: introduction.aux
+A level-1 auxiliary file: chapter1.aux
+A level-1 auxiliary file: chapter2.aux
+A level-1 auxiliary file: chapter3.aux
+A level-1 auxiliary file: chapter4.aux
+A level-1 auxiliary file: conclusion.aux
+A level-1 auxiliary file: appendix1.aux
+A level-1 auxiliary file: appendix2.aux
+A level-1 auxiliary file: appendix3.aux
+The style file: plain.bst
+Database file #1: refs.bib
+Warning--to sort, need author or key in prism_example
+Warning--empty journal in lam
+Warning--empty year in lam
+Warning--there's a number but no volume in salvucci_0
+You've used 19 entries,
+            2118 wiz_defined-function locations,
+            618 strings with 7283 characters,
+and the built_in function-call counts, 6752 in all, are:
+= -- 683
+> -- 271
+< -- 7
++ -- 112
+- -- 88
+* -- 433
+:= -- 1055
+add.period$ -- 60
+call.type$ -- 19
+change.case$ -- 99
+chr.to.int$ -- 0
+cite$ -- 23
+duplicate$ -- 288
+empty$ -- 566
+format.name$ -- 88
+if$ -- 1473
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 20
+newline$ -- 95
+num.names$ -- 36
+pop$ -- 133
+preamble$ -- 1
+purify$ -- 82
+quote$ -- 0
+skip$ -- 207
+stack$ -- 0
+substring$ -- 433
+swap$ -- 85
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 72
+warning$ -- 4
+while$ -- 68
+width$ -- 21
+write$ -- 204
+(There were 4 warnings)
