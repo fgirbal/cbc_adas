@@ -341,9 +341,7 @@ Similarly to CTL, it is possible to define the operators F (eventually) and G (g
 
 While PCTL path formulas are defined above, it should be mentioned that all PCTL formulas are state formulas, and that path formulas should only appear inside the probabilistic operator. 
 
-In relation to the probabilistic operator in PCTL, the generalisation from the Markov chain to the Markov decision process can be done using the concept of adversary (also denoted strategy or scheduler), initially introduced in Section~\ref{sec:dtmcs_mdps}.
-
-It should be mentioned that, in the case of an MDP, the operator $\mathbb{P}_{\triangleright p}$ should be interpreted under the following semantics:
+In relation to the probabilistic operator in PCTL, the generalisation from the Markov chain to the Markov decision process can be done using the concept of adversary (also denoted strategy or scheduler), initially introduced in Section~\ref{sec:dtmcs_mdps}. In the case of an MDP, the operator $\mathbb{P}_{\triangleright p}$ should be interpreted under the following semantics:
 
 \begin{equation}
 	s \models \mathbb{P}_{\triangleright p} (\varphi) \text{ if, and only if, } \forall \sigma \in Adv: Pr^{\sigma}_s (\pi \in Paths^{\sigma}(s): \pi \models \varphi) \triangleright p
@@ -475,7 +473,7 @@ P=? [ F x=2 || F y=2 ]
 }
 \end{minipage}
 
-These properties, in DTMCs correspond simply to the application of Bayes' theorem of conditional probability, which states that:
+This property can be interpreted as \textit{"what is the probability that the model eventually reaches the state} \texttt{x = 2}\textit{, given that it eventually reaches the state} \texttt{y = 2}\textit{"}. These properties, in DTMCs, correspond simply to the application of Bayes' theorem of conditional probability, which states that:
 
 \begin{equation}
 	P_s (\varphi_1 \bigmid \varphi_2) = \frac{P_s (\varphi_1 \wedge \varphi_2)}{P_s (\varphi_2)}
@@ -483,10 +481,22 @@ These properties, in DTMCs correspond simply to the application of Bayes' theore
 
 For $P_s (\varphi_2) \neq 0$. It must be emphasised that this is \textbf{not} the case for MDPs, where the existence of multiple adversaries complicates the calculations of conditional probabilities.
 
-In order to reason over bounds of conditional probabilities in limited scenarios, the following proposition is stated and its proof is presented.
+This does not mean that it is not possible to reason over conditional probabilities in MDPs. For some specific scenarios, it is possible to obtain meaningful bounds which allow comparisons between the ones obtained in DTMCs and MDPs. One of those scenarios is defined in the proposition below, with the proof following it.
 
 \begin{proposition}
-Consider a Markov decision process $\mathcal{M} = (S, Act, \mathbf{P}, p_{init}, AP, L)$ which admits adversaries $\sigma \in Adv$. Let $\varphi_1, \varphi_2$ be two PCTL path formulas, such that, for any path $\pi \in Paths(s)$: $\pi \models \varphi_1 \Rightarrow \pi \models \varphi_2$. In this case it holds that:
+Consider a Markov decision process $\mathcal{M} = (S, Act, \mathbf{P}, p_{init}, AP, L)$ which admits adversaries $\sigma \in Adv$. Let $\varphi_1, \varphi_2$ be two PCTL path formulas, such that, for any path $\pi \in Paths(s)$: $\pi \models \varphi_1 \Rightarrow \pi \models \varphi_2$. Assume as well that:
+
+\begin{equation}
+	\sigma' \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \bigmid \varphi_2)
+\end{equation}
+
+And that:
+
+\begin{equation}
+	P^{\sigma'}_s (\varphi_1) = p_{\max, s} (\varphi_1)
+\end{equation}
+
+That is, the adversary which maximises the probability of $\varphi_2 \bigmid \varphi_1$ also maximises the probability $\varphi_1$. In this case it holds that:
 
 \begin{equation}
 	p_{\max, s} (\varphi_1 \bigmid \varphi_2) \geq \frac{p_{\max, s} (\varphi_1)}{p_{\max, s} (\varphi_2)}
@@ -509,58 +519,32 @@ with:
 
 %We will prove that this leads to a contradiction.
 
-Assume that $\sigma' \in Adv$ is an adversary such that:
-
-\begin{equation}
-	\sigma' \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \bigmid \varphi_2)
-\end{equation}
-
-that is, $\sigma'$ is an adversary under which the probability of $\varphi_1 \bigmid \varphi_2$ is maximised. Under this adversary, it is true, through Bayes' theorem of conditional probability:
-
-\begin{equation}
-	p_{\max, s} (\varphi_1 \bigmid \varphi_2) = P^{\sigma'} _s(\varphi_1 \bigmid \varphi_2) = \frac{P^{\sigma'}_s (\varphi_1 \wedge \varphi_2)}{P^{\sigma'}_s (\varphi_2)} = \frac{P^{\sigma'}_s (\varphi_1)}{P^{\sigma'}_s (\varphi_2)}
-\end{equation}
-
-Consider $\sigma_1, \sigma_2 \in Adv$ such that:
+Consider $\sigma_2 \in Adv$ such that:
 
 \begin{equation}
 \label{eq:max_sigmas}
-\begin{aligned}
-	& \sigma_1 \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1) \\
-	& \sigma_2 \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_2)
-\end{aligned}
+	\sigma_2 \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_2)
 \end{equation}
 
-Assume, for the safe of contradiction, that:
+Assume, for the sake of contradiction, that:
 
 \begin{equation}
 	p_{\max, s} (\varphi_1 \bigmid \varphi_2) < \frac{p_{\max, s} (\varphi_1)}{p_{\max, s} (\varphi_2)}
 \end{equation}
 
-Therefore, we have that:
+Under adversary $\sigma'$, it can be written that, through Bayes' theorem of conditional probability:
+
+\begin{equation}
+	p_{\max, s} (\varphi_1 \bigmid \varphi_2) = P^{\sigma'} _s(\varphi_1 \bigmid \varphi_2) = \frac{P^{\sigma'}_s (\varphi_1 \wedge \varphi_2)}{P^{\sigma'}_s (\varphi_2)} = \frac{P^{\sigma'}_s (\varphi_1)}{P^{\sigma'}_s (\varphi_2)}
+\end{equation}
+
+Therefore, it follows that:
 
 \begin{equation}
 	\frac{P^{\sigma'}_s (\varphi_1)}{P^{\sigma'}_s (\varphi_2)} < \frac{p_{\max, s} (\varphi_1)}{p_{\max, s} (\varphi_2)}
 \end{equation}
 
-For this to be true, it must be that $P^{\sigma'}_s (\varphi_1) < p_{\max, s} (\varphi_1)$ and/or $P^{\sigma'}_s (\varphi_2) > p_{\max, s} (\varphi_2)$. The second condition constitutes a contradiction, since in that case $\sigma_2$ would not maximise the probability of $\varphi_2$ ($p_{\max, s} (\varphi_2) = P^{\sigma_2}_s (\varphi_2)$, by definition), a violation of the assumption described in Equation~\ref{eq:max_sigmas}. We are thus left with the conditions $P^{\sigma'}_s (\varphi_1) < p_{\max, s} (\varphi_1) \wedge P^{\sigma'}_s (\varphi_2) \leq p_{\max, s} (\varphi_2)$. % However, this also poses a contradiction on the assumption that $\sigma'$ maximises the probability of $\varphi_1 \bigmid \varphi_2$, as in that case the strategy $\sigma_1$ yields a higher probability, given that $(\pi \models \varphi_1 \Rightarrow \pi \models \varphi_2) \Rightarrow \forall \sigma \in Adv: P^{\sigma}_s (\varphi_2) \geq P^{\sigma}_s (\varphi_1)$.
-
-%And thus we can state that:
-
-%\begin{equation}
-%	\frac{P^{\sigma'}_s (\varphi_1)}{P^{\sigma'}_s (\varphi_2)} < \frac{P^{\sigma'_1}_s (\varphi_1)}{P^{\sigma'_1}_s (\varphi_2)}
-%\end{equation}
-
-%For this to be true, it must stand that $P^{\sigma'}_s (\varphi_1) < P^{\sigma'_1}_s (\varphi_1)$ and/or $P^{\sigma'}_s (\varphi_2) > P^{\sigma'_1}_s (\varphi_2)$. This means that, under $\sigma'_1$, either $\varphi_1$ or $\varphi_2$ have a higher probability of being satisfied than under $\varphi$. 
-
-%Since it must hold that $\pi \in Paths(s)$: $\pi \models \varphi_1 \Rightarrow \pi \models \varphi_2$, it should also be that $P^{\sigma'}_s (\varphi_2) \geq P^{\sigma'}_s (\varphi_1)$ and $P^{\sigma'_1}_s (\varphi_2) \geq P^{\sigma'_1}_s (\varphi_1)$. Therefore, if $P^{\sigma'}_s (\varphi_1) < P^{\sigma'_1}_s (\varphi_1)$, then:
-
-%\begin{equation}
-%	P^{\sigma'}_s (\varphi_1) < P^{\sigma'_1}_s (\varphi_1) \leq P^{\sigma'_1}_s (\varphi_2) < P^{\sigma'}_s (\varphi_2)
-%\end{equation}
-
-
-
+For this to be true, it must be that $P^{\sigma'}_s (\varphi_2) > p_{\max, s} (\varphi_2)$, since $P^{\sigma'}_s (\varphi_1) = p_{\max, s} (\varphi_1)$. This constitutes a contradiction, since in that case $\sigma_2$ would not maximise the probability of $\varphi_2$ ($p_{\max, s} (\varphi_2) = P^{\sigma_2}_s (\varphi_2)$, by definition), a violation of the assumption described in Equation~\ref{eq:max_sigmas}. Thus, the proposition is proven.
 \end{proof}
 
 In MDPs, however, it is also possible to perform multi-objective verification, whereas multiple properties will be tested simultaneously (both in PRISM and Storm). One example of this would be:
