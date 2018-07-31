@@ -1,4 +1,4 @@
-# Multi-objective Strategy Synthesis for Advanced Driver Assistance Systems
+# To Err is Human: Designing Correct-by-Construction Driver Assistance Systems using Cognitive Modelling
 
 Project to be submitted as part of the degree of Master of Computer Science at the University of Oxford.
 
@@ -8,4 +8,4 @@ Dr. Morteza Lahijanian and Professor Marta Kwiatkowska
 
 ___
 
-###### Last edit: 24 Apr 2018 by Francisco Eiras
+###### Last edit: 26 Jul 2018 by Francisco Eiras
