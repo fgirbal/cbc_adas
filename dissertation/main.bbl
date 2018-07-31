@@ -39,6 +39,13 @@ Taolue Chen, Vojt{\v{e}}ch Forejt, Marta Kwiatkowska, Aistis Simaitis, and
 \newblock In {\em International Symposium on Mathematical Foundations of
   Computer Science}, pages 266--277. Springer, 2013.
 
+\bibitem{state_explosion}
+Edmund~M Clarke, William Klieber, Milo{\v{s}} Nov{\'a}{\v{c}}ek, and Paolo
+  Zuliani.
+\newblock Model checking and the state explosion problem.
+\newblock In {\em Tools for Practical Software Verification}, pages 1--30.
+  Springer, 2012.
+
 \bibitem{storm}
 Christian Dehnert, Sebastian Junges, Joost-Pieter Katoen, and Matthias Volk.
 \newblock A storm is coming: {A} modern probabilistic model checker.
@@ -80,10 +87,25 @@ Marta Kwiatkowska, Gethin Norman, and David Parker.
 Chak Lam.
 \newblock Driver assistance using cognitive modelling and strategy synthesis.
 
+\bibitem{abstraction_1}
+Lihong Li, Thomas~J Walsh, and Michael~L Littman.
+\newblock Towards a unified theory of state abstraction for mdps.
+\newblock In {\em ISAIM}, 2006.
+
 \bibitem{older_1}
 Andrew Liu and Dario Salvucci.
 \newblock Modeling and prediction of human driver behavior.
 \newblock In {\em Intl. Conference on HCI}, 2001.
+
+\bibitem{thw}
+Highway~Capacity Manual.
+\newblock Highway capacity manual.
+\newblock {\em Washington, DC}, 11, 2000.
+
+\bibitem{abstraction_2}
+Austin Mohr.
+\newblock A survey of state abstraction techniques for markov decision
+  processes.
 
 \bibitem{salvucci_0}
 Dario Salvucci, Erwin Boer, and Andrew Liu.

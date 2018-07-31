@@ -9,6 +9,9 @@
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Flowchart of the Monitoring module.\relax }}{27}
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Flowchart of the Decision Making module.\relax }}{28}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Flowchart of the Control module.\relax }}{29}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Example of the simulation of the lane change for $o_{lane} = 1$ (left lane), $d = 20m$, $v = 15m/s$ and $v_1 = 15m/s$. In this case, after the change is complete the variable assignments are $crashed = 0$ (no collision happened), $\Delta x = 119m$, $\Delta T = 6s$ and $v = 23m/s$.\relax }}{32}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces $\text {P[}lC = true\text {]}$ as a function of $thw_{car}$ for Aggressive ($\alpha = 1$), Average ($\alpha = 0.6$) and Cautious ($\alpha = 0.4$) drivers.\relax }}{34}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces $\text {P[}lC = true\text {]}$ as a function of $d$ for Aggressive ($\beta = 1000$), Average ($\beta = 0.5$) and Cautious ($\beta = 0.01$) drivers.\relax }}{36}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

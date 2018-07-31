@@ -17,46 +17,48 @@ Database file #1: refs.bib
 Warning--to sort, need author or key in prism_example
 Warning--empty journal in lam
 Warning--empty year in lam
+Warning--empty journal in abstraction_2
+Warning--empty year in abstraction_2
 Warning--there's a number but no volume in salvucci_0
-You've used 19 entries,
+You've used 23 entries,
             2118 wiz_defined-function locations,
-            618 strings with 7283 characters,
-and the built_in function-call counts, 6752 in all, are:
-= -- 683
-> -- 271
-< -- 7
-+ -- 112
-- -- 88
-* -- 433
-:= -- 1055
-add.period$ -- 60
-call.type$ -- 19
-change.case$ -- 99
+            637 strings with 7776 characters,
+and the built_in function-call counts, 7925 in all, are:
+= -- 793
+> -- 326
+< -- 8
++ -- 135
+- -- 106
+* -- 502
+:= -- 1254
+add.period$ -- 72
+call.type$ -- 23
+change.case$ -- 120
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 288
-empty$ -- 566
-format.name$ -- 88
-if$ -- 1473
+cite$ -- 29
+duplicate$ -- 342
+empty$ -- 664
+format.name$ -- 106
+if$ -- 1720
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 20
-newline$ -- 95
-num.names$ -- 36
-pop$ -- 133
+int.to.str$ -- 23
+missing$ -- 24
+newline$ -- 114
+num.names$ -- 44
+pop$ -- 163
 preamble$ -- 1
-purify$ -- 82
+purify$ -- 99
 quote$ -- 0
-skip$ -- 207
+skip$ -- 240
 stack$ -- 0
-substring$ -- 433
-swap$ -- 85
-text.length$ -- 7
+substring$ -- 473
+swap$ -- 94
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 72
-warning$ -- 4
-while$ -- 68
-width$ -- 21
-write$ -- 204
-(There were 4 warnings)
+type$ -- 88
+warning$ -- 6
+while$ -- 79
+width$ -- 25
+write$ -- 244
+(There were 6 warnings)
