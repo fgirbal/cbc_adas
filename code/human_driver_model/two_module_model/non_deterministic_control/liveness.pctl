@@ -1,0 +1,4 @@
+P=? [F (x=length & t<19)];
+P=? [F (x=length & t<24)];
+P=? [F (x=length & t<19) || F (x=length)];
+P=? [F (x=length & t<24) || F (x=length)];

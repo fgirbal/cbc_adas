@@ -4,16 +4,20 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 12-May-2018; Last revision: 15-May-2018
+# 12-May-2018; Last revision: 2-Aug-2018
 
 import pygame
 import sys, os, csv, argparse, subprocess
 
 parser=argparse.ArgumentParser(
     description='''Given a PRISM model, obtain a sample trace using get_trace.py and simulate it.''')
-parser.add_argument('model.pm', type=str, help='The model from which to obtain the sample execution (built using model_generator.py).')
-parser.add_argument('-x [VALUE]', type=str, help='Execution is [VALUE] times faster.')
+parser.add_argument('model', type=str, help='The model from which to obtain the sample execution (built using model_generator.py).')
+parser.add_argument('-x', '--times', type=float, default=1, help='Execution is X times faster.')
+parser.add_argument('-rt', '--read_trace', action="store_true", help='Read an existing trace.')
 args=parser.parse_args()
+
+model = args.model
+speed = args.times
 
 # Helper functions
 _image_library = {}
@@ -45,16 +49,10 @@ def detect_crash(x1, y1, x2, y2, w, h):
 	return True
 
 # Main code
-
-if len(sys.argv) > 3:
-	speed = float(sys.argv[3])
-else:
-	speed = 1
-
 v1 = -1
 x1_0 = -1
 
-f = open(sys.argv[1], 'r')
+f = open(model, 'r')
 
 for line in f:
 	if "const int v1" in line:
@@ -72,7 +70,8 @@ if v1 == -1 or x1_0 == -1:
 f.close()
 
 # Generate the trace
-subprocess.run("python3 get_trace.py %s %d %d"%(sys.argv[1], v1, x1_0), shell=True)
+if not args.read_trace:
+	subprocess.run("python3 get_trace.py %s %d %d"%(model, v1, x1_0), shell=True)
 
 pygame.init()
 pygame.display.set_caption('Sample Path Simulation')

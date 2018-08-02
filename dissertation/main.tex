@@ -9,6 +9,20 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{float}
+\usepackage{lscape}
+
+\usepackage{caption,subcaption}
+\captionsetup{format=hang,labelsep=space,indention=0cm,labelfont=bf,width=.95\textwidth,skip=1.5\baselineskip}
+\captionsetup[sub]{labelfont=bf,labelsep=period,labelformat=mysublabelfmt}
+
+\makeatletter
+\renewcommand\p@subfigure{\thefigure\,}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+% If desired for table as well:
+% \renewcommand\p@subtable{\thetable\,}
+% \renewcommand\thesubtable{\alph{subtable})}
+\DeclareCaptionLabelFormat{mysublabelfmt}{\alph{sub\@captype}}
+\makeatother
 
 \usepackage{xcolor}
 \usepackage{listings}

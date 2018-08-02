@@ -78,18 +78,18 @@ for driver_i = 1:3
         
         d = ds(d_i);
 %         
-%         x = 0:0.5:80;
-%         val1 = 1/log(80*1000+1)*log(1000*x+1);
-%         val2 = 1/log(80*0.5+1)*log(0.5*x+1);
-%         val3 = 1/log(80*0.01+1)*log(0.01*x+1);
-%         
-%         figure;
-%         hold on;
-%         plot(x,val1);
-%         plot(x,val2);
-%         plot(x,val3);
-% 
-%         pause
+        x = 0:0.5:80;
+        val1 = 1/log(80*1000+1)*log(1000*x+1);
+        val2 = 1/log(80*0.5+1)*log(0.5*x+1);
+        val3 = 1/log(80*0.01+1)*log(0.01*x+1);
+        
+        figure;
+        hold on;
+        plot(x,val1);
+        plot(x,val2);
+        plot(x,val3);
+
+        pause
         
         plC = 1/log(80*log_param_dd(driver_i)+1)*log(log_param_dd(driver_i)*d+1);
         

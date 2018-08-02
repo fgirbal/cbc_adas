@@ -59,8 +59,8 @@ for vi2_i = 1:length(vi2s)
             
             x_y_t = zeros(13*n_iter,3);
             
-%             f = figure(1);
-%             hold on;
+            f = figure(1);
+            hold on;
 
             n_write = 1;
             bad_run_example = zeros(13,3);
@@ -112,7 +112,7 @@ for vi2_i = 1:length(vi2s)
                     temp(idx_sub,:) = [t, x, y];
                     idx_sub = idx_sub + 1;
 
-%                     plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
+                    plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
                 end
 
                 while floor(t) ~= t
@@ -122,7 +122,7 @@ for vi2_i = 1:length(vi2s)
 
                     temp(idx_sub,:) = [t, x, y];
                     idx_sub = idx_sub + 1;
-%                     plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
+                    plot(vehicles_pos(1,1), vehicles_pos(1,2), 'or')
                 end
                 
 %                 sum_x = sum_x + x;
@@ -161,18 +161,18 @@ for vi2_i = 1:length(vi2s)
             bad_p_x = polyfit(bad_run_example(:,1),bad_run_example(:,2),2);
             bad_p_y = polyfit(bad_run_example(:,1),bad_run_example(:,3),6);
             
-%             plot(x_y_t(:,2), x_y_t(:,3),'ob')
-%             plot(bad_run_example(:,2), bad_run_example(:,3),'*r')
-%             p_xy = polyfit(x_y_t(:,2),x_y_t(:,3),5);
-%             bad_p_xy = polyfit(bad_run_example(:,2),bad_run_example(:,3),5);
-%             x1 = linspace(0,max(x_y_t(:,2)));
-%             y1 = polyval(p_xy,x1);
-%             plot(x1,y1,'b')
-%             x1 = linspace(0,max(bad_run_example(:,2)));
-%             y1 = polyval(bad_p_xy,x1);
-%             plot(x1,y1,'r')
-%             
-%             pause
+            plot(x_y_t(:,2), x_y_t(:,3),'ob')
+            plot(bad_run_example(:,2), bad_run_example(:,3),'*r')
+            p_xy = polyfit(x_y_t(:,2),x_y_t(:,3),5);
+            bad_p_xy = polyfit(bad_run_example(:,2),bad_run_example(:,3),5);
+            x1 = linspace(0,max(x_y_t(:,2)));
+            y1 = polyval(p_xy,x1);
+            plot(x1,y1,'b')
+            x1 = linspace(0,max(bad_run_example(:,2)));
+            y1 = polyval(bad_p_xy,x1);
+            plot(x1,y1,'r')
+            
+            pause
             
 %             est_x1 = round(sum_x/n_iter)
             est_vx = max(round(sum_vx/n_iter), vi1);
