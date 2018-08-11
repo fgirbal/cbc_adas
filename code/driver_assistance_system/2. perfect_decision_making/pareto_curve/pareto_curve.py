@@ -6,7 +6,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 26-Jun-2018; Last revision: 10-Jul-2018
+# 10-Aug-2018; Last revision: 11-Aug-2018
 
 import sys, os, subprocess, csv, argparse
 import matplotlib.pyplot as plt
@@ -14,6 +14,7 @@ import numpy as np
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 from matplotlib import cm
+from matplotlib.ticker import FormatStrFormatter
 
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
@@ -25,6 +26,8 @@ parser.add_argument('v', type=int, default=29, help='Initial velocity of the veh
 parser.add_argument('v1', type=int, default=30, help='Initial velocity of the other vehicle.')
 parser.add_argument('x1_0', type=int, default=15, help='Initial position of the other vehicle.')
 parser.add_argument('--cond', '-c', action="store_true", help='If set, conditional probabilities will be displayed.')
+parser.add_argument('--output', '-o', type=str, default="paretopoints", help='Name of the generated file')
+parser.add_argument('--query', '-q', type=str, default="", help='Query to build the Pareto curve on.')
 parser.add_argument('--path', '-p', type=str, default="results", help='Generated file will be saved in PATH.')
 args=parser.parse_args()
 
@@ -32,12 +35,12 @@ v = args.v
 v1 = args.v1
 x1_0 = args.x1_0
 path = args.path
+output = args.output
+query = args.query
 cond = args.cond
 
 
-def obtain_curve():
-	ex_path = "results/r_%s_%s_%s"%(v,v1,x1_0)
-
+def build_model(ex_path):
 	os.system("mkdir %s > /dev/null"%ex_path)
 
 	# Construct the file
@@ -61,7 +64,7 @@ def obtain_curve():
 
 		print(prop + ' : ' + probability)
 
-		if 'Pmax=? [ F (x=500&t<' in prop and probability != "0.0":
+		if 'Pmax=? [ F (x=500&t<' in prop and float(probability) > 0.001:
 			T = int(prop[20:22])
 			Tmin = min(T, Tmin)
 
@@ -69,27 +72,52 @@ def obtain_curve():
 
 	f.close()
 
-	# ------------- Synthesis -------------
-	multi_obj_query = "multi(Pmin=? [F crashed], Pmax=? [F (x=500) & (t<%d)])"%Tmin
-	print('Synthesis using the query "%s"'%multi_obj_query)
-
-	proc = subprocess.Popen('prism -importmodel %s/out.all -pctl "%s" -exportpareto %s/paretopoints.txt'%(ex_path,multi_obj_query,ex_path), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-	output = str(proc.stdout.read())
-
-	f = open("results/r_%s_%s_%s/time.txt"%(v,v1,x1_0), "w")
+	f = open("%s/time.txt"%ex_path, "w")
 	f.write(str(Tmin))
 	f.close()
 
-def draw_curve():
-	ex_path = "results/r_%s_%s_%s"%(v,v1,x1_0)
+
+def synthesis(ex_path, query, output):
+	# ------------- Synthesis -------------
+	if query == "":
+		f = open("%s/time.txt"%ex_path, "r")
+		Tmin = int(f.readline())
+		f.close()
+		multi_obj_query = "multi(Pmin=? [F crashed], Pmax=? [F (x=500) & (t<%d)])"%Tmin
+	else:
+		multi_obj_query = query
+
+	print('Synthesis using the query "%s"...'%multi_obj_query)
+
+	proc = subprocess.Popen('prism -importmodel %s/out.all -pctl "%s" -exportpareto %s/%s.txt'%(ex_path,multi_obj_query,ex_path,output), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+	output_1 = str(proc.stdout.read())
+
+	print('Outputing to %s.txt and %s_query.txt'%(output,output))
+
+	f = open("%s/%s_query.txt"%(ex_path,output), "w")
+	f.write(multi_obj_query)
+	f.close()
+
+
+def draw_curve(ex_path, input_file, cond):
 	x = []
 	y = []
 
-	f = open("%s/time.txt"%ex_path, "r")
-	Tmin = int(f.readline())
+	f = open("%s/%s_query.txt"%(ex_path,input_file), "r")
+	query = f.readline()
 	f.close()
 
-	f = open("%s/paretopoints.txt"%ex_path, "r")
+	# LaTeX display handlers
+	query = query.replace("min=?", "$_{=?}$")
+	query = query.replace("max=?", "$_{=?}$")
+	query = query.replace("&", "\&")
+	query = query.replace("<", "$<$")
+	query = query.replace(">", "$>$")
+
+	xlabel = query.split(',')[0][6:]
+	ylabel = query.split(',')[1][:-1]
+
+	f = open("%s/%s.txt"%(ex_path,input_file), "r")
 	arr_val = f.readline()[2:-1]
 	new_arr = arr_val.split(', (')
 	for tup in new_arr:
@@ -105,6 +133,8 @@ def draw_curve():
 	if cond:
 		for i in range(len(new_y)):
 			new_y[i] = min(new_y[i]/(1-new_x[i]),1)
+
+		ylabel = "%s $||$ F (x=500)]"%ylabel[:-1]
 
 	fig, ax = plt.subplots()
 
@@ -125,19 +155,21 @@ def draw_curve():
 
 		ax.add_collection(p)
 
-	plt.xlabel('P$_{min=?}$ [F crashed]')
-	if not cond:
-		plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s))]'%Tmin)
-	else:
-		plt.ylabel('P$_{max=?}$ [F ((x = 500) \& (t $<$ %s)) $|$ F (x=500)]'%Tmin)
+	plt.xlabel(xlabel)
+	plt.ylabel(ylabel)
+	# plt.title(query)
 
 	plt.show()
 
+def_path = "%s/r_%s_%s_%s"%(path,v,v1,x1_0)
 
-if not os.path.exists("results/r_%s_%s_%s/paretopoints.txt"%(v,v1,x1_0)) or not os.path.exists("results/r_%s_%s_%s/time.txt"%(v,v1,x1_0)):
-	obtain_curve()
+if not os.path.exists("%s/res.txt"%def_path):
+	build_model(def_path)
 
-draw_curve()
+if not os.path.exists("%s/%s.txt"%(def_path,output)):
+	synthesis(def_path, query, output)
+
+draw_curve(def_path, output, cond)
 print('Done.')
 
 

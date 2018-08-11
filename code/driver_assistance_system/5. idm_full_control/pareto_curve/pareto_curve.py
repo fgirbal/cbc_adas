@@ -109,8 +109,8 @@ def draw_curve(ex_path, input_file, cond):
 	f.close()
 
 	# LaTeX display handlers
-	query = query.replace("min=?", "$_{min=?}$")
-	query = query.replace("max=?", "$_{max=?}$")
+	query = query.replace("min=?", "$_{=?}$")
+	query = query.replace("max=?", "$_{=?}$")
 	query = query.replace("&", "\&")
 	query = query.replace("<", "$<$")
 	query = query.replace(">", "$>$")
@@ -135,7 +135,7 @@ def draw_curve(ex_path, input_file, cond):
 		for i in range(len(new_y)):
 			new_y[i] = min(new_y[i]/(1-new_x[i]),1)
 
-		ylabel = "%s $|$ F (x=500)]"%ylabel[:-1]
+		ylabel = "%s $||$ F (x=500)]"%ylabel[:-1]
 
 	fig, ax = plt.subplots()
 
