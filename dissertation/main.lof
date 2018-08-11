@@ -13,6 +13,14 @@
 \contentsline {figure}{\numberline {3.6}{\ignorespaces $\text {P[}lC = true\text {]}$ as a function of $thw_{car}$ and $d$ for vehicles originating from the right lane (a) and left lane (b).\relax }}{35}
 \contentsline {figure}{\numberline {3.7}{\ignorespaces Snapshots of the simulator for one of the paths in the scenario $(d_{type}, v, v_1, x_{1,0}) = (3, 28, 21, 38)$.\relax }}{48}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Overview of the system with the possibilities of the ADAS intervention.\relax }}{50}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Example of the simulation of the lane change for $o_{lane} = 1$ (right lane), $d = 20m$, $v = 15m/s$ and $v_1 = 15m/s$ (the legend of each path corresponds to the situation with parameters $k_{far}, k_{near},k_I$, respectively).\relax }}{54}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Pareto curves for the unconditional properties, for $T = 20$.\relax }}{57}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Pareto curves for the conditional properties, for $T = 20$.\relax }}{58}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Pareto curves for the unconditional properties, for $T = 19$.\relax }}{59}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Pareto curves for the unconditional properties, for $T = 19$ (cont.).\relax }}{60}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Pareto curves for the conditional properties, for $T = 19$.\relax }}{61}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Pareto curves for the conditional properties, for $T = 19$ (cont.).\relax }}{62}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

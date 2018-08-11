@@ -52,7 +52,7 @@ The control law for the steering angle $\varphi$ can be defined as:
 	\Delta \varphi = k_{far} \Delta \theta_{far} + k_{near} \Delta \theta_{near} + k_I \min{(\theta_{near}^{(i)}, \theta_{\max})} \Delta t
 \end{equation}
 
-with $k_{far}$, $k_{near}$ and $k_{I}$ defined as in \cite{salvucci_1}.
+with $k_{far}$, $k_{near},k_{I}$ and $\theta_{\max}$ defined as in \cite{salvucci_1}.
 
 The process for the longitudinal control is very similar. At any cycle $i > 0$, the model starts by encoding the position of the lead vehicle and calculating the time headway $thw_{car}^{(i)}$ to it. It then computes:
 

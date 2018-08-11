@@ -1,4 +1,5 @@
 \chapter{Human Driver Modelling}
+\label{sec:human_driver}
 
 In this chapter, the human driver model that Salvucci presents in \cite{salvucci_1} is implemented and the metrics used to verify the model are established. Initially, the model is implemented in \textit{Matlab} based on the integrated driver model. To be able to verify it using the probabilistic model checking techniques presented in Chapter 2, the model undergoes an abstraction process, out of which a discrete-time Markov chain is obtained using several different approaches and assumptions. Metrics are then established to be able to evaluate whether the model meets the requirements and how well the human performs in a given situation. Finally, a simulator is presented in Section~\ref{sec:simulator} in order to allow visualisation of paths in the model.
 
@@ -94,6 +95,7 @@ The process of abstraction consists in transforming the evolution of the continu
 In the following sections, the abstraction process for the different modules of ACT-R is presented in detail, as well as the thought process behind the choices made. Finally, the unified model is presented using the different modules designed.
 
 \subsection{Non-Probabilistic Control Module}
+\label{sec:non_prob_control}
 
 The control module, as presented in the previous section and following Salvucci's approach in \cite{salvucci_1}, is fully deterministic, in the sense that there is no probabilistic reasoning involved. It makes use of perception (for the near and far points) and two simple control laws which influence the position, velocity and acceleration of the vehicle in the environment.
 
@@ -103,7 +105,7 @@ The straightforward strategy is not, by any standards, efficient in terms of sta
 
 In this approach, the vehicle's position is represented by two discrete integer variables $x \in \{0,...,length\}$ for a given $length$ and $lane \in \{right, left\}$ (can be extended to more than two lanes), and the acceleration and velocity of the vehicle are simply $a = a_x$ and $v = v_x$. Time is still represented in the same way, with $t \in \{0,...,max\_time\}$. If a lane change is decided by the decision making module, then, \textbf{within one transition of the control}, the $lane$ variable is updated with the final destination lane, and the variables $x, v, a$ and $t$ are updated to reflect the obtained values after a lane change. These values are obtained from a look-up table and depend on the distance to the other vehicle ($d$) and the velocities of both the vehicle in question ($v$) and the other vehicle ($v_1$) (an obstacle on the road can be modelled by setting $v_1 = 0$). Additionally, the variable $crashed$ is used to represent whether the vehicle has collided in the process or not. The linear acceleration is implemented similarly using pre-simulation to determine the value of acceleration and the motion law is updated in the model itself.
 
-The continuous model of driver behaviour obtained in the previous section in \textit{Matlab} is used as the basis for the simulation of lane changes and linear acceleration. From this model, look-up tables are obtained which, given an origin lane ($o_{lane}$), a distance to the other vehicle and the velocities of both the vehicle in question and the other vehicle determines whether a crash happened or not, what is the $\Delta x$ and $\Delta T$ incurred (how did the position in $x$ changed and how long did it take), and the final velocity of the vehicle in question. The code presented in Appendix~\ref{sec:control_abs} corresponds to a similar version of the control (but probabilistic, as presented later in this section). An example of the simulation of the scenario $o_{lane} = 1$, $d = 20m$, $v = 15m/s$ and $v_1 = 20m/s$ is shown in Figure~\ref{fig:lane_change_ex}.
+The continuous model of driver behaviour obtained in the previous section in \textit{Matlab} is used as the basis for the simulation of lane changes and linear acceleration. From this model, look-up tables are obtained which, given an origin lane ($o_{lane}$), a distance to the other vehicle and the velocities of both the vehicle in question and the other vehicle determines whether a crash happened or not, what is the $\Delta x$ and $\Delta T$ incurred (how did the position in $x$ changed and how long did it take), and the final velocity of the vehicle in question. The code presented in Appendix~\ref{sec:control_abs} corresponds to a similar version of the control (but probabilistic, as presented later in this section). An example of the simulation of the scenario $o_{lane} = 1$, $d = 20m$, $v = 15m/s$ and $v_1 = 15m/s$ is shown in Figure~\ref{fig:lane_change_ex}.
 
 \begin{figure}[h]
     \centering
@@ -198,6 +200,7 @@ From this, a look-up table can be generated which, for different driver types, y
 The code presented in Appendix~\ref{sec:dm_abs} corresponds to the methods for obtain the unified look-up table used for the decision making and monitoring module.
 
 \subsection{Probabilistic Control Module}
+\label{sec:prob_control}
 
 In light of the uncertainty introduced in the decision making and monitoring module regarding the visual perception of distance, it becomes only natural that this would be extended to the control module as well. In order to cope with this, a probabilistic version of the control module was designed, where the noise $n$ presented in the previous section is taken into consideration. 
 
@@ -352,6 +355,7 @@ By loading and building the model in either PRISM or Storm, it is observable tha
 }
 
 \section{Model Evaluation Metrics}
+\label{sec:model_metrics}
 
 With the model efficiently represented as a DTMC through abstraction, it becomes possible to perform model checking of certain properties on it in order to evaluate the relative performance of different profiles of drivers. In the following subsections, different categories of evaluation are presented and properties representing metrics within that category are proposed and tested in a small population of scenarios (the same test cases used to generate  Table~\ref{tab:sta_tra_example}). In the rest of the dissertation it is assumed (unless explicitly mentioned otherwise) that the test road segment has a length of $500m$.
 
@@ -448,6 +452,7 @@ It should be noted that, for a given set of initial conditions, the lower the qu
 }
 
 \subsection{Liveness Properties}
+\label{sec:live_props}
 
 Liveness can be defined in terms of the efficiency of the drivers, i.e. how quickly do they reach the end of the road. One of the variables of the model is the time, $t$, in seconds since the beginning of the execution. For a given constant $T$, the property:
 
