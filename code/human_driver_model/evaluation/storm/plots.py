@@ -108,7 +108,7 @@ def read_files_to_dict(path):
 
 
 def safety_plots(p, v1_in, x1_0_in):
-	generate_samples(20, v1=v1_in, x1_0=x1_0_in, path=p, seq=True)
+	# generate_samples(20, v1=v1_in, x1_0=x1_0_in, path=p, seq=True)
 
 	x = [];
 	y = [[],[],[]];
@@ -134,7 +134,7 @@ def safety_plots(p, v1_in, x1_0_in):
 
 	plt.ylabel('P$_{=?}$ [F crashed]')
 	plt.xlabel('v [m/s]')
-	plt.title('Safety property for $v_1 = %d$, $x_{1,0} = %d$'%(v1_in, x1_0_in))
+	# plt.title('Safety property for $v_1 = %d$, $x_{1,0} = %d$'%(v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
 	plt.show()
 
@@ -204,9 +204,9 @@ def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
 	
 	plt.legend(loc='upper left')
 
-	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ T) $|$ F (x = 500)]')
+	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ T) $||$ F (x = 500)]')
 	plt.xlabel('T [s]')
-	plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
+	# plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
 	plt.show()
 
@@ -221,7 +221,7 @@ def safety_box_plot(p):
 
 	plt.boxplot(vals, labels=["Aggressive", "Average", "Cautious"], whis=4)
 	plt.ylabel('P$_{=?}$ [F crashed]')
-	plt.title('Safety property')
+	# plt.title('Safety property')
 	plt.show()
 
 
@@ -288,9 +288,9 @@ def liveness_box_plot(T, p):
 	# ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d))]'%time_val]
 
 	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
-	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ %d) $|$ F (x = 500)]'%time_val)
+	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ %d) $||$ F (x = 500)]'%time_val)
 	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d))]'%time_val)
-	plt.title('Liveness property')
+	# plt.title('Liveness property')
 	plt.ylim(-0.05,1.05)
 	plt.show()
 

@@ -20,45 +20,45 @@ Warning--empty year in lam
 Warning--empty journal in abstraction_2
 Warning--empty year in abstraction_2
 Warning--there's a number but no volume in salvucci_0
-You've used 23 entries,
+You've used 24 entries,
             2118 wiz_defined-function locations,
-            637 strings with 7776 characters,
-and the built_in function-call counts, 7925 in all, are:
-= -- 793
-> -- 326
+            641 strings with 7816 characters,
+and the built_in function-call counts, 8118 in all, are:
+= -- 809
+> -- 333
 < -- 8
-+ -- 135
-- -- 106
-* -- 502
-:= -- 1254
-add.period$ -- 72
-call.type$ -- 23
-change.case$ -- 120
++ -- 138
+- -- 108
+* -- 507
+:= -- 1285
+add.period$ -- 74
+call.type$ -- 24
+change.case$ -- 124
 chr.to.int$ -- 0
-cite$ -- 29
-duplicate$ -- 342
-empty$ -- 664
-format.name$ -- 106
-if$ -- 1720
+cite$ -- 30
+duplicate$ -- 349
+empty$ -- 686
+format.name$ -- 108
+if$ -- 1762
 int.to.chr$ -- 0
-int.to.str$ -- 23
+int.to.str$ -- 24
 missing$ -- 24
-newline$ -- 114
-num.names$ -- 44
-pop$ -- 163
+newline$ -- 118
+num.names$ -- 46
+pop$ -- 171
 preamble$ -- 1
-purify$ -- 99
+purify$ -- 102
 quote$ -- 0
-skip$ -- 240
+skip$ -- 250
 stack$ -- 0
-substring$ -- 473
-swap$ -- 94
+substring$ -- 478
+swap$ -- 95
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 88
+type$ -- 92
 warning$ -- 6
-while$ -- 79
-width$ -- 25
-write$ -- 244
+while$ -- 81
+width$ -- 26
+write$ -- 251
 (There were 6 warnings)

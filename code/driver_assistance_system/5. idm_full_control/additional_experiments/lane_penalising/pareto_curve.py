@@ -5,7 +5,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 16-Jul-2018; Last revision: 16-Jul-2018
+# 16-Jul-2018; Last revision: 13-Aug-2018
 
 import sys, os, subprocess, csv, argparse
 import matplotlib.pyplot as plt
@@ -67,8 +67,8 @@ def draw_curve(ex_path, input_file):
 	f.close()
 
 	# LaTeX display handlers
-	query = query.replace("min=?", "$_{min=?}$")
-	query = query.replace("max=?", "$_{max=?}$")
+	query = query.replace("min=?", '$_{=?}$')
+	query = query.replace("max=?", "$_{=?}$")
 	query = query.replace("&", "\&")
 	query = query.replace("<", "$<$")
 	query = query.replace(">", "$>$")

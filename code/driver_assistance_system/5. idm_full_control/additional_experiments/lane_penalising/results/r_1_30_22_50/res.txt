@@ -1,0 +1,7 @@
+Pmin=? [ F crashed ]:
+Result
+0.14441734468692008
+
+Rmin=? [ C ]:
+Result
+Error: Expected minimum total reward (C) is not yet supported for MDPs..

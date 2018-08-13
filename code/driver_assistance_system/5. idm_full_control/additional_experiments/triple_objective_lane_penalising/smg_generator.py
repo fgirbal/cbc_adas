@@ -1,5 +1,6 @@
-# SMG_GENERATOR - Transform the tables into the MDP
-# in order to perform multi-objective synthesis.
+# SMG_GENERATOR - Transform the tables into an SMG
+# in order to perform multi-objective synthesis (with more
+# than 2 properties).
 #
 # VERSION: 
 #	- imperfect decision making (gamma)
@@ -10,7 +11,7 @@
 # Author: Francisco Girbal Eiras, MSc Computer Science
 # University of Oxford, Department of Computer Science
 # Email: francisco.eiras@cs.ox.ac.uk
-# 1-Jul-2018; Last revision: 16-Jul-2018
+# 1-Jul-2018; Last revision: 13-Aug-2018
 
 import sys, csv, argparse, datetime
 

@@ -1,0 +1,13 @@
+step,t,crashed,actrState,lC,x,v,a,k_chosen,lane,_da
+0,0,false,1,false,0,30,0,1,1,2
+1,1,false,2,false,30,30,0,1,1,2
+2,1,false,1,false,30,30,0,1,1,2
+3,2,false,2,false,60,30,0,1,1,2
+4,2,false,1,true,60,30,0,1,1,2
+5,6,false,2,false,178,30,0,3,2,2
+6,6,false,1,false,178,30,0,3,2,2
+7,7,false,2,false,208,30,0,3,2,2
+8,7,false,1,true,208,30,0,3,2,2
+9,13,false,2,false,376,30,0,1,1,2
+10,13,false,1,false,376,30,0,1,1,2
+11,14,false,2,false,400,30,0,1,1,2

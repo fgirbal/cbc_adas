@@ -22,6 +22,17 @@
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Pareto curves for the conditional properties, for $T = 19$.\relax }}{61}
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Pareto curves for the conditional properties, for $T = 19$ (cont.).\relax }}{62}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Plots of the variation of the value of the safety property with the initial velocity of the main vehicle for the conditions $v_1 = 20m/s$ and $x_{1,0} = 35m$.\relax }}{66}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Plots of the variation of the value of the safety property with the initial velocity of the main vehicle for the conditions $v_1 = 22m/s$ and $x_{1,0} = 40m$.\relax }}{67}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Variation of the value of the safety properties with the initial velocities of both vehicles for $x_{1,0} = 50m$.\relax }}{68}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Box plot of the value of the safety properties for a randomly sampled population of 100 different initial conditions (equal in both cases).\relax }}{69}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Plots of the variation of the value of the liveness properties with the value of $T$ (in $s$) for the initial conditions $v = 21m/s$, $v_1 = 19m/s$ and $x_{1,0} = 70m$.\relax }}{72}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Plots of the variation of the value of the liveness properties with the value of $T$ (in $s$) for the initial conditions $v = 26m/s$, $v_1 = 22m/s$ and $x_{1,0} = 46m$.\relax }}{73}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Box plot of the value of the liveness properties for $T = 21s$ for a randomly sampled population of 50 different initial conditions (equal in both cases).\relax }}{74}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Box plot of the value of the liveness properties for $T = 22s$ for a randomly sampled population of 50 different initial conditions (equal in both cases).\relax }}{75}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Pareto curve for the model checking of the lane penalising property.\relax }}{79}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Snapshots of the simulator for one of the paths of the model.\relax }}{80}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Snapshots of the simulator for one of the paths of the model.\relax }}{81}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

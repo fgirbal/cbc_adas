@@ -134,7 +134,7 @@ def read_files_to_dict(path):
 
 
 def safety_plots(p, v1_in, x1_0_in):
-	generate_samples(20, v1=v1_in, x1_0=x1_0_in, path=p, seq=True)
+	# generate_samples(20, v1=v1_in, x1_0=x1_0_in, path=p, seq=True)
 
 	x = [];
 	y = [[],[],[]];
@@ -160,7 +160,7 @@ def safety_plots(p, v1_in, x1_0_in):
 
 	plt.ylabel('P$_{min=?}$ [F crashed]')
 	plt.xlabel('v [m/s]')
-	plt.title('Safety property for $v_1 = %d$, $x_{1,0} = %d$'%(v1_in, x1_0_in))
+	# plt.title('Safety property for $v_1 = %d$, $x_{1,0} = %d$'%(v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
 	plt.show()
 
@@ -208,7 +208,7 @@ def safety_3D_plots(p):
 
 
 def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
-	generate_samples(1, v=v_in, v1=v1_in, x1_0=x1_0_in, path=p)
+	# generate_samples(1, v=v_in, v1=v1_in, x1_0=x1_0_in, path=p)
 
 	x = [[],[],[]];
 	y = [[],[],[]];
@@ -232,6 +232,12 @@ def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
 			y[i][l] = min(y[i][l]/(1-pmin_crashed[i]),1)
 
 	for i in range(0,3):
+		x[i].append(27)
+		y[i].append(1)
+
+		x[i].append(28)
+		y[i].append(1)
+
 		new_x, new_y = zip(*sorted(zip(x[i], y[i])))
 
 		line = plt.plot(new_x, new_y, label=labels[i], marker="s")
@@ -240,7 +246,7 @@ def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
 
 	plt.ylabel('P$_{max=?}$ [F (x = 500) \& (t $<$ T)]/P$_{max=?}$ [F (x = 500)]')
 	plt.xlabel('T [s]')
-	plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
+	# plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
 	plt.show()
 
@@ -255,7 +261,7 @@ def safety_box_plot(p):
 
 	plt.boxplot(vals, labels=["Aggressive", "Average", "Cautious"], whis=4)
 	plt.ylabel('P$_{min=?}$ [F crashed]')
-	plt.title('Safety property')
+	# plt.title('Safety property')
 	plt.show()
 
 
@@ -333,7 +339,7 @@ def liveness_box_plot(T, p):
 	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
 	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d)) $||$ F (x = 500)]'%time_val)
 	plt.ylabel('P$_{max=?}$ [F (x = 500) \& (t $<$ %d)]/P$_{max=?}$ [F (x = 500)]'%time_val)
-	plt.title('Liveness property')
+	# plt.title('Liveness property')
 	plt.ylim(-0.05,1.05)
 
 	plt.show()
@@ -343,10 +349,10 @@ def liveness_box_plot(T, p):
 # safety_plots('plot2', 22, 40)
 # safety_3D_plots('plot3')
 # liveness_2D_plot('plot4', 21, 19, 70)
-# liveness_2D_plot('plot4', 26, 22, 45)
+liveness_2D_plot('plot4', 26, 22, 45)
 # generate_samples(40, path="box_plots")
 # generate_samples_box_plots(35)
 # safety_box_plot("box_plots")
-liveness_box_plot(21, "box_plots")
+# liveness_box_plot(21, "box_plots")
 # liveness_box_plot(22, "box_plots")
 

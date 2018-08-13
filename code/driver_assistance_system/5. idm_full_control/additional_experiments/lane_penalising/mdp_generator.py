@@ -50,7 +50,7 @@ f.write("//Generated on %s.\n\n"%(now.strftime("%d-%m-%Y at %H:%M")))
 f.write("//Version: imperfect decision making, gamma = %.2f; linear acceleration assistance; lane changing assistance; \n\n"%gamma)
 
 f.write("mdp\n\n")
-f.write("const int length = 500; // road length\n")
+f.write("const int length = 400; // road length\n")
 f.write("const int max_time = 35; // maximum time of experiment\n")
 f.write("const double gamma = %.2f; // gamma value\n\n"%gamma)
 f.write("// Other vehicle\n")
