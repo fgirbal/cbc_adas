@@ -39,6 +39,8 @@
     xrightmargin=\dimexpr\fboxsep+\fboxrule,
     breaklines=true,
     basicstyle=\small\tt,
+    showspaces=false,
+    showstringspaces=false,
     keywordstyle=\color{blue}\sf,
     identifierstyle=\color{black},
     commentstyle=\color{cyan},
@@ -119,7 +121,7 @@
 
 \begin{romanpages}          % start roman page numbering
 {\setlength{\parskip}{1pt} \tableofcontents }            % generate and include a table of contents
-{\setlength{\parskip}{1pt} \listoffigures }              % generate and include a list of figures
+% {\setlength{\parskip}{1pt} \listoffigures }              % generate and include a list of figures
 \end{romanpages}            % end roman page numbering
 
 \include{introduction}
@@ -131,11 +133,41 @@
 \include{chapter4}
 \include{conclusion}
 
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\renewcommand{\lstlistingname}{File}
+
+\lstset
+{
+    language={Python},
+    %alsolanguage={PGF/TikZ},
+    frame=none,
+    framesep=\fboxsep,
+    framerule=\fboxrule,
+    rulecolor=\color{gray},
+    keepspaces=true,
+    xleftmargin=\dimexpr\fboxsep+\fboxrule,
+    xrightmargin=\dimexpr\fboxsep+\fboxrule,
+    breaklines=true,
+    basicstyle=\small\tt,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color{blue}\sf,
+    identifierstyle=\color{black},
+    commentstyle=\color{cyan},
+    backgroundcolor=\color{white},
+    tabsize=2,
+    columns=flexible,
+    numbers=left, 
+    numberstyle=\tiny\color{mygray}, 
+    numbersep=8pt,
+    captionpos=t,
+}
+
 %now enable appendix numbering format and include any appendices
 \appendix
-\include{appendix1}
-\include{appendix2}
-\include{appendix3}
+%\include{appendix1}
+%\include{appendix2}
+%\include{appendix3}
 
 %next line adds the Bibliography to the contents page
 \addcontentsline{toc}{chapter}{Bibliography}

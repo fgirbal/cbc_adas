@@ -1,4 +1,5 @@
 \chapter{Literature Review and Definitions}
+\label{sec:background}
 
 This chapter presents the concepts and theory required to understand the methodology, rationale and relevance of this dissertation. It starts by defining a Cognitive Architecture, and goes into more detail about Adaptive Control of Thought - Rational, which is the underlying framework used in the Integrated Driver Modelling described in Section \ref{sec:salvucci} and the basis for the system developed in Chapter 3: \textit{Human Driver Modelling}. The chapter concludes with the introduction of several important concepts in the area of Probabilistic Model Checking, which are essential for modelling, verification and synthesis in this context.
 
@@ -484,6 +485,7 @@ For $P_s (\varphi_2) \neq 0$. It must be emphasised that this is \textbf{not} th
 This does not mean that it is not possible to reason over conditional probabilities in MDPs. For some specific scenarios, it is possible to obtain meaningful bounds which allow comparisons between the ones obtained in DTMCs and MDPs. One of those scenarios is defined in the proposition below, with the proof following it.
 
 \begin{proposition}
+\label{pro:cond_props}
 Consider a Markov decision process $\mathcal{M} = (S, Act, \mathbf{P}, p_{init}, AP, L)$ which admits adversaries $\sigma \in Adv$. Let $\varphi_1, \varphi_2$ be two PCTL path formulas, such that, for any path $\pi \in Paths(s)$: $\pi \models \varphi_1 \Rightarrow \pi \models \varphi_2$. Assume as well that:
 
 \begin{equation}

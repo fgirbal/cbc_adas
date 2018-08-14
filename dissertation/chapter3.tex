@@ -1,4 +1,5 @@
 \chapter{Advanced Driver Assistance Systems}
+\label{sec:adas}
 
 This chapter explores and compares several ideas for assistance systems which can be implemented on top of the human driver model generated in the previous one. It starts by tackling the design of the system in terms of the placement in the existing module based model and the capabilities within it, following an incremental approach (considering the limitations of the vehicle and drivers). It then performs a comparison of the different approaches using two distinct test cases and it concludes which ADAS performs the best (within reasonable assumptions). This solution is then evaluated and compared to the human driver in Chapter~\ref{sec:results}.
 
@@ -95,6 +96,7 @@ In terms of implementation, the MDP is obtained through simply reading the three
 While it would appear to be the case that an ADAS with both decision making and control assistance at the linear acceleration and steering level would be the optimal choice for the driver assistance system, there are no guarantees that this is true. As such, an evaluation and comparison of all the possible designs must be performed in order to determine the best option which can then be compared to the human driver in Chapter~\ref{sec:results}. To do so, it is necessary to establish multi-objective metrics and some meaningful test cases (as testing all the options would be infeasible).
 
 \subsection{Multi-Objective Metrics}
+\label{sec:multi_obj_metrics}
 
 As established in Section~\ref{sec:model_metrics}, safety and liveness are two important metrics which will be used in Chapter~\ref{sec:results} to evaluate the human driver model. Therefore, it makes sense that such properties should be the focus of the synthesis for the driver assistance system. The goal is to minimise the probability of crashing and to maximise the liveness property. This can be obtained using a multi-objective query such as the one below:
 

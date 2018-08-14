@@ -32,8 +32,8 @@
 \contentsline {figure}{\numberline {5.8}{\ignorespaces Box plot of the value of the liveness properties for $T = 22s$ for a randomly sampled population of 50 different initial conditions (equal in both cases).\relax }}{75}
 \contentsline {figure}{\numberline {5.9}{\ignorespaces Pareto curve for the model checking of the lane penalising property.\relax }}{79}
 \contentsline {figure}{\numberline {5.10}{\ignorespaces Snapshots of the simulator for one of the paths of the model.\relax }}{80}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Snapshots of the simulator for one of the paths of the model.\relax }}{81}
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Pareto curve for the model checking of the unsafe driving property.\relax }}{81}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Snapshots of the simulator for one of the paths of the model.\relax }}{82}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
