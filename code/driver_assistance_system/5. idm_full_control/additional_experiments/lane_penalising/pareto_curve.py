@@ -66,6 +66,8 @@ def draw_curve(ex_path, input_file):
 	query = f.readline()
 	f.close()
 
+	floor = True
+
 	# LaTeX display handlers
 	query = query.replace("min=?", '$_{=?}$')
 	query = query.replace("max=?", "$_{=?}$")
@@ -95,10 +97,14 @@ def draw_curve(ex_path, input_file):
 
 	if len(new_x) > 1:
 		new_x.append(max(x))
-		new_y.append(max(y)+2)
-
 		new_x.append(min(x))
-		new_y.append(max(y)+2)
+
+		if floor:
+			new_y.append(min(y)-2)
+			new_y.append(min(y)-2)
+		else:
+			new_y.append(max(y)+2)
+			new_y.append(max(y)+2)
 
 		xy = np.vstack((new_x, new_y)).T
 
