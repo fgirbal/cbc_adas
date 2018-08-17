@@ -36,12 +36,26 @@ Ewin~R Boer and Marika Hoedemaeker.
 John Carr.
 \newblock State "keep right" laws.
 
+\bibitem{prism_games}
+Taolue Chen, Vojt{\v{e}}ch Forejt, Marta Kwiatkowska, David Parker, and Aistis
+  Simaitis.
+\newblock Prism-games: A model checker for stochastic multi-player games.
+\newblock In {\em International Conference on Tools and Algorithms for the
+  Construction and Analysis of Systems}, pages 185--191. Springer, 2013.
+
 \bibitem{pareto}
 Taolue Chen, Vojt{\v{e}}ch Forejt, Marta Kwiatkowska, Aistis Simaitis, and
   Clemens Wiltsche.
 \newblock On stochastic games with multiple objectives.
 \newblock In {\em International Symposium on Mathematical Foundations of
   Computer Science}, pages 266--277. Springer, 2013.
+
+\bibitem{games}
+Taolue Chen, Marta Kwiatkowska, Aistis Simaitis, and Clemens Wiltsche.
+\newblock Synthesis for multi-objective stochastic games: An application to
+  autonomous urban driving.
+\newblock In {\em International Conference on Quantitative Evaluation of
+  Systems}, pages 322--337. Springer, 2013.
 
 \bibitem{state_explosion}
 Edmund~M Clarke, William Klieber, Milo{\v{s}} Nov{\'a}{\v{c}}ek, and Paolo

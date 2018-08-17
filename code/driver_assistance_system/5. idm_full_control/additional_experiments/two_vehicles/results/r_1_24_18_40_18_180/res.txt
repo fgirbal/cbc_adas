@@ -1,0 +1,31 @@
+Pmin=? [ F crashed ]:
+Result
+0.21300236612294401
+
+Pmax=? [ F (x=length&t<19) ]:
+Result
+0.77298883185998
+
+Pmax=? [ F (x=length&t<20) ]:
+Result
+0.7853146464331358
+
+Pmax=? [ F (x=length&t<21) ]:
+Result
+0.7869976338770561
+
+Pmax=? [ F (x=length&t<22) ]:
+Result
+0.7869976338770561
+
+Pmax=? [ F (x=length&t<23) ]:
+Result
+0.7869976338770561
+
+Pmax=? [ F (x=length&t<24) ]:
+Result
+0.7869976338770561
+
+Pmax=? [ F (x=length&t<25) ]:
+Result
+0.7869976338770561

@@ -1,0 +1,4 @@
+Pmin=? [ F crashed ]
+Pmax=? [ F (x=length & t < 15) ]
+Pmax=? [ F (x=length & t < 16) ]
+Pmax=? [ F (x=length & t < 17) ]

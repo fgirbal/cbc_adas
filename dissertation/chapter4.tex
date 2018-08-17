@@ -30,7 +30,7 @@ Pmin=? [F crashed]
 
 These properties are directly comparable, as they represent the same quantitative value (this is not the case with the liveness properties). It should be noted that the lower the value of this property, the safer the system is. This means that these properties can be used not only for comparisons between the human driver alone and the full system (human and driver assistance system) for a given scenario, but also for inter-situational comparisons (i.e. with different initial conditions).
 
-A scenario, in both cases, can be uniquely defined as a tuple $(d_t, v, v_1, x_{1,0})$, where $d_t \in \{1,2,3\}$ is the driver class considered (aggressive, average or cautious, respectively). In practice, this means that, for a road segment of $500m$ and considering $v, v_1 \in \{15,...,34\}$ and $x_{1,0} \in \{1,...,500\}$, there are $20 \times 20 \times 500 \times 3 = 600,000$ different scenarios to consider. Assuming that model checking each of those scenarios for both the human driver and the full system takes 5 minutes each (an assumption which will be challenged in Chapter~\ref{sec:conclusion}), this task would take approximately 2083 days to complete. Given the time frame of this dissertation, this would be infeasible. As such, three other methods where designed as a way to compare both systems: 
+A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1, x_{1,0})$, where $d_{type} \in \{1,2,3\}$ is the driver class considered (aggressive, average or cautious, respectively). In practice, this means that, for a road segment of $500m$ and considering $v, v_1 \in \{15,...,34\}$ and $x_{1,0} \in \{1,...,500\}$, there are $20 \times 20 \times 500 \times 3 = 600,000$ different scenarios to consider. Assuming that model checking each of those scenarios for both the human driver and the full system takes 5 minutes each (an assumption which will be challenged in Chapter~\ref{sec:conclusion}), this task would take approximately 2083 days to complete. Given the time frame of this dissertation, this would be infeasible. As such, three other methods where designed as a way to compare both systems: 
 
 \begin{itemize}
 	\item \textbf{Main vehicle initial velocity test cases}: for two randomly selected tuples $(v_1, x_{1,0})$, the variation of the value of the safety properties for each driver profile with the variation of $v$ were obtained. This directly compares 20 different scenarios for each driver class. The two tuples were randomly generated as $(v_1, x_{1,0}) = (20, 35)$ and $(v_1, x_{1,0}) = (22, 40)$, and the results are presented in Figures~\ref{fig:plot1} and \ref{fig:plot2}, respectively.
@@ -248,6 +248,7 @@ The first drawback has to do with the fact that the comparison in the human and 
 An additional drawback in terms of the liveness properties in the full system (i.e. human driver and ADAS system) case is that these are defined as lower bounds which are not proven to be tight. In fact, in Figure~\ref{fig:plot8}, while the $25\%$ and $75\%$ quartiles appear to be higher in the case of the full system than the human driver model, this is not the case with the median, which is at similar values (or even lower for the class of cautious drivers). From the rest of the data, it would appear that this value might be the result of the fact that the lower bound is not tight and might be underestimating the value of the maximal conditional property for the sample population used. However, this is not certain, and it might also be that the full system is outperformed, in terms of the liveness properties, by the human driver in certain conditions. The use of the unconditional liveness properties here would be meaningless, as it would incur in the safety bias first presented in Section~\ref{sec:live_props}. A solution to this problem would be to develop the tools to model check conditional properties in MDPs, however, this was outside the scope of this dissertation and would be highly time consuming.
 
 \section{Additional Experiments}
+\label{sec:add_exp}
 
 While outside the scope of the main goal of the dissertation of evaluating safety and liveness, additional properties can be used to synthesise strategies for the ADAS which enforce other types of behaviours. 
 
@@ -288,7 +289,7 @@ multi(Pmin=? [F crashed], Rmin=? [C])
 }
 \end{minipage}
 
-To exemplify the use of this reward structure and property, the scenario $(d_t, v, v_1, x_{1,0}) = (1, 30, 22, 50)$ (an aggressive driver with an initial speed of $30m/s$ and a lead vehicle at a distance of $50m$ going at $22m/s$) is considered. It should also be noted that the length of the road segment considered in this case was $400m$. By verifying this property, the Pareto curve obtained is presented in Figure~\ref{fig:lane_penalising_pareto}
+To exemplify the use of this reward structure and property, the scenario $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$ (an aggressive driver with an initial speed of $30m/s$ and a lead vehicle at a distance of $50m$ going at $22m/s$) is considered. It should also be noted that the length of the road segment considered in this case was $400m$. By verifying this property, the Pareto curve obtained is presented in Figure~\ref{fig:lane_penalising_pareto}
 
 \begin{figure}[H]
 \centering
@@ -357,7 +358,7 @@ As observed, minimal time is spent in the left lane, with the main vehicle retur
 
 \subsection{Unsafe by Construction}
 
-Until this point, the assumption has been that the goal of the assistance system was to enforce safety and liveness. However, assume a bad actor has access to the model and the deployment process used in the vehicle. In such a case, it becomes important to evaluate the extent of the damage that such an actor could do. Take the same scenario as above, $(d_t, v, v_1, x_{1,0}) = (1, 30, 22, 50)$. Let's also assume that the bad actor wants the accident to happen after the the driver has driven between the $100$ and $200m$. The following property can be considered:
+Until this point, the assumption has been that the goal of the assistance system was to enforce safety and liveness. However, assume a bad actor has access to the model and the deployment process used in the vehicle. In such a case, it becomes important to evaluate the extent of the damage that such an actor could do. Take the same scenario as above, $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$. Let's also assume that the bad actor wants the accident to happen after the the driver has driven between the $100$ and $200m$. The following property can be considered:
 
 \begin{minipage}{\linewidth}
 {\vspace{1em}
