@@ -10,6 +10,7 @@
 \usepackage{mathtools}
 \usepackage{float}
 \usepackage{lscape}
+\usepackage{url}
 
 \usepackage{caption,subcaption}
 \captionsetup{format=hang,labelsep=space,indention=0cm,labelfont=bf,width=.95\textwidth,skip=1.5\baselineskip}
@@ -113,6 +114,7 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
 
+\newcommand{\red}[1]{\textcolor{red}{#1}}
 
 {\setlength{\parskip}{0em} \maketitle}                  % create a title page from the preamble info
 % \include{dedication}        % include a dedication.tex file
@@ -161,6 +163,7 @@
     numberstyle=\tiny\color{mygray}, 
     numbersep=8pt,
     captionpos=t,
+    basicstyle=\fontsize{10}{11}\sffamily
 }
 
 %now enable appendix numbering format and include any appendices
@@ -169,12 +172,13 @@
 %\include{appendix2}
 %\include{appendix3}
 
+\bibliographystyle{ieeetr}
 %next line adds the Bibliography to the contents page
 \addcontentsline{toc}{chapter}{Bibliography}
 %uncomment next line to change bibliography name to references
 %\renewcommand{\bibname}{References}
-{\setlength{\parskip}{0pt}\bibliography{refs} 	       %use a bibtex bibliography file refs.bib
-\bibliographystyle{plain}  %use the plain bibliography style}
+\bibliography{refs} 	       %use a bibtex bibliography file refs.bib
+%\bibliographystyle{plain}  %use the plain bibliography style}
 
 \end{document}
 

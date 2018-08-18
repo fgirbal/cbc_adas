@@ -9,52 +9,52 @@ A level-1 auxiliary file: chapter2.aux
 A level-1 auxiliary file: chapter3.aux
 A level-1 auxiliary file: chapter4.aux
 A level-1 auxiliary file: conclusion.aux
-The style file: plain.bst
+The style file: ieeetr.bst
 Database file #1: refs.bib
-Warning--to sort, need author or key in prism_example
+Warning--empty institution in crashes
+Warning--empty journal in fv2
 Warning--empty journal in lam
 Warning--empty journal in abstraction_2
 Warning--empty year in abstraction_2
-Warning--there's a number but no volume in salvucci_0
-You've used 26 entries,
-            2118 wiz_defined-function locations,
-            648 strings with 8294 characters,
-and the built_in function-call counts, 9207 in all, are:
-= -- 925
-> -- 384
-< -- 10
-+ -- 158
-- -- 126
-* -- 576
-:= -- 1445
-add.period$ -- 83
-call.type$ -- 26
-change.case$ -- 139
+You've used 47 entries,
+            1876 wiz_defined-function locations,
+            739 strings with 12211 characters,
+and the built_in function-call counts, 12653 in all, are:
+= -- 1215
+> -- 500
+< -- 0
++ -- 187
+- -- 140
+* -- 882
+:= -- 1744
+add.period$ -- 48
+call.type$ -- 47
+change.case$ -- 46
 chr.to.int$ -- 0
-cite$ -- 31
-duplicate$ -- 395
-empty$ -- 768
-format.name$ -- 126
-if$ -- 2011
+cite$ -- 52
+duplicate$ -- 662
+empty$ -- 1275
+format.name$ -- 140
+if$ -- 3090
 int.to.chr$ -- 0
-int.to.str$ -- 26
-missing$ -- 26
-newline$ -- 129
-num.names$ -- 50
-pop$ -- 190
+int.to.str$ -- 47
+missing$ -- 41
+newline$ -- 146
+num.names$ -- 45
+pop$ -- 220
 preamble$ -- 1
-purify$ -- 115
+purify$ -- 0
 quote$ -- 0
-skip$ -- 287
+skip$ -- 432
 stack$ -- 0
-substring$ -- 552
-swap$ -- 117
-text.length$ -- 10
+substring$ -- 827
+swap$ -- 242
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 100
+type$ -- 0
 warning$ -- 5
-while$ -- 91
-width$ -- 28
-write$ -- 277
+while$ -- 130
+width$ -- 49
+write$ -- 440
 (There were 5 warnings)

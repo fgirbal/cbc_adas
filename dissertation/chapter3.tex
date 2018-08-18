@@ -141,7 +141,7 @@ For the sake of brevity, the following numbering will be assumed in the captions
 	\item Decision making with partially compliant drivers + linear acceleration control + steering control ADAS (varies with classes of drivers)
 \end{enumerate}
 
-\subsubsection{$v = 21$ m/s, $v_1 = 19$ m/s, $x_{1,0} = 70$ m}
+\subsubsection{$v = 21$ m/s, $v_1 = 19$ m/s, $x_{1,0} = 70$ m ($T=20$)}
 
 \begin{figure}[H]
 \centering
@@ -305,129 +305,171 @@ For the sake of brevity, the following numbering will be assumed in the captions
 %\caption{Pareto curves for the conditional properties, for $T = 20$ (cont.).}
 %\end{figure}
 
-\subsubsection{$v = 30$ m/s, $v_1 = 22$ m/s, $x_{1,0} = 50$ m}
+\subsubsection{$v = 30$ m/s, $v_1 = 22$ m/s, $x_{1,0} = 50$ m ($T=19$)}
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/1.pdf}
   \subcaption{1}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\end{subfigure}\\
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/2_1.pdf}
   \subcaption{2 (Aggressive drivers)}
 \end{subfigure} 
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/2_2.pdf}
   \subcaption{2 (Average drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/2_3.pdf}
   \subcaption{2 (Cautious drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/3_1.pdf}
   \subcaption{3 (Aggressive drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/3_2.pdf}
   \subcaption{3 (Average drivers)}
 \end{subfigure}
-\caption{Pareto curves for the unconditional properties, for $T = 19$.}
-\end{figure}
-
-\begin{figure}[H] \ContinuedFloat
-\centering
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/3_3.pdf}
   \subcaption{3 (Cautious drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_1.pdf}
   \subcaption{4 (Aggressive drivers)}
 \end{subfigure} 
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_2.pdf}
   \subcaption{4 (Average drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_3.pdf}
   \subcaption{4 (Cautious drivers)}
 \end{subfigure}
-\caption{Pareto curves for the unconditional properties, for $T = 19$ (cont.).}
-\label{fig:test_case_2_uncond}
+\caption{Pareto curves for the unconditional properties, for $T = 19$.}
 \end{figure}
 
+%\begin{figure}[H] \ContinuedFloat
+%\centering
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/3_3.pdf}
+%  \subcaption{3 (Cautious drivers)}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_1.pdf}
+%  \subcaption{4 (Aggressive drivers)}
+%\end{subfigure} 
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_2.pdf}
+%  \subcaption{4 (Average drivers)}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_3.pdf}
+%  \subcaption{4 (Cautious drivers)}
+%\end{subfigure}
+%\caption{Pareto curves for the unconditional properties, for $T = 19$ (cont.).}
+%\label{fig:test_case_2_uncond}
+%\end{figure}
+
 \begin{figure}[H]
+\vspace{3em}
 \centering
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/1.pdf}
   \subcaption{1}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\end{subfigure}\\
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/2_1.pdf}
   \subcaption{2 (Aggressive drivers)}
 \end{subfigure} 
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/2_2.pdf}
   \subcaption{2 (Average drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/2_3.pdf}
   \subcaption{2 (Cautious drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/3_1.pdf}
   \subcaption{3 (Aggressive drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/3_2.pdf}
   \subcaption{3 (Average drivers)}
 \end{subfigure}
-\caption{Pareto curves for the conditional properties, for $T = 19$.}
-\end{figure}
-
-\begin{figure}[H] \ContinuedFloat
-\centering
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/3_3.pdf}
   \subcaption{3 (Cautious drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_1.pdf}
   \subcaption{4 (Aggressive drivers)}
 \end{subfigure} 
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_2.pdf}
   \subcaption{4 (Average drivers)}
 \end{subfigure}
-\begin{subfigure}{0.49\textwidth}
+\begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_3.pdf}
   \subcaption{4 (Cautious drivers)}
 \end{subfigure}
-\caption{Pareto curves for the conditional properties, for $T = 19$ (cont.).}
-\label{fig:test_case_2_cond}
+
+\caption{Pareto curves for the conditional properties, for $T = 19$.}
 \end{figure}
+
+%\begin{figure}[H] \ContinuedFloat
+%\centering
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/3_3.pdf}
+%  \subcaption{3 (Cautious drivers)}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_1.pdf}
+%  \subcaption{4 (Aggressive drivers)}
+%\end{subfigure} 
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_2.pdf}
+%  \subcaption{4 (Average drivers)}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%  \centering
+%  \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_3.pdf}
+%  \subcaption{4 (Cautious drivers)}
+%\end{subfigure}
+%\caption{Pareto curves for the conditional properties, for $T = 19$ (cont.).}
+%\label{fig:test_case_2_cond}
+%\end{figure}
 
 \subsection{Overall Comparison}
 

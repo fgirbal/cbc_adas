@@ -1,9 +1,11 @@
 \chapter{Experimental Results}
 \label{sec:results}
 
-In this chapter, the performance of the driver assistance system is evaluated by comparing the value of quantitative properties in the human driver model obtained in Chapter~\ref{sec:human_driver} to similar properties in the model of the human driver with the ADAS designed in Chapter~\ref{sec:adas} (decision making with partially compliant drivers and with active linear acceleration and steering control). This is achieved using the various metrics defined throughout the dissertation, through random test cases of initial conditions and further comparison using a randomly generated sample population. After a discussion of the main results, some additional experiments regarding different properties outside the scope of the extensive comparison are presented.
+In this chapter, the performance of the driver assistance system is evaluated by comparing the value of quantitative properties in the human driver model obtained in Chapter~\ref{sec:human_driver} to similar properties in the model of the human driver with the ADAS designed in Chapter~\ref{sec:adas} (decision making with partially compliant drivers and with active linear acceleration and steering control). This is achieved using the various metrics defined throughout the dissertation, through random test cases of initial conditions and further comparison using a randomly generated sample population. After a discussion of the main results, some demonstrations of possible extensions regarding different properties outside the scope of the performance evaluation and scenarios with more vehicles are presented.
 
-\section{Human driver and ADAS comparison}
+\section{Performance Evaluation of ADAS}
+
+\red{Add table with number of states and transitions for human and ADAS and with building times}
 
 \subsection{Safety Results}
 \label{sec:res_safety}
@@ -40,12 +42,12 @@ A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot1_1.pdf}
   \subcaption{Human driver model}
 \end{subfigure}
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot1_2.pdf}
   \subcaption{ADAS}
@@ -56,12 +58,12 @@ A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot2_1.pdf}
   \subcaption{Human driver model}
 \end{subfigure}
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot2_2.pdf}
   \subcaption{ADAS}
@@ -72,17 +74,17 @@ A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.5\textwidth}
+\begin{subfigure}{0.55\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot3_aggressive.pdf}
   \subcaption{Aggressive drivers}
 \end{subfigure}
-\begin{subfigure}{0.5\textwidth}
+\begin{subfigure}{0.55\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot3_average.pdf}
   \subcaption{Average drivers}
 \end{subfigure} 
-\begin{subfigure}{0.5\textwidth}
+\begin{subfigure}{0.55\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot3_cautious.pdf}
   \subcaption{Cautious drivers}
@@ -93,12 +95,12 @@ A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot6_1.pdf}
   \subcaption{Human driver model}
 \end{subfigure}
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/safety/plot6_2.pdf}
   \subcaption{ADAS}
@@ -143,7 +145,7 @@ since intuitively the interest is in adversaries which maximise the conditional 
 Therefore, a lower bound on the conditional probability, $\zeta$, can be obtained using the quantitative properties:
 
 \begin{equation}
-	\zeta = \frac{\text{\texttt{Pmax=? [F (x=length) \& (t<T)]}}}{\text{\texttt{Pmax=? [F (x=length)]}}}
+	\zeta(T) = \frac{\text{\texttt{Pmax=? [F (x=length) \& (t<T)]}}}{\text{\texttt{Pmax=? [F (x=length)]}}}
 \end{equation}
 
 At this point it should also be noted that (as described in Section~\ref{sec:multi_obj_metrics}):
@@ -155,7 +157,7 @@ At this point it should also be noted that (as described in Section~\ref{sec:mul
 so long as $p_{\max, s} (\text{\texttt{F (crashed | x = length)}}) = p_{\min, s} (\text{\texttt{F (crashed | x = length)}}) = 1$ (completeness property for the MDP). Therefore, $\zeta$ can be re-written as:
 
 \begin{equation}
-	\zeta = \frac{\text{\texttt{Pmax=? [F (x=length) \& (t<T)]}}}{1 - \text{\texttt{Pmin=? [F crashed]}}}
+	\zeta(T) = \frac{\text{\texttt{Pmax=? [F (x=length) \& (t<T)]}}}{1 - \text{\texttt{Pmin=? [F crashed]}}}
 \end{equation}
 
 As was the case with the safety properties, model checking the entire space of possible initial conditions would be infeasible given the time frame of this dissertation. Similarly, two methods were designed to compare both systems at the liveness level:
@@ -167,12 +169,12 @@ As was the case with the safety properties, model checking the entire space of p
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot4_1.pdf}
   \subcaption{Human driver model}
 \end{subfigure}
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot4_2.pdf}
   \subcaption{ADAS}
@@ -183,12 +185,12 @@ As was the case with the safety properties, model checking the entire space of p
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot5_1.pdf}
   \subcaption{Human driver model}
 \end{subfigure}
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot5_2.pdf}
   \subcaption{ADAS}
@@ -199,33 +201,33 @@ As was the case with the safety properties, model checking the entire space of p
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot7_1.pdf}
   \subcaption{Human driver model}
 \end{subfigure}
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot7_2.pdf}
   \subcaption{ADAS}
 \end{subfigure} 
-\caption{Box plot of the value of the liveness properties for $T = 21s$ for a randomly sampled population of 50 different initial conditions (equal in both cases).}
+\caption{Box plot of the value of the liveness properties for $T = 21s$ for a randomly sampled population of 100 different initial conditions (equal in both cases).}
 \label{fig:plot7}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot8_1.pdf}
   \subcaption{Human driver model}
 \end{subfigure}
-\begin{subfigure}{0.75\textwidth}
+\begin{subfigure}{0.49\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{results/liveness/plot8_2.pdf}
   \subcaption{ADAS}
 \end{subfigure} 
-\caption{Box plot of the value of the liveness properties for $T = 22s$ for a randomly sampled population of 50 different initial conditions (equal in both cases).}
+\caption{Box plot of the value of the liveness properties for $T = 22s$ for a randomly sampled population of 100 different initial conditions (equal in both cases).}
 \label{fig:plot8}
 \end{figure}
 
@@ -247,7 +249,7 @@ The first drawback has to do with the fact that the comparison in the human and 
 
 An additional drawback in terms of the liveness properties in the full system (i.e. human driver and ADAS system) case is that these are defined as lower bounds which are not proven to be tight. In fact, in Figure~\ref{fig:plot8}, while the $25\%$ and $75\%$ quartiles appear to be higher in the case of the full system than the human driver model, this is not the case with the median, which is at similar values (or even lower for the class of cautious drivers). From the rest of the data, it would appear that this value might be the result of the fact that the lower bound is not tight and might be underestimating the value of the maximal conditional property for the sample population used. However, this is not certain, and it might also be that the full system is outperformed, in terms of the liveness properties, by the human driver in certain conditions. The use of the unconditional liveness properties here would be meaningless, as it would incur in the safety bias first presented in Section~\ref{sec:live_props}. A solution to this problem would be to develop the tools to model check conditional properties in MDPs, however, this was outside the scope of this dissertation and would be highly time consuming.
 
-\section{Additional Experiments}
+\section{Demonstration of Possible Extensions}
 \label{sec:add_exp}
 
 While outside the scope of the main goal of the dissertation of evaluating safety and liveness, additional properties can be used to synthesise strategies for the ADAS which enforce other types of behaviours. 
@@ -358,7 +360,7 @@ As observed, minimal time is spent in the left lane, with the main vehicle retur
 
 \subsection{Unsafe by Construction}
 
-Until this point, the assumption has been that the goal of the assistance system was to enforce safety and liveness. However, assume a bad actor has access to the model and the deployment process used in the vehicle. In such a case, it becomes important to evaluate the extent of the damage that such an actor could do. Take the same scenario as above, $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$. Let's also assume that the bad actor wants the accident to happen after the the driver has driven between the $100$ and $200m$. The following property can be considered:
+Until this point, the assumption has been that the goal of the assistance system was to enforce safety and liveness. However, assume a bad actor has access to the model and the deployment process used in the vehicle. In such a case, it becomes important to evaluate the extent of the damage that such an actor could do. Take the same scenario as above, $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$. Let's also assume that the bad actor wants the accident to happen after the the driver has driven between the $100$ and $200m$, for a road segment of $400m$. The following property can be considered:
 
 \begin{minipage}{\linewidth}
 {\vspace{1em}
@@ -408,11 +410,80 @@ This property maximises the probability of crashing, while requiring the vehicle
 \label{fig:unsafe_sim}
 \end{figure}
 
+\subsection{Three Vehicle Highway Scenario}
 
+So far the scenarios studied have assumed there are only two vehicles on the road: the main vehicle considered and another lead vehicle. It would be interesting to extend the current model to a simple three vehicle scenario. 
 
+In this case, it was considered that two other vehicles were on the road, each starting at a certain distance from the main vehicle, $x_{1,0}$ and $x_{2,0}$, respectively, and going at a constant velocity of $v_1$ and $v_2$, respectively, with $x_{1,0} < x_{2,0}$ and $v_1 \leq v_2$. A scenario in this case is thus represented by a tuple $(d_{type}, v, v_1, x_{1,0}, v_2, x_{2,0})$. The model is obtained by adding a variable, $focusVehicle \in \{1,2\}$ which defines which vehicle is the current focus of attention of the driver. The constant movement of the two vehicles are simply defined as:
 
+\begin{equation}
+\begin{aligned}
+	x_1(t) & = x_{1,0} + v_1\cdot t\\
+	x_2(t) & = x_{2,0} + v_2\cdot t
+\end{aligned}
+\end{equation}
 
+Considering $i = focusVehicle$ (for conciseness sake), the distance between the two vehicles can be then obtained as:
 
+\begin{equation}
+	d(t) = \lvert x(t) - x_i(t) \rvert
+\end{equation}
+
+And the boolean function $posDist$ can be defined as:
+
+\begin{equation}
+posDist(t) = 
+     \begin{cases}
+       \text{true,} &\quad\text{if }x(t) \geq x_i(t)\\
+       \text{false,} &\quad\text{otherwise.} \\
+     \end{cases}
+\end{equation}
+
+As soon as the main vehicle overtakes the first vehicle successfully, $focusVehicle$ becomes $2$ and the formulas switch from the first to the second vehicle. 
+
+This constitutes an efficient way of introducing an additional vehicle in the model, as it is essentially achieved through the use of a single variable and the modifying of the required formulas. It should be noted that, despite this, the reachable states in the model will increase as well as the size of the model definition from the need to include more of the lane changing look-up table (for $v_1$ and $v_2$). 
+
+Take, as an example, the case $(d_{type}, v, v_1, x_{1,0}, v_2, x_{2,0}) = (3, 24, 17, 35, 18, 140)$, that is, a cautious driver going at $24m/s$ and two lead vehicles, one starting $35m$ in front of the main and going at $17m/s$, and the other one starting at $140m$ and going at $18m/s$. In this scenario, for simulation purposes, it is considered that the length of the road segment is $400m$. Building the model, an MDP with $52,059$ states is obtained. By verifying the property \texttt{Pmin=? [F crashed]}, the value of this property comes out to be $0.1580$ and \texttt{Pmax=? [F (x=length) \& (t<16)]} is the property with the lowest $T$ with a non-zero value, with a value of $0.1193$. As such, the following multi-objective property:
+
+\begin{minipage}{\linewidth}
+{\vspace{1em}
+\begin{lstlisting}
+multi(Pmax=? [F x=400 & t < 16], P<=0.158 [F crashed])
+\end{lstlisting}
+}
+\end{minipage}
+
+generates an adversary which maximises this liveness property while guaranteeing the minimum value possible for the liveness property. The adversary obtained permits the generation of paths such as the one presented in the simulator frames in Figure~\ref{fig:three_vehicle_sim} (for a slightly modified simulator which includes information about the two other vehicles). It should be noted that, while the simulation continues after $400m$, the model is considers a road segment of length $400m$ (it continues past this point in this case because the main vehicle is performing a lane change).
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.75\textwidth}
+  \centering
+  \includegraphics[width=1\textwidth]{results/additional/two_1.png}
+\end{subfigure}\\ \vspace{2px}
+\begin{subfigure}{0.75\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{results/additional/two_2.png}
+\end{subfigure} \\ \vspace{2px}
+\begin{subfigure}{0.75\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{results/additional/two_3.png}
+\end{subfigure} \\ \vspace{2px}
+\begin{subfigure}{0.75\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{results/additional/two_4.png}
+\end{subfigure} \\ \vspace{2px}
+\begin{subfigure}{0.75\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{results/additional/two_5.png}
+\end{subfigure} \\ \vspace{2px}
+\begin{subfigure}{0.75\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{results/additional/two_6.png}
+\end{subfigure}
+\caption{Snapshots of the simulator for one of the paths of the model.}
+\label{fig:three_vehicle_sim}
+\end{figure}
 
 
 

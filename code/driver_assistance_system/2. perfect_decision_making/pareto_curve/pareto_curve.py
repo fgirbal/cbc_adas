@@ -18,7 +18,7 @@ from matplotlib.ticker import FormatStrFormatter
 
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
-plt.rc('font', size=13)
+plt.rc('font', size=24)
 
 parser=argparse.ArgumentParser(
     description='''Generate the model, perform verification to obtain the appropriate multi-objective synthesis problem and perform synthesis to obtain the pareto curve desired.''')
@@ -155,10 +155,11 @@ def draw_curve(ex_path, input_file, cond):
 
 		ax.add_collection(p)
 
-	plt.xlabel(xlabel)
-	plt.ylabel(ylabel)
+	plt.xlabel(xlabel, fontsize=18)
+	plt.ylabel(ylabel, fontsize=18)
 	# plt.title(query)
 
+	plt.subplots_adjust(right=0.95, top=0.95, left=0.19, bottom=0.16)
 	plt.show()
 
 def_path = "%s/r_%s_%s_%s"%(path,v,v1,x1_0)

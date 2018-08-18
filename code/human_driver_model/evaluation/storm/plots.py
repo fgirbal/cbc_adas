@@ -15,7 +15,7 @@ import matplotlib as mpl
 
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
-plt.rc('font', size=13)
+plt.rc('font', size=24)
 
 # Generate samples for some of the graphs
 # seq = True iff two out of (v, v1, x1_0) are set
@@ -130,12 +130,14 @@ def safety_plots(p, v1_in, x1_0_in):
 
 		line = plt.plot(new_x, new_y, label=labels[i], marker="s")
 	
-	plt.legend(loc='upper left')
+	plt.legend(loc='upper left', fontsize=18)
 
-	plt.ylabel('P$_{=?}$ [F crashed]')
-	plt.xlabel('v [m/s]')
+	plt.ylabel('P$_{=?}$ [F crashed]', fontsize=18)
+	plt.xlabel('v [m/s]', fontsize=18)
 	# plt.title('Safety property for $v_1 = %d$, $x_{1,0} = %d$'%(v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
+
+	plt.subplots_adjust(right=0.95, top=0.95, left=0.19, bottom=0.16)
 	plt.show()
 
 
@@ -202,12 +204,14 @@ def liveness_2D_plot(p, v_in, v1_in, x1_0_in):
 
 		line = plt.plot(new_x, new_y, label=labels[i], marker="s")
 	
-	plt.legend(loc='upper left')
+	plt.legend(loc='lower right', fontsize=18)
 
-	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ T) $||$ F (x = 500)]')
-	plt.xlabel('T [s]')
+	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ T) $||$ F (x = 500)]', fontsize=16)
+	plt.xlabel('T [s]', fontsize=18)
 	# plt.title('Liveness property for $v = %d$, $v_1 = %d$, $x_{1,0} = %d$'%(v_in, v1_in, x1_0_in))
 	plt.xticks(np.arange(min(new_x)-1, max(new_x)+1, 2))
+
+	plt.subplots_adjust(right=0.95, top=0.95, left=0.17, bottom=0.16)
 	plt.show()
 
 
@@ -220,8 +224,10 @@ def safety_box_plot(p):
 	vals[2] = props_dict[2]['P=? [F crashed]']
 
 	plt.boxplot(vals, labels=["Aggressive", "Average", "Cautious"], whis=4)
-	plt.ylabel('P$_{=?}$ [F crashed]')
+	plt.ylabel('P$_{=?}$ [F crashed]', fontsize=18)
 	# plt.title('Safety property')
+
+	plt.subplots_adjust(right=0.95, top=0.95, left=0.17, bottom=0.12)
 	plt.show()
 
 
@@ -288,14 +294,16 @@ def liveness_box_plot(T, p):
 	# ts[2] = props_dict[2]['P=? [F ((x = 500) & (t < %d))]'%time_val]
 
 	plt.boxplot(ts, labels=["Aggressive", "Average", "Cautious"], whis=1.5)
-	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ %d) $||$ F (x = 500)]'%time_val)
+	plt.ylabel('P$_{=?}$ [F (x = 500) \& (t $<$ %d) $||$ F (x = 500)]'%time_val, fontsize=16)
 	# plt.ylabel('P$_{=?}$ [F ((x = 500) \& (t $<$ %d))]'%time_val)
 	# plt.title('Liveness property')
 	plt.ylim(-0.05,1.05)
+
+	plt.subplots_adjust(right=0.95, top=0.95, left=0.17, bottom=0.12)
 	plt.show()
 
 
-# safety_plots('plot1', 20, 35)
+safety_plots('plot1', 20, 35)
 # safety_plots('plot2', 22, 40)
 # safety_3D_plots('plot3')
 # liveness_2D_plot('plot4', 21, 19, 70)
@@ -303,5 +311,5 @@ def liveness_box_plot(T, p):
 # generate_samples(250, path="box_plots")
 # safety_box_plot("box_plots")
 # liveness_box_plot(21, "box_plots")
-liveness_box_plot(22, "box_plots")
+# liveness_box_plot(22, "box_plots")
 
