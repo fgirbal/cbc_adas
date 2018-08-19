@@ -70,6 +70,12 @@ J.~Somers, ``The coming software apocalypse.''
   \url{http://www.theatlantic.com/technology/archive/2017/09/saving-the-world-from-code/540393/},
   Sep 2017 (accessed August 18, 2018).
 
+\bibitem{games2}
+M.~Z. Kwiatkowska, ``Model checking and strategy synthesis for stochastic
+  games: From theory to practice (invited talk),'' in {\em LIPIcs-Leibniz
+  International Proceedings in Informatics}, vol.~55, Schloss
+  Dagstuhl-Leibniz-Zentrum fuer Informatik, 2016.
+
 \bibitem{software_1}
 B.~Abbott, T.~Bapty, C.~Biegl, G.~Karsai, and J.~Sztipanovits, ``Model-based
   software synthesis,'' {\em IEEE Software}, no.~3, pp.~42--52, 1993.

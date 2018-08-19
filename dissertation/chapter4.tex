@@ -5,7 +5,39 @@ In this chapter, the performance of the driver assistance system is evaluated by
 
 \section{Performance Evaluation of ADAS}
 
-\red{Add table with number of states and transitions for human and ADAS and with building times}
+The first step towards the comparison between the human driver model and the full system (human driver with the ADAS designed) lies in the building of the model and, as such, it is only natural that the evaluation should start by comparing the state space and building time of each of the two models.
+
+\subsection{State Space and Building Time Results}
+\label{sec:res_state}
+
+A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1, x_{1,0})$, where $d_{type} \in \{1,2,3\}$ is the driver class considered (aggressive, average or cautious, respectively). In practice, this means that, for a road segment of $500m$ and considering $v, v_1 \in \{15,...,34\}$ and $x_{1,0} \in \{1,...,500\}$, there are $20 \times 20 \times 500 \times 3 = 600,000$ different scenarios to consider. Assuming that the building time of each of those scenarios for both the human driver and the full system takes 5 minutes each, this task would take approximately 2083 days to complete. Given the time frame of this dissertation, this would be infeasible. As such, a sample population of 10 random scenarios were generated and the results in terms of the number of states (\#S), the number of transitions (\#T) of the built model and time, in seconds, (t [s]) it took to build the model\footnote{The models were built using a Macbook Pro with a 2,6 GHz Intel Core i7 (quad core). The human model results were obtained using Storm's sparse engine, while the full system results were obtained using PRISM's hybrid engine.} are presented in Table~\ref{tab:state_space_res}.
+
+\vspace{1em}
+\bgroup
+\def\arraystretch{1.3}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{$d_{type}$}} & \multicolumn{1}{c|}{\multirow{2}{*}{$v$}} & \multicolumn{1}{c|}{\multirow{2}{*}{$v_1$}} & \multicolumn{1}{c|}{\multirow{2}{*}{$x_{1,0}$}} & \multicolumn{3}{c|}{\textbf{Human}}                                                                             & \multicolumn{3}{c|}{\textbf{Human and ADAS}}                                                                    \\ \cline{5-10} 
+\multicolumn{1}{|c|}{}                            & \multicolumn{1}{c|}{}                     & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                           & \multicolumn{1}{c|}{\textbf{\#S}} & \multicolumn{1}{c|}{\textbf{\#T}} & \multicolumn{1}{c|}{\textbf{t {[}s{]}}} & \multicolumn{1}{c|}{\textbf{\#S}} & \multicolumn{1}{c|}{\textbf{\#T}} & \multicolumn{1}{c|}{\textbf{t {[}s{]}}} \\ \hline \hline
+1                                                 & 34                                        & 18                                          & 78                                              & 106                               & 119                               & 2.479                                   & 12,213                            & 26,743                            & 309.949                                 \\ \hline
+1                                                 & 31                                        & 31                                          & 52                                              & 227                               & 251                               & 4.064                                   & 103,531                           & 360,505                           & 269.900                                 \\ \hline
+2                                                 & 22                                        & 18                                          & 64                                              & 358                               & 399                               & 5.327                                   & 401,632                           & 1,231,288                         & 282.307                                 \\ \hline
+3                                                 & 28                                        & 25                                          & 58                                              & 334                               & 399                               & 4.695                                   & 209,143                           & 710,168                           & 277.272                                 \\ \hline
+1                                                 & 24                                        & 24                                          & 84                                              & 278                               & 316                               & 4.264                                   & 320,088                           & 1,055,570                         & 281.231                                 \\ \hline
+3                                                 & 21                                        & 19                                          & 68                                              & 364                               & 426                               & 5.262                                   & 448,145                           & 1,414,788                         & 290.160                                 \\ \hline
+2                                                 & 24                                        & 17                                          & 52                                              & 215                               & 238                               & 3.623                                   & 225,095                           & 650,096                           & 297.895                                 \\ \hline
+3                                                 & 29                                        & 29                                          & 66                                              & 212                               & 237                               & 4.025                                   & 153,464                           & 530,137                           & 279.170                                 \\ \hline
+2                                                 & 25                                        & 17                                          & 44                                              & 153                               & 168                               & 3.276                                   & 63,403                            & 156,201                           & 302.744                                 \\ \hline
+2                                                 & 31                                        & 20                                          & 40                                              & 85                                & 94                                & 2.559                                   & 22,135                            & 50,746                            & 267.165                                 \\ \hline
+\end{tabular}
+\caption{Result of the state space and build time for 10 test cases.}
+\label{tab:state_space_res}
+\end{table}
+\egroup
+
+As expected, the state space is considerably larger in the full system than in the human driver model alone. However, the time for model construction in both cases is larger than expected for models of such dimensions, particularly when compared to other similar results in \cite{lam}. For a similarly obtained randomly generated sample of 100 test cases, the average build time for the human model was $3.861$s and in the case of the full system this value was $283.256$s.
 
 \subsection{Safety Results}
 \label{sec:res_safety}
@@ -32,7 +64,7 @@ Pmin=? [F crashed]
 
 These properties are directly comparable, as they represent the same quantitative value (this is not the case with the liveness properties). It should be noted that the lower the value of this property, the safer the system is. This means that these properties can be used not only for comparisons between the human driver alone and the full system (human and driver assistance system) for a given scenario, but also for inter-situational comparisons (i.e. with different initial conditions).
 
-A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1, x_{1,0})$, where $d_{type} \in \{1,2,3\}$ is the driver class considered (aggressive, average or cautious, respectively). In practice, this means that, for a road segment of $500m$ and considering $v, v_1 \in \{15,...,34\}$ and $x_{1,0} \in \{1,...,500\}$, there are $20 \times 20 \times 500 \times 3 = 600,000$ different scenarios to consider. Assuming that model checking each of those scenarios for both the human driver and the full system takes 5 minutes each (an assumption which will be challenged in Chapter~\ref{sec:conclusion}), this task would take approximately 2083 days to complete. Given the time frame of this dissertation, this would be infeasible. As such, three other methods where designed as a way to compare both systems: 
+As such, three other methods where designed as a way to compare both systems: 
 
 \begin{itemize}
 	\item \textbf{Main vehicle initial velocity test cases}: for two randomly selected tuples $(v_1, x_{1,0})$, the variation of the value of the safety properties for each driver profile with the variation of $v$ were obtained. This directly compares 20 different scenarios for each driver class. The two tuples were randomly generated as $(v_1, x_{1,0}) = (20, 35)$ and $(v_1, x_{1,0}) = (22, 40)$, and the results are presented in Figures~\ref{fig:plot1} and \ref{fig:plot2}, respectively.
@@ -252,7 +284,7 @@ An additional drawback in terms of the liveness properties in the full system (i
 \section{Demonstration of Possible Extensions}
 \label{sec:add_exp}
 
-While outside the scope of the main goal of the dissertation of evaluating safety and liveness, additional properties can be used to synthesise strategies for the ADAS which enforce other types of behaviours. 
+While outside the scope of the main goal of the dissertation of evaluating safety and liveness, extensions of the work presented can be obtained fairly easily. They can be achieved through additional properties that can be used to synthesise strategies for the ADAS which enforce other types of behaviours or through minor modifications of the model to encompass different assumptions.
 
 \subsection{Left Lane Penalising}
 
