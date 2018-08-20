@@ -235,6 +235,9 @@ A.~Mohr, ``A survey of state abstraction techniques for markov decision
 \bibitem{thw}
 H.~C. Manual, ``Highway capacity manual,'' {\em Washington, DC}, vol.~11, 2000.
 
+\bibitem{pygame}
+P.~Shinners, ``pygame.'' \url{https://github.com/pygame/pygame}, 2011.
+
 \bibitem{carr}
 J.~Carr, ``State "keep right" laws.'' \url{http://www.mit.edu/~jfc/right.html},
   (accessed August 18, 2018).

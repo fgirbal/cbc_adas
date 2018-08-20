@@ -19,7 +19,7 @@ The overall view of the system is presented in Figure~\ref{fig:driver_model_over
     \label{fig:driver_model_overview}
 \end{figure}
 
-The monitoring module is implemented according to the flowchart presented in Figure~\ref{fig:monitor}, from the description given in \cite{salvucci_1}. The threshold for monitoring is set at $0.2$, as this is the value suggested by Salvucci in \cite{salvucci_1}. The output of this process corresponds to altering the global variable $a$ corresponding to the declarative memory cell composed of $k$ chunks. No specific value for $k$ is given by Salvucci in \cite{salvucci_1}, but it is taken to be 8 from \cite{lam}. The function \texttt{GET\_DISTANCE} is not described in depth due to the fact that it is trivial under the assumption stated in the previous paragraph.
+The monitoring module is implemented according to the flowchart presented in Figure~\ref{fig:monitor}, from the description given in \cite{salvucci_1}. The threshold for monitoring is set at $0.2$, as this is the value suggested by Salvucci in \cite{salvucci_1}. The output of this process corresponds to altering the global variable $a$ corresponding to the declarative memory cell composed of $k$ chunks. No specific value for $k$ is given by Salvucci in \cite{salvucci_1}, but it is taken to be 8 from \cite{lam}. The function \texttt{GET\_DISTANCE} is not described in depth due to the fact that it is trivial under the assumption stated previously.
 
 The overall flowchart of the decision making module is shown in Figure~\ref{fig:dm}. The high level part is similar to the flowchart presented in Figure~\ref{fig:flowchart_dm}, with small differences related to the loading of variables and information from the different memories available. It is worth noticing that the control makes use of the function \texttt{LOOK\_VEHICLE} initially presented in the monitoring module to verify the presence of a vehicle in a relative position of a lane. The flow of the function \texttt{SET\_LANE\_FOLLOWING} is also omitted due to the trivial nature of this function under the assumptions made.
 
@@ -84,7 +84,7 @@ where $\mathbf{x}(t) = (x(t), y(t))$, $\mathbf{v}(t) = (v_x(t), v_y(t))$, and $\
 \label{fig:control}
 \end{figure}
 
-In this case, as Salvucci mentions in \cite{salvucci_1}, $\Delta t = 0.5s$. It is also assumed that the vehicle does go over or under the speed limits, and therefore, $v_x \in [15, 34]\text{ }m/s$ (between $50km/h$ and $120km/h$ - typical limits in highway speeds).
+In this case, as Salvucci mentions in \cite{salvucci_1}, $\Delta t = 0.5s$. It is also assumed that the vehicle complies with the speed limits, and, therefore, $v_x \in [15, 34]\text{ }m/s$ (between $50km/h$ and $120km/h$ - typical limits in highway speeds).
 
 Using these assumptions, the continuous driver model is implemented in \textit{Matlab} as presented in Appendix~\ref{sec:appendix_cont}.
 
@@ -99,7 +99,7 @@ In the following sections, the abstraction process for the different modules of 
 
 The control module, as presented in the previous section and following Salvucci's approach in \cite{salvucci_1}, is fully deterministic, in the sense that there is no probabilistic reasoning involved. It makes use of perception (for the near and far points) and two simple control laws which influence the position, velocity and acceleration of the vehicle in the environment.
 
-The straightforward approach to this problem would be to represent it as a simple $N\times M$ grid, in which a tuple $(x,y)$ with $x\in \{0,...,N\}$ and $y\in \{0,...,M\}$ would describe the position of the vehicle, and all other variables (i.e. $v_x$, $v_y$, $a_x$, $a_y$ and $t$) would be integer versions of its continuous model representation. In this approach, the control laws could be applied directly over the grid and the results would be the movement of the vehicle in it. However, there is an intrinsic problem with this approach. The error associated with the use of the grid as a way to discretise space would, logically, be reduced with an increase of $N$ and $M$ for a representation of the same road segment (i.e. increase in resolution). For example, the error associated with a road segment of $500 \times 7m^2$ represented by $N = 500$ and $M = 7$ (each grid square corresponds to $1m^2$) would be significantly greater than if $N = 5000$ and $M = 70$ (each grid square corresponds to  $10^{-2}\text{ }m^2$). The conclusion would be that one should increase $N$ and $M$ in order to obtain an appropriate resolution, but this incurs in the problem of state explosion presented in the beginning of the section: as the variable ranges increase, the number of states in the system grows exponentially. Thus, while the situation of $N = 5000$ and $M = 70$ is appealing in terms of error minimisation, it would be intractable to actually build and perform model checking on it (e.g. for $v_x, v_y \in \{15,...,34\}^2$ and $a_x, a_y \in \{-3,...,3\}^2$, the control module alone would have approximately $6.89\times 10^{9}$ states, making it impossible to add decision making and monitoring on top of it). 
+The straightforward approach to this problem would be to represent it as a simple $N\times M$ grid, in which a tuple $(x,y)$ with $x\in \{0,...,N\}$ and $y\in \{0,...,M\}$ would describe the position of the vehicle, and all other variables (i.e. $v_x$, $v_y$, $a_x$, $a_y$ and $t$) would be integer versions of its continuous model representation. In this approach, the control laws could be applied directly over the grid and the results would be the movement of the vehicle in it. However, there is an intrinsic problem with this approach. The error associated with the use of the grid as a way to discretise space would, logically, be reduced with an increase of $N$ and $M$ for a representation of the same road segment (i.e. increase in resolution). For example, the error associated with a road segment of $500 \times 7m^2$ represented by $N = 500$ and $M = 7$ (each grid square corresponds to $1m^2$) would be significantly greater than if $N = 5000$ and $M = 70$ (each grid square corresponds to  $10^{-2}\text{ }m^2$). The conclusion would be that one should increase $N$ and $M$ in order to obtain an appropriate resolution, but this incurs in the problem of state explosion presented in the beginning of the section: as the variable ranges increase, the number of states in the system grows exponentially. Thus, while the situation of $N = 5000$ and $M = 70$ is appealing in terms of error minimisation, it would be intractable to actually build and perform model checking on it (e.g. for $v_x, v_y \in \{15,...,34\}$ and $a_x, a_y \in \{-3,...,3\}$, the control module alone would have approximately $6.89\times 10^{9}$ states, making it impossible to add decision making and monitoring on top of it). 
 
 The straightforward strategy is not, by any standards, efficient in terms of state space and does not use any of the information of the problem to simplify it. In particular, one should notice that, in this scenario, the movement in the $y$ direction is used simply for the purpose of lane changing, a process which is purely deterministic (as described in \cite{salvucci_1}). Therefore, a more interesting approach to the abstraction of the control module could take this into account and \textbf{pre-simulate the lane changing operations}.
 
@@ -114,10 +114,10 @@ The continuous model of driver behaviour obtained in the previous section in \te
     \label{fig:lane_change_ex}
 \end{figure}
 
-This process focuses the computational effort on the pre-calculations, simplifying the final model significantly in terms of the state space, while removing the error made by discretising in the $y$ direction of the grid (the error in the $x$ direction is still present though). With regards to the size of the lane changing table, for the considered scenario of $2$ lanes, $v, v_1 \in \{15,...,34\}^2$ and for any discrete $d \in \{1,...,length\}$, the size of the table would be $2\times 20^2 \times length = 800 \times length$. Given that the only value of the table that is effectively altered with a change in $d$ is the value of $crashed$ (as the $\Delta x$, $\Delta T$ and final $v$ depend solely on the initial velocities of both vehicles), it is possible to define $d_{\max}$ such that:
+This process focuses the computational effort on the pre-calculations, simplifying the final model significantly in terms of the state space, while removing the error made by discretising in the $y$ direction of the grid (the error in the $x$ direction is still present though). With regards to the size of the lane changing table, for the considered scenario of $2$ lanes, $v, v_1 \in \{15,...,34\}$ and for any discrete $d \in \{1,...,length\}$, the size of the table would be $2\times 20^2 \times length = 800 \times length$. Given that the only value of the table that is effectively altered with a change in $d$ is the value of $crashed$ (as the $\Delta x$, $\Delta T$ and final $v$ depend solely on the initial velocities of both vehicles), it is possible to define $d_{\max}$ such that:
 
 \begin{equation}
-d_{\max} < length\text{, s.t. }\forall v, v_1 \in \{15,...,34\}^2, d' \geq d_{\max}: crashed_{d'} = false
+d_{\max} < length\text{, s.t. }\forall v, v_1 \in \{15,...,34\}, d' \geq d_{\max}: crashed_{d'} = false
 \end{equation}
 
 that is, $d_{\max}$ is a great enough value of $d$ such that, regardless of the speed of the two vehicles, no crash will occur between them. With this change, it is possible to reduce the table from $800\times length$ to $800\times d_{\max}$ (since all other rows would be equal to the one for $d_{max}$). For the given ranges of $v$ and $v_1$, $d_{\max}$ is determined to be $43m$, and thus the obtained look-up table contains $34,400$ rows.
@@ -197,7 +197,7 @@ where $\max_d$ is the maximum length considered and $N(d)$ corresponds to the cu
 
 From this, a look-up table can be generated which, for different driver types, yields the probability of lane changing for a certain distance to the lead car and velocity. For the 3 driver profiles mentioned, considering $d \in \{1,...,80\}$ ($\max_d = 80$) and $v \in \{15,...,34\}$, the table generated for the vehicle in the right lane has $4,800$ rows \footnote{In the data obtained for the results presented in this dissertation, $\delta = 1$.}. Under the same conditions, the look-up table for the vehicle in the left obtained has $240$ rows (the difference is explained by the fact that the velocity does not influence this table). Thus, the unified decision making table has $5,040$ rows.
 
-The code presented in Appendix~\ref{sec:dm_abs} corresponds to the methods for obtain the unified look-up table used for the decision making and monitoring module.
+The code presented in Appendix~\ref{sec:dm_abs} corresponds to the methods used to obtain the unified look-up table used for the decision making and monitoring module.
 
 \subsection{Probabilistic Control Module}
 \label{sec:prob_control}
@@ -210,7 +210,7 @@ The code presented in Appendix~\ref{sec:control_abs} corresponds to the simulati
 
 \subsection{Unified Two-Module Model}
 
-Using the three tables generated (two for the probabilisitic control - linear and steering control - and one for the decision making), the final DTMC model unifies both using a sequential variable $actr\_state \in \{1,2\}$, where $actr\_state = 1$ corresponds to the control and $actr\_state = 2$ corresponds to decision making. In the version of the unified model built for this thesis, only two vehicles are present: the first is the one controlled by the driver and the second is a lead vehicle starting at a distance $x = x_{1,0}$ (in meters) from the main vehicle (which starts at $x=0$) and moves with a constant speed of $v_1$. Its movement is, therefore, completely determined by the formula:
+Using the three tables generated (two for the probabilisitic control - linear and steering control - and one for the decision making), the final DTMC model unifies both using a sequential variable $actr\_state \in \{1,2\}$, where $actr\_state = 1$ corresponds to the control and $actr\_state = 2$ corresponds to decision making. In the version of the unified model built for this thesis, only two vehicles are present: the first is the one controlled by the driver and the second is a lead vehicle starting at a distance $x = x_{1,0}$ (in meters) from the main vehicle (which starts at $x=0$) and moves with a constant speed of $v_1$ on a road segment of $length$ meters. The movement of the lead vehicle is, therefore, completely determined by the formula:
 
 \begin{equation}
 	x_1(t) = x_{1,0} + v_1\cdot t
@@ -237,8 +237,8 @@ Due to the large size of the tables generated, the models should be generated au
 \textbf{General assumptions}
 
 \begin{enumerate}
-	\item A transition between from state $s$ to state $s'$ is possible if, and only if, the variable $actr\_state$ takes different values in $s$ and $s'$.
-	\item A transition between from state $s$ to state $s'$ is possible if, and only if, $t_{s'} \geq t_s$ (where $t_a$ is the value of variable $t$ in state $a$).
+	\item A transition from state $s$ to state $s'$ is possible if, and only if, the variable $actr\_state$ takes different values in $s$ and $s'$.
+	\item A transition from state $s$ to state $s'$ is possible if, and only if, $t_{s'} \geq t_s$ (where $t_{\alpha}$ is the value of variable $t$ in state $\alpha$).
 	\item The model should have no states with self transitions, as there is always a continuous evolution of the state of the vehicles.
 	\item A deadlock state should only be entered if, and only if, the vehicle either crashes ($crashed = true$) or reaches the end of the road ($x = length$).
 \end{enumerate}
@@ -357,7 +357,7 @@ By loading and building the model in either PRISM or Storm, it is observable tha
 \section{Model Evaluation Metrics}
 \label{sec:model_metrics}
 
-With the model efficiently represented as a DTMC through abstraction, it becomes possible to perform model checking of certain properties on it in order to evaluate the relative performance of different profiles of drivers. In the following subsections, different categories of evaluation are presented and properties representing metrics within that category are proposed and tested in a small population of scenarios (the same test cases used to generate  Table~\ref{tab:sta_tra_example}). In the rest of the dissertation it is assumed (unless explicitly mentioned otherwise) that the test road segment has a length of $500m$.
+With the model efficiently represented as a DTMC through abstraction, it becomes possible to perform model checking of certain properties on it in order to evaluate the relative performance of different profiles of drivers. In the following subsections, different categories of evaluation are presented and properties representing metrics within that category are proposed and tested in a small population of scenarios (the same test cases used to generate  Table~\ref{tab:sta_tra_example}). In the rest of the dissertation it is assumed (unless explicitly mentioned otherwise) that the road segment has a length of $500m$.
 
 \subsection{Completeness Properties}
 
@@ -383,7 +383,7 @@ P>=1 [F "deadlock"]
 
 which guarantees that a deadlock will eventually be reached and no infinite loop  is generated by mistake within the DTMC.
 
-Using PRISM or Storm, the results of the model checking of these properties in the test cases are presented in Table~\ref{tab:completeness}. As expected, for all the scenarios the properties are satisfied, confirming that these models are complete in terms of the expected outcome. While these properties does not need to be extensively analysed, they constitute a guarantee that the generated model is complete and its verification is performed in all tests performed in the analysis of Chapter~\ref{sec:results}.
+Using PRISM or Storm, the results of the model checking of these properties in the test cases are presented in Table~\ref{tab:completeness}. As expected, for all the scenarios the properties are satisfied, confirming that these models are complete in terms of the expected outcome. While these properties do not need to be extensively analysed, they constitute a guarantee that the generated model is complete. As such, its verification is performed in all tests performed in the analysis of Chapter~\ref{sec:results}.
 
 {
 \vspace{1em}
@@ -478,7 +478,7 @@ P=? [F (x=length & t < max_time)]
 }
 \end{minipage}
 
-However, the problem with these properties relies on the fact that they intrinsically rely on the safety property, since a higher probability of crashing naturally implies a lower probability of reaching the end, and therefore an even lower probability of reaching the end under $T$ seconds. To mitigate this issue, the following conditional properties are introduced:
+However, the problem with these properties is based on the fact that they intrinsically rely on the safety property, since a higher probability of crashing naturally implies a lower probability of reaching the end, and, therefore, an even lower probability of reaching the end under $T$ seconds. To mitigate this issue, the following conditional properties are introduced:
 
 \begin{minipage}{\linewidth}
 {\vspace{1em}
@@ -490,7 +490,7 @@ P=? [F (x=length & t<T) || F (x=length)]
 
 which reads as \textit{"what is the probability that the model eventually reaches a state where }\texttt{x = length}\textit{ and }\texttt{t < T}\textit{ given that it reaches one where} \texttt{x = length}\textit{"}. This allows for direct comparisons between driver profiles and different scenarios. It should be noted that these are actually $max\_time$ different properties, as with the case of the unconditional ones. 
 
-Using Storm, both the unconditional and conditional properties can be verified directly. While PRISM supports the unconditional ones, conditional properties are not yet supported by the tool. However, it is possible to verify separately the properties \texttt{P=? [F (x=length \& t<T)]} and \texttt{P=? [F (x=length)]}, and use Bayes' theorem:
+Using Storm, both the unconditional and conditional properties can be verified directly. While PRISM supports the unconditional ones, conditional properties are not yet supported by the tool. However, it is possible to verify separately the properties \texttt{P=? [F (x=length \& t<T)]} and \texttt{P=? [F (x=length)]}, and use Bayes' theorem to calculate:
 
 \begin{equation}
 \text{\texttt{P=? [F (x=length \& t<T) || F (x=length)]}} = \frac{\text{\texttt{P=? [F (x=length \& t<T)]}}}{\text{\texttt{P=? [F (x=length)]}}}
@@ -532,14 +532,14 @@ Table~\ref{tab:liveness} presents the results of the verification of the livenes
 \end{table}
 \egroup
 
-From Table~\ref{tab:liveness}, it is possible to observe that different scenarios, despite having distinct values of the unconditional properties, have a similar value of the conditional ones. For example, for $T < 24$, the scenario $(d_{type}, v, v_1, x_{1,0}) = (1, 28, 17, 43)$ has a a significantly lower unconditional probability than the $(d_{type}, v, v_1, x_{1,0}) = (3, 28, 21, 38)$, yet they have exactly the same conditional one. While the unconditional properties can be interpreted in these scenarios as \textit{"the vehicle will reach the end of the road and be under 24s with probability 0.2881"} and \textit{"the vehicle will reach the end of the road and be under 24s with probability 0.8396"},  in both these cases the conditional probability should be interpreted as \textit{"if the vehicle reaches the end of the road, then it will do so before 24s with certainty"}. The conditional property can be understood as an elimination of the safety bias of inherent to each scenario, leading to more meaningful inter-situational comparisons. Extensive experimental results regarding these properties are presented in Chapter~\ref{sec:results}
+From Table~\ref{tab:liveness}, it is possible to observe that different scenarios, despite having distinct values of the unconditional properties, have a similar value of the conditional ones. For example, for $T < 24$, the scenario $(d_{type}, v, v_1, x_{1,0}) = (1, 28, 17, 43)$ has a a significantly lower unconditional probability than the $(d_{type}, v, v_1, x_{1,0}) = (3, 28, 21, 38)$, yet they have exactly the same conditional one. While the unconditional properties can be interpreted in these scenarios as \textit{"the vehicle will reach the end of the road and be under 24s with probability 0.2881"} and \textit{"the vehicle will reach the end of the road and be under 24s with probability 0.8396"},  in both these cases the conditional probability should be interpreted as \textit{"if the vehicle reaches the end of the road, then it will do so before 24s with certainty"}. The conditional property can be understood as an elimination of the safety bias inherent to each scenario, leading to more meaningful inter-situational comparisons. Extensive experimental results regarding these properties are presented in Chapter~\ref{sec:results}
 
 \section{Simulation of Paths in the Model}
 \label{sec:simulator}
 
 In order to visualise possible executions of the trajectory and decisions taken in the model, a visual simulator was designed and implemented in \textit{Python}, with the code presented in Appendix~\ref{sec:sim-app}.
 
-The simulator essentially uses the option \texttt{simpath} in the PRISM command line tool which allows it to output a simulated path in the model without having to actually build it. Using this outputted path in the model, the script reads it and plays it back to the user using a GUI built in \textit{pygame}. 
+The simulator essentially uses the option \texttt{simpath} in the PRISM command line tool which allows it to output a simulated path in the model without having to actually build it. Using this outputted path in the model, the script reads it and plays it back to the user using a GUI built in \textit{pygame} for \textit{Python} \cite{pygame}. 
 
 In order to faithfully represent the lane change operations the driver performs, an additional table is obtained using the steering control abstraction, which corresponds to the interpolation of the $x$ and $y$ positions of the vehicle as a function of time (i.e. $x(t)$ and $y(t)$). Given the complexity of the $y$ movement compared to the $x$ movement, the positions are represented by a $6^{th}$ and $2^{nd}$ degree polynomial, respectively. 
 

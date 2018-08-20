@@ -16,36 +16,36 @@ Warning--empty journal in fv2
 Warning--empty journal in lam
 Warning--empty journal in abstraction_2
 Warning--empty year in abstraction_2
-You've used 48 entries,
+You've used 49 entries,
             1876 wiz_defined-function locations,
-            745 strings with 12440 characters,
-and the built_in function-call counts, 12817 in all, are:
-= -- 1228
-> -- 504
+            750 strings with 12521 characters,
+and the built_in function-call counts, 12942 in all, are:
+= -- 1239
+> -- 508
 < -- 0
-+ -- 189
-- -- 141
-* -- 893
-:= -- 1768
-add.period$ -- 49
-call.type$ -- 48
-change.case$ -- 47
++ -- 191
+- -- 142
+* -- 898
+:= -- 1786
+add.period$ -- 50
+call.type$ -- 49
+change.case$ -- 48
 chr.to.int$ -- 0
-cite$ -- 53
-duplicate$ -- 674
-empty$ -- 1299
-format.name$ -- 141
-if$ -- 3130
+cite$ -- 54
+duplicate$ -- 678
+empty$ -- 1317
+format.name$ -- 142
+if$ -- 3162
 int.to.chr$ -- 0
-int.to.str$ -- 48
+int.to.str$ -- 49
 missing$ -- 42
-newline$ -- 149
-num.names$ -- 46
-pop$ -- 226
+newline$ -- 152
+num.names$ -- 47
+pop$ -- 232
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 435
+skip$ -- 439
 stack$ -- 0
 substring$ -- 827
 swap$ -- 243
@@ -54,7 +54,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 5
-while$ -- 131
-width$ -- 50
-write$ -- 450
+while$ -- 132
+width$ -- 51
+write$ -- 458
 (There were 5 warnings)
