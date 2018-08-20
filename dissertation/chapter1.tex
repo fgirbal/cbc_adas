@@ -1,7 +1,7 @@
 \chapter{Literature Review and Definitions}
 \label{sec:background}
 
-This chapter presents the concepts and theory required to understand the methodology, rationale and relevance of this dissertation. It starts by defining a Cognitive Architecture, and goes into more detail about Adaptive Control of Thought - Rational, which is the underlying framework used in the Integrated Driver Modelling described in Section \ref{sec:salvucci} and the basis for the system developed in Chapter 3: \textit{Human Driver Modelling}. The chapter concludes with the introduction of several important concepts in the area of Probabilistic Model Checking, which are essential for modelling, verification and synthesis in this context.
+This chapter presents the concepts and theory required to understand the methodology, rationale and contributions of this dissertation. It starts by defining a Cognitive Architecture, and goes into more detail about Adaptive Control of Thought - Rational, which is the underlying framework used in the Integrated Driver Modelling described in Section \ref{sec:salvucci} and the basis for the system developed in Chapter 3. The chapter concludes with the introduction of several important concepts in the area of Probabilistic Model Checking, which are essential for modelling, verification and synthesis in this context.
 
 \section{Cognitive Architectures}
 
@@ -11,7 +11,7 @@ The idea of a cognitive architecture originated in the early 1970s. A survey by 
 
 \subsection{Adaptive Control of Thought - Rational (ACT-R)}
 
-Adaptive Control of Thought - Rational (or ACT-R as it is commonly known) is a particular cognitive architecture first presented by John R. Anderson in 1983 \cite{actr_1} and further developed by Anderson \textit{et al.} in \cite{actr_2}. 
+Adaptive Control of Thought - Rational (or ACT-R as it is commonly known as) is a particular cognitive architecture first presented by John R. Anderson in 1983 \cite{actr_1} and further developed by Anderson \textit{et al.} in \cite{actr_2}. 
 
 \begin{figure}[h]
     \centering
@@ -20,7 +20,7 @@ Adaptive Control of Thought - Rational (or ACT-R as it is commonly known) is a p
     \label{fig:act_r_1}
 \end{figure}
 
-The architecture can be generally described as two distinct modules: a \textit{perceptual-motor} layer and a \textit{cognitive} layer, as presented in Figure~\ref{fig:act_r_1}. The perceptual-motor module corresponds to the interface of the cognition with the environment (which plays a key role in ACT-R), being comprised of sub-modules such as vision and motor actions. The cognitive layer is focused on memory, which can be divided into two different categories: \textit{declarative} (consisting of factual knowledge and goals - e.g. \textit{"The maximum driving speed in a typical UK motorway is 70 mph"} or \textit{"Try get to point B"}) and \textit{procedural} (consisting of rules/procedures - e.g. \textit{"If the lead vehicle is going slowly, attempt an overtake"}) \cite{actr_4}. Furthermore, declarative memory is composed of \textit{chunks}, which are smaller pieces of information divided into categories or attributes that form more complex memories. In the example \textit{"The maximum driving speed in a typical UK motorway is 70 mph"}, \texttt{maximum driving speed in a typical UK motorway} is a category, whereas \texttt{70 mph} is an attribute. Another possible attribute for this category could be \texttt{112 km/h} (since $70 mph = 112 km/h$).
+The architecture can be generally described as two distinct layers: a \textit{perceptual-motor} layer and a \textit{cognitive} layer, as presented in Figure~\ref{fig:act_r_1}. The perceptual-motor layer corresponds to the interface of the cognition with the environment (which plays a key role in ACT-R), being comprised of modules such as vision and motor actions. The cognitive layer is focused on memory, which can be divided into two different categories: \textit{declarative} (consisting of factual knowledge and goals - e.g. \textit{"The maximum driving speed in a typical UK motorway is 70 mph"} or \textit{"Try get to point B"}) and \textit{procedural} (consisting of rules/procedures - e.g. \textit{"If the lead vehicle is going slowly, attempt an overtake"}) \cite{actr_4}. Furthermore, declarative memory is composed of \textit{chunks}, which are smaller pieces of information, divided into categories and attributes, that form more complex memories. In the example \textit{"The maximum driving speed in a typical UK motorway is 70 mph"}, \texttt{maximum driving speed in a typical UK motorway} is a category, whereas \texttt{70 mph} is an attribute. Another possible attribute for this category could be \texttt{112 km/h} (since $70 mph = 112 km/h$).
 
 \section{Integrated Driver Modelling in ACT-R}
 \label{sec:salvucci}
@@ -36,7 +36,7 @@ The model Salvucci introduced in \cite{salvucci_1} was developed with a specific
     \label{fig:high_level_salvucci}
 \end{figure}
 
-The \textbf{control} component manages both the lower level perception cues and the physical manipulation of the vehicle (e.g. steering, accelerating or breaking). The module can be divided into lateral (i.e. steering) and longitudinal (i.e. speed) control, each modelled by a separate control law. 
+The \textbf{control} component manages both the lower level perception cues and the physical manipulation of the vehicle (e.g. steering, accelerating or breaking). The module can be divided into lateral (i.e. steering) and longitudinal (i.e. velocity) control, each modelled by a separate control law. 
 
 The lateral control is determined by the existence of two artefacts that the driver obtains using lower level perception cues: the \textit{near point} and the \textit{far point}. In this model,  \textit{"the near point represents the vehicle’s current lane position, used to judge how close the vehicle is to the center of the roadway (...) [and] is characterized as a point in the center of the near lane visible in front of the vehicle, set at a distance of 10 m from the vehicle’s center"} while \textit{"the far point indicates the curvature of the upcoming roadway, used to judge what the driver should execute to anticipate the upcoming curvature and remain in the current lane} \cite{salvucci_1}. At any cycle $i > 0$, the model works by using perception to determine the visual angles $\theta_{near}^{(i)}$ and $\theta_{far}^{(i)}$ and calculates:
 
@@ -67,7 +67,7 @@ The control law for the linear acceleration $\psi$ can be written as:
 	\Delta \psi = k_{car} \Delta thw_{car} + k_{follow} (thw_{car} - thw_{follow})\Delta t
 \end{equation}
 
-with $k_{car}$, $k_{follow}$ and $thw_{car}$ defined as in \cite{salvucci_1}.
+with $k_{car}$, $k_{follow}$ and $thw_{follow}$ defined as in \cite{salvucci_1}.
 
 These control laws can be applied in order to model the behaviour of the driver in terms of lane keeping and curve negotiation, and generalise to lane changing actions in a straightforward manner. In order to initiate a lane change, the driver just starts following the near and far points of the destination lane instead of the current lane, as Salvucci and Liu presented in \cite{older_3}.
 
@@ -95,14 +95,14 @@ Probabilistic model checking is a generalisation of model checking for the autom
 
 Probabilistic model checking begins with the appropriate modelling of the system in a stochastic finite state-transition representation. There are several ways to do this according to the type of system to be modelled. 
 
-In \textit{discrete-time Markov Chains} (DTMCs), all choices (i.e. transitions) are probabilistic \cite{bk08}. While this is useful in some cases, others require nondeterminism, which is where \textit{Markov Decision Processes} (MDPs) come in. In MDPs, nondeterministic probabilistic choices coexist. Essentially, a DTMC is an MDP with a uniquely determined probabilistic distribution \cite{bk08}. Both DTMCs and MDPs can be augmented with reward structures, which correspond to real positive values that can be interpreted as bonuses or costs \cite{bk08}.
+In \textit{discrete-time Markov Chains} (DTMCs), all choices (i.e. transitions) are probabilistic \cite{bk08}. While this is useful in some cases, others require nondeterminism, which is where \textit{Markov Decision Processes} (MDPs) come in. In MDPs, nondeterministic probabilistic choices coexist. Essentially, a DTMC is an MDP with a uniquely determined probabilistic distribution \cite{bk08}. Both DTMCs and MDPs can be augmented with reward structures, which correspond to real positive values assigned to states, transitions or actions that can be interpreted as bonuses or costs \cite{bk08}.
 
 The formal definitions of DTMCs, MDPs and reward structures follow (adapted from \cite{bk08, fknp11, kp07}).
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Discrete-time Markov Chain (DTMC)}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+{\vspace{1em}
+\textbf{Discrete-time Markov Chain (DTMC)}}
+{
 
 A \textit{discrete-time Markov chain} is a tuple $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ such that:
 \begin{itemize}
@@ -123,9 +123,9 @@ $\mathcal{M}$ is denoted \textit{finite} if $S$ and $AP$ are finite sets.
 \end{defi}}
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Markov Decision Process (MDP)}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+\vspace{1em}
+\textbf{Markov Decision Process (MDP)}
+{
 
 A \textit{Markov decision process} is a tuple $\mathcal{M} = (S, Act, \mathbf{P}, p_{init}, AP, L)$ such that:
 \begin{itemize}
@@ -147,9 +147,10 @@ An action $\alpha \in Act$ is enabled in a state $s$ if, and only if, $\sum_{s' 
 \end{defi}}
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Reward Structures for DTMCs and MDPs}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+\vspace{1em}
+\textbf{Reward Structures for DTMCs and MDPs}
+{
+
 A \textit{reward structure} for a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ is a tuple $\mathcal{C} = (\rho, \iota)$ such that:
 \begin{itemize}
 	\item $\rho: S \to \mathbb{R}_{\geq 0}$ is a state reward function
@@ -167,9 +168,10 @@ A \textit{reward structure} for a Markov decision process $\mathcal{M} = (S, Act
 There are some additional concepts related to DTMCs and MDPs which are relevant to the understanding of temporal logics and model checking. These are the concepts of paths in Markov chains or decision processes, and adversary in a Markov decision process (adapted from \cite{bk08, fknp11}).
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Paths in DTMCs and MDPs}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+\vspace{1em}
+\textbf{Paths in DTMCs and MDPs}
+{
+
 An \textit{(infinite) path} $\pi$ in a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ is defined as an infinite sequence of states $\pi = s_0 \to s_1 \to s_2 ...$ (also written as $\pi = s_0s_1s_2...$) such that $\forall i \geq 0: \mathbf{P}(s_i, s_{i+1}) > 0$.
 
 A \textit{finite path} $\rho$ in the discrete-time Markov chain $\mathcal{M}$ is defined as the prefix of an infinite path $\pi$, $\rho = s_0 \to s_1 \to ... \to s_n$ for $n > 0$.
@@ -183,9 +185,10 @@ In both Markov chains and decision processes, the set of all infinite paths is d
 \end{defi}}
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Adversary (alternatively Strategy or Scheduler)}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+\vspace{1em}
+\textbf{Adversary (alternatively Strategy or Scheduler)}
+{
+
 An \textit{adversary} for an MDP $\mathcal{M} = (S, Act, \mathbf{P}, p_{init}, AP, L)$ is a function $\sigma: S^+ \to Act$ such that $\sigma(s_0s_1...s_n) \in Act(s_n)$ for all $s_0s_1...s_n \in S^+$.
 
 An adversary $\sigma$ is called memoryless if, and only if, for any $\pi_1 = s_0s_1...s_n$ and $\pi_2 = s'_0s'_1...s_n$ it is true that $\sigma(\pi_1) = \sigma(\pi_2) = \sigma(s_n)$.
@@ -195,21 +198,22 @@ An adversary $\sigma$ is called memoryless if, and only if, for any $\pi_1 = s_0
 \subsection{Temporal Logics}
 \label{sec:temp_logics}
 
-In order to verify properties in models, there needs to be a way of expressing them formally and unequivocally. While some reachability and reward-based properties come directly from the definition of DTMCs, MDPs and reward structures \cite{fknp11}, more interesting and complex properties require the use of a temporal logic. A propositional temporal logic is essentially an extension of propositional logic by temporal operators \cite{bk08}. In this context, one can consider time as being \textit{linear} or \textit{branching}. In linear time, at every moment in time there must only exist a single successor moment, whereas from the branching perspective, there may exist multiple ones, forming a tree-like structure of alternatives. Linear Temporal Logic (LTL) is a temporal logic which assumes the first, while Computation Tree Logic (CTL) is based on the branching perspective. Probabilistic Computational Tree Logic (PCTL) is an extension of CTL that takes into account a probabilistic operator.
+In order to verify properties in models, there needs to be a way of expressing those properties formally and unequivocally. While some reachability and reward-based properties come directly from the definition of DTMCs, MDPs and reward structures \cite{fknp11}, more interesting and complex properties require the use of a temporal logic. A propositional temporal logic is essentially an extension of propositional logic by temporal operators \cite{bk08}. In this context, one can consider time as being \textit{linear} or \textit{branching}. In linear time, at every moment in time there must only exist a single successor moment, whereas from the branching perspective, there may exist multiple ones, forming a tree-like structure of alternatives. Linear Temporal Logic (LTL) is a temporal logic which assumes the first, while Computation Tree Logic (CTL) is based on the branching perspective. Probabilistic Computational Tree Logic (PCTL) is an extension of CTL that takes into account a probabilistic operator.
 
-Given the definition of a path in an MC and MDP, it is possible to define the syntax for LTL, CTL and PCTL (adapted from \cite{bk08, fknp11}).
+Given the definition of a path in a MC and an MDP, it is possible to define the syntax for LTL, CTL and PCTL (adapted from \cite{bk08, fknp11}).
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Syntax and Semantics of LTL}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+{\vspace{1em}
+\textbf{Syntax and Semantics of LTL}}
+{
+
 An \textit{LTL formulae} $\varphi$ over a set of atomic propositions $AP$ can formed according to the following grammar:
 
 \begin{equation}
 	\varphi ::= \text{\texttt{true}} \bigmid a \bigmid \varphi_1 \wedge \varphi_2 \bigmid \neg \varphi \bigmid \text{X} \varphi \bigmid \varphi_1 \text{ U } \varphi_2
 \end{equation}
 
-where $a \in AP$, X is the next operator and U is the until operator as defined below for Markov chains and decision processes.
+where $a \in AP$, $\varphi_i$ are path formulas, X is the next operator and U is the until operator as defined below for Markov chains and decision processes.
 
 For a given path $\pi = s_0s_1s_2...$ in a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
 \begin{itemize}
@@ -236,16 +240,17 @@ The operator F (eventually) can also be defined as:
 It can be noticed that, as a result of the linear time consideration in LTL, all the formulas are taken over paths. This is not the case in CTL which can have both path and state formulae, as shown below.
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Syntax and Semantics of CTL}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+{\vspace{1em}
+\textbf{Syntax and Semantics of CTL}}
+{
+
 A \textit{CTL state formulae} $\Phi$ over a set of atomic propositions $AP$ can formed according to the following grammar:
 
 \begin{equation}
 	\Phi ::= \text{\texttt{true}} \bigmid a \bigmid \Phi_1 \wedge \Phi_2 \bigmid \neg \Phi \bigmid \text{E} \varphi \bigmid \text{A} \varphi
 \end{equation}
 
-where $a \in AP$ and $\varphi$ is a path formula.
+where $a \in AP$, $\varphi$ is a path formula, $\Phi_i$ are state formulas, E is the exists operator, and A is the all operator as defined below for Markov chains and decision processes.
 
 For a given state $s \in S$ in a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
 \begin{itemize}
@@ -263,7 +268,7 @@ A \textit{CTL path formulae} $\varphi$ over a set of atomic propositions $AP$ ca
 	\varphi ::= \text{X} \Phi \bigmid \Phi_1 \text{ U } \Phi_2
 \end{equation}
 
-where $a \in AP$ and $\Phi$ is a state formula.
+where $a \in AP$, $\Phi_i$ are state formulas, X is the next operator, and U is the until operator as defined below for Markov chains and decision processes.
 
 For a given path $\pi = s_0s_1s_2...$ in a Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
 \begin{itemize}
@@ -287,16 +292,17 @@ It is also possible to define the operators F (eventually) and G (globally) as:
 \end{defi}}
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Syntax and Semantics of PCTL}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+{\vspace{1em}
+\textbf{Syntax and Semantics of PCTL}}
+{
+
 A \textit{PCTL state formulae} $\Phi$ over a set of atomic propositions $AP$ can formed according to the following grammar:
 
 \begin{equation}
 	\Phi ::= \text{\texttt{true}} \bigmid a \bigmid \Phi_1 \wedge \Phi_2 \bigmid \neg \Phi \bigmid \mathbb{P}_{\triangleright p} (\varphi)
 \end{equation}
 
-where $a \in AP$, $p \in [0,1]$, $\triangleright \in \{>, <, \geq, \leq\}$ is a probability bound and $\varphi$ is a path formula.
+where $a \in AP$, $\Phi_i$ are state formulas, $\varphi$ is a path formula, $p \in [0,1]$, $\triangleright \in \{>, <, \geq, \leq\}$ is a probability bound, and $\mathbb{P}_{\triangleright p}$ is the probabilistic operator as defined below for Markov chains and decision processes.
 
 For a given state $s \in S$ in a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
 \begin{itemize}
@@ -313,7 +319,7 @@ A \textit{PCTL path formulae} $\varphi$ over a set of atomic propositions $AP$ c
 	\varphi ::= \text{X} \Phi \bigmid \Phi_1 \text{ U}^{\leq k}\, \Phi_2 \bigmid \Phi_1 \text{ U } \Phi_2
 \end{equation}
 
-where $a \in AP$, $k \in \mathbb{N}$ and $\Phi$ is a state formula.
+where $a \in AP$, $k \in \mathbb{N}$, $\Phi_i$ are state formulas, X is the next operator, U is the until operator, and U$^{\leq k}$ is the bounded-until operator as defined below for Markov chains and decision processes.
 
 For a given path $\pi = s_0s_1s_2...$ in a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
 \begin{itemize}
@@ -352,11 +358,11 @@ that is, the probability, from state $s$, that $\varphi$ is true for an outgoing
 
 \subsection{PRISM Language}
 
-PRISM is a probabilistic model checking tool developed in cooperation between the Universities of Oxford and Birmingham \cite{prism}. It was one of the first tools within stochastic model checking to be released and it is currently maintained by David Parker. In order to use PRISM (and other alternative model checking techniques), it is essential to be able to specify the model. To achieve this, the team behind PRISM developed the PRISM Language, initially described in \cite{prism_1}.
+PRISM is a probabilistic model checking tool developed in cooperation between the Universities of Oxford and Birmingham \cite{prism}. It was one of the first tools within stochastic model checking to be released and its development is currently headed by David Parker. In order to use PRISM (and other alternative model checking tools), it is essential to be able to specify the model. To achieve this, the team behind PRISM developed the PRISM Language, initially described in \cite{prism_1}.
 
-A model described in the PRISM Language (typically a \texttt{.pm}, \texttt{.nm} or \texttt{.prism} text file) should contain a keyword that indicates the kind of model to expect. For example, the keyword \texttt{dtmc} indicates the model is a DTMC (discrete-time Markov chain) and \texttt{mdp} indicates a MDP (Markov decision process).
+A model described in PRISM Language (typically a \texttt{.pm}, \texttt{.nm} or \texttt{.prism} text file) should contain a keyword that indicates the kind of model to expect. For example, the keyword \texttt{dtmc} indicates the model is a DTMC (discrete-time Markov chain) and \texttt{mdp} indicates a MDP (Markov decision process).
 
-The PRISM language uses two different basic components to define a model \textit{modules} and \textit{variables}. A module is composed of a set of local variables whose behaviour is described by \textit{commands}. A general command is of the form:
+PRISM Language uses two different basic components to define a model: \textit{modules} and \textit{variables}. A module is composed of a set of local variables whose behaviour is described by \textit{commands}. A general command is of the form:
 
 {\vspace{1em}
 \begin{lstlisting}
@@ -364,14 +370,14 @@ The PRISM language uses two different basic components to define a model \textit
 \end{lstlisting}
 }
 
-where \textit{guard} is a boolean expression over the variables, \textit{prob\_i} is the probability that \textit{update\_i} will be taken (with $\sum_i \text{prob\_i} = 1$) and \textit{update\_i} is the the new value of local and/or global variables if the guard is true and a transition is taken to this configuration.
+where \textit{guard} is a boolean expression over the variables, \textit{prob\_i} is the probability that \textit{update\_i} will be taken (with $\sum_i \text{prob\_i} = 1$) and \textit{update\_i} is the new value the local and/or global variables take if the guard is true and a transition is taken to this configuration.
 
 A state of the module is defined as a configuration of its local variables, and a state of the model is a configuration of the states of all modules which compose it and the global variables.
 
-In Listing \ref{lst:example}, an example of a simple MDP model described in PRISM Language is shown. This example is comprised of two modules, \texttt{M1} and \texttt{M2}, each with their own local variables, and no global variables are declared. It should be noted that the variables in PRISM Language should either be integers (\texttt{int}) or booleans (\texttt{bool}) and can be initialised by specifying \texttt{init} after the initial declaration. Due to the fact that we are dealing with finite models, the integers must be in a finite range as well.
+In Listing \ref{lst:example}, an example of a simple MDP model described in PRISM Language is shown. This example is comprised of two modules, \texttt{M1} and \texttt{M2}, each with their own local variables, and no global variables are declared. It should be noted that the variables in PRISM Language should either be integers (\texttt{int}) or booleans (\texttt{bool}) and can be initialised by specifying \texttt{init} after the initial declaration. Due to the fact that we are dealing with finite models, the integers must be in a finite range.
 
 {\vspace{1em}
-\begin{lstlisting}[caption={Example of a simple MDP model from \cite{prism_example}},captionpos=b,label={lst:example}]
+\begin{lstlisting}[caption={Example of a simple MDP model from \cite{prism_example} (modified)},captionpos=b,label={lst:example}]
 // Example 1 (modified)
 // Two process mutual exclusion
 
@@ -420,11 +426,11 @@ endrewards
 
 where the \textit{guards} are similarly defined as before, but the distinction between state and transition rewards is defined by the \textit{action} (which may be empty).
 
-\subsection{Model Checking in DTMCs and MDPs}
+\subsection{Model Checking and Strategy Synthesis in DTMCs and MDPs}
 
-After the description of the model using a language such as the PRISM Language, it is possible to verify properties on the said model. These properties can be of different types according to the model and the model checking tool chosen. 
+After the description of the model using a language such as PRISM Language, it is possible to verify properties on the said model. These properties can be of different types according to the model and the model checking tool chosen. 
 
-In this dissertation, the models built will be represented through discrete-time Markov chains and Markov decision processes, so the properties of interest tend to be best expressed in the temporal logics LTL or PCTL. The PRISM model checker is one of the tools which allows a user to import a text file with the probabilistic model, build it and verify LTL and PCTL properties on it \cite{prism}. Another tool used for this purpose is the Storm model checker \cite{storm}. Each of these tools has it strengths and weaknesses. PRISM is an extremely robust tool, with lots of options in terms of engines to perform the required calculations, and a graphical interface. Storm is a relatively recent tool which builds on top of some of PRISM's features and introduces new ones, such as an optimised Sparse engine (a great advantage when dealing with models with a small state space) and conditional properties in DTMCs \cite{storm}. However, it does not provide a graphical interface and is limited in terms of capabilities and I/O. Due to the fact that Storm builds on top of PRISM, it uses the PRISM Language for model input and the properties are specified using the same convention.
+In this dissertation, the models built will be represented through discrete-time Markov chains and Markov decision processes, so the properties of interest tend to be best expressed in the temporal logics LTL or PCTL. The PRISM model checker allows a user to import a text file with the probabilistic model, build it and verify LTL and PCTL properties on it \cite{prism}. Another tool used for this purpose is the Storm model checker \cite{storm}. Each of these tools has it strengths and weaknesses. PRISM is an extremely robust tool, with lots of options in terms of engines to perform the required calculations, and a graphical interface. Storm is a relatively recent tool which builds on top of some of PRISM's features and introduces new ones, such as an optimised Sparse engine (a great advantage when dealing with models with a small state space) and conditional properties in DTMCs \cite{storm}. However, it does not provide a graphical interface and is limited in terms of capabilities and I/O. Due to the fact that Storm builds on top of PRISM, it allows models described in PRISM Language as input and the properties are specified using the same convention.
 
 In order to illustrate properties, consider the example of Listing~\ref{lst:example}. A PCTL property in this case could be defined as:
 
@@ -451,7 +457,7 @@ Pmax=? [F x = 2]
 }
 \end{minipage}
 
-Instead of returning a boolean value of satisfaction, these return the actual values of the probabilities of the properties being satisfied. They are, therefore, extremely useful metrics for model comparison. For the case of the DTMC, due to the fact that there is no nondeterminism, the probability of a path is uniquely defined (as seen in Section~\ref{sec:temp_logics}), and thus can be expressed simply as \texttt{P=?}. For MDPs, this is not the case. In order to verify the probabilistic operator $\mathbb{P}_{\triangleright p}$ on the path formula $\varphi$, a model checker needs to calculate the following quantities:
+Instead of returning a boolean value of satisfaction, these return the actual values of the probabilities of the properties being satisfied. They are, therefore, extremely useful metrics for model comparison. For the case of the DTMC, due to the fact that there is no nondeterminism, the probability of a path is uniquely defined (as seen in Section~\ref{sec:temp_logics}), and thus can be expressed simply using the operator \texttt{P=?}. For MDPs, this is not the case. In order to verify the probabilistic operator $\mathbb{P}_{\triangleright p}$ on the path formula $\varphi$, a model checker needs to calculate the following quantities:
 
 \begin{equation}
 \begin{aligned}
@@ -549,7 +555,7 @@ Therefore, it follows that:
 For this to be true, it must be that $P^{\sigma'}_s (\varphi_2) > p_{\max, s} (\varphi_2)$, since $P^{\sigma'}_s (\varphi_1) = p_{\max, s} (\varphi_1)$. This constitutes a contradiction, since in that case $\sigma_2$ would not maximise the probability of $\varphi_2$ ($p_{\max, s} (\varphi_2) = P^{\sigma_2}_s (\varphi_2)$, by definition), a violation of the assumption described in Equation~\ref{eq:max_sigmas}. Thus, the proposition is proven.
 \end{proof}
 
-In MDPs, however, it is also possible to perform multi-objective verification, whereas multiple properties will be tested simultaneously (both in PRISM and Storm). One example of this would be:
+In MDPs it is also possible to perform multi-objective verification, whereas multiple properties will be tested simultaneously (both in PRISM and Storm). One example of this would be:
 
 \begin{minipage}{\linewidth}
 {\vspace{1em}
@@ -579,12 +585,13 @@ multi(Pmax=? [F x=2], Pmax=? [F y=2])
 }
 \end{minipage}
 
-This leads to a situation where compromises between the optimisation of either one of the properties might have to be reached. Pareto curves are the result of the verification of such properties \cite{pareto}.
+This leads to a situation where compromises between the optimisation of either one of the properties might have to be reached. Pareto curves are the result of the verification of such properties and their formal definition is presented below (adapted from \cite{pareto}).
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Multi-objective Query, Pareto Vector and Pareto Curve (alternatively Set)}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+{\vspace{1em}
+\textbf{Multi-objective Query, Pareto Vector and Pareto Curve (alternatively Set)}}
+{
+
 A \textit{multi-objective query} (MQ) $\phi$ of $n$ objectives is a positive boolean combination of $n$ predicates of the form $r_i \geq v_i$, where $r_i$ is a reward function, $v_i \in \mathbb{Q}$ is a bound. The notation $\phi[\mathbf{x}]$, $\mathbf{x} \in \mathbb{R}^n$ is used to denote $\phi$ in which each $r_i \geq v_i$ is replaced by $r_i \geq x_i$
 
 Consider a multi-objective query MQ $\phi$ of $n$ objectives. The vector $\mathbf{x} \in \mathbb{R}^n$ is a \textit{Pareto vector} of $\phi$ if, and only if:
@@ -599,7 +606,7 @@ A \textit{Pareto curve} of $\phi$ is the set of all Pareto vectors that $\phi$ a
 }
 \end{defi}}
 
-Thus, the result of the verification of a multi-objective optimisation property corresponds to a Pareto curve (this curve might contain a single vector). Both PRISM and Storm allow for the verification of properties containing up to 2 objectives each. As a result, 2D plots are the best way to represent these solutions. In Figure~\ref{fig:pareto_1}, the result of the verification of the property \texttt{multi(Pmax=? [F G x=2], Pmax=? [F G y=2])} is shown. As it can be observed, either property can be satisfied with certainty, but not both simultaneously (mutual exclusion). The green area under the curve corresponds to the achievable set.
+Thus, the result of the verification of a multi-objective optimisation property corresponds to a Pareto curve (this curve might contain a single vector). Both PRISM and Storm allow for the verification of properties containing up to 2 objectives each. As a result, 2D plots are the best way to represent these solutions. In Figure~\ref{fig:pareto_1}, the result of the verification of the property \texttt{multi(Pmax=? [F G x=2], Pmax=? [F G y=2])} in the model described in Listing~\ref{lst:example} is shown. As it can be observed, either property can be satisfied with certainty, but not both simultaneously (mutual exclusion). The light green area under the curve corresponds to the achievable set.
 
 \begin{figure}[h]
     \centering
@@ -608,12 +615,12 @@ Thus, the result of the verification of a multi-objective optimisation property 
     \label{fig:pareto_1}
 \end{figure}
 
-Each of the values resulting of the verification of quantitative properties in MDPs (whether they be a single value from a single optimisation, or a Pareto vector) is the result of an adversary which solves the nondeterminism and converts the MDP into a DTMC \cite{bk08}. The process of obtaining the adversary which satisfies certain properties is denoted by \textbf{strategy synthesis} or \textbf{adversary generation}, and it is formally defined below.
+Each of the values resulting of the verification of quantitative properties in MDPs (whether they be a single value from a single-objective optimisation, or a Pareto vector) is the result of an adversary which solves the nondeterminism and converts the MDP into a DTMC \cite{bk08}. The process of obtaining the adversary which satisfies certain properties is denoted by \textbf{strategy synthesis} or \textbf{adversary generation}, and it is formally defined below.
 
 {\begin{defi}
-{\setlength{\parskip}{2em}
-\textbf{Strategy Synthesis (alternatively Adversary Generation)}\vspace{1em}\\}
-{\setlength{\parskip}{1em} 
+{\vspace{1em}
+\textbf{Strategy Synthesis (alternatively Adversary Generation)}}
+{
 
 Consider a Markov decision process $\mathcal{M} = (S, Act, \mathbf{P}, p_{init}, AP, L)$. The process of maximal (similarly minimal) \textit{strategy synthesis} of the path formula $\varphi$ is defined as a process that yields an adversary $\sigma \in Adv$ such that:
 
