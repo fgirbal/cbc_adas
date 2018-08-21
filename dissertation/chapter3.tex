@@ -27,13 +27,13 @@ At the decision making level, the human driver model considered has two options:
 	\alpha \in A := \{(lc) \bigmid (\neg lc \wedge a = a_p) \bigmid (\neg lc \wedge a = a_d)\}
 \end{equation}
 
-where $lc$ corresponds to lane changing, $a$ is the acceleration, $a_p$ is the acceleration the vehicle is currently holding and $a_d$ is a constant value for deceleration that a driver applies when suggested to decelerate. In this dissertation, it was assumed that $a_d = -1$ (minimum decelerating value).
+where $lc$ corresponds to the decision to perform a lane change, $a$ is the acceleration in the next state, $a_p$ is the acceleration the vehicle is currently holding and $a_d$ is a constant value for deceleration that a driver applies when suggested to decelerate. In this dissertation, it was assumed that $a_d = -1$ (minimum decelerating value).
 
 Considering that the drivers are fully compliant with the suggestions given by the system, the decision making at each step can be replaced by the all the possible actions, obtaining an MDP with three choices at this level. The code presented in Appendix~\ref{sec:adas_pdm} corresponds to the implementation of a generator for this ADAS.
 
 \subsubsection{Decision Making with Partially Compliant Drivers}
 
-In the case of the ADAS previously designed, it is assumed that humans will not only follow all the suggestions, but they will comply with them fully and immediately after they are received (within the same ACT-R cycle in the decision making). However, this is not a realistic assumption by any means. In fact, people are more prone to following suggestions when these align with their original interests, than otherwise. With this in mind, a new solution is presented which more accurately represents the suggestive decision making considered in this section.
+In the case of the ADAS previously designed, it is assumed that humans will not only follow all the suggestions, but they will comply with them fully and immediately after they are received (within the same ACT-R cycle in the decision making). However, this is not a realistic assumption by any means. In fact, people are more prone to following suggestions when these align with their original intent, than otherwise. With this in mind, a new solution is presented which more accurately represents the suggestive decision making considered in this section.
 
 In the human driver model, a single action was available for a set of conditions, such that at any decision making state ($actr\_state = 2$) $s$ there would be a value $p$ such that the next state $s'$ could be written as:
 
@@ -47,7 +47,7 @@ Consider a factor $\gamma \in [0,1]$ which corresponds to how responsive a drive
 s'_i = \gamma: \alpha_i + (1-\gamma)\cdot p:(lC) + (1-\gamma)\cdot (1-p):(\neg lC \:\&\: a = a_p)
 \end{equation}
 
-Given that $\gamma, p \in [0,1]$, the transitions are guaranteed to sum up to one for every case. The decision making with fully compliant drivers corresponds to case where $\gamma = 1$. The code presented in Appendix~\ref{sec:adas_idm} corresponds to the implementation of a generator for this particular ADAS.
+Given that $\gamma, p \in [0,1]$, the transitions are guaranteed to sum up to one for every case. The decision making with fully compliant drivers corresponds to the case where $\gamma = 1$. The code presented in Appendix~\ref{sec:adas_idm} corresponds to the implementation of a generator for this particular ADAS.
 
 \subsection{Control based ADAS}
 
@@ -76,7 +76,7 @@ The implementation of such system consists in replacing the existing linear cont
 
 While linear acceleration control assistance improves safety and liveness, steering assistance can also be improved using incremental velocity and acceleration. 
 
-In \cite{salvucci_1}, Salvucci introduces a control law for the steering angle $\varphi$, as presented in Section~\ref{sec:salvucci}, for a given $k_{far}, k_{near}$ and $k_I$. By changing the values of these constants, different control laws are obtained, which introduce different accelerations and velocities at each time step, mimicking the behaviour of the incremental control previously assumed (i.e. within such a strategy, the difference in acceleration and velocity introduced is the difference between these values for the two control laws at each time step). The value of $\theta_{\max}$ (as defined in Section~\ref{sec:salvucci}), guarantees the feasibility of the movement in terms of the acceleration induced. Thus, actions in these assistance system at the model level correspond to different sets of $(k_{far}, k_{near},k_I)$ available to the ADAS.
+In \cite{salvucci_1}, Salvucci introduces a control law for the steering angle $\varphi$, as presented in Section~\ref{sec:salvucci}, for a given $k_{far}, k_{near}$ and $k_I$. By changing the values of these constants, different control laws are obtained, which introduce different accelerations and velocities at each time step, mimicking the behaviour of the incremental control previously assumed (i.e. within such a strategy, the difference in acceleration and velocity introduced is the difference between these values for the two control laws at each time step). The value of $\theta_{\max}$ (as defined in Section~\ref{sec:salvucci}), guarantees the feasibility of the movement in terms of the acceleration induced. Thus, actions in this assistance system at the model level correspond to different sets of $(k_{far}, k_{near},k_I)$ available to the ADAS.
 
 In this dissertation, three distinct sets of parameters were considered as possible actions, $(k_{far}, k_{near},k_I) \in \{(15,3,5), (17,3,6), (14.5,3,7)\}$. An example of the simulation for the situation where $o_{lane} = 1$, $d = 20m$, $v = 15m/s$ and $v_1 = 15m/s$ (with the non-probabilistic control) is presented in Figure~\ref{fig:steering_control_ex}.
 
@@ -93,7 +93,7 @@ In terms of implementation, the MDP is obtained through simply reading the three
 
 \section{Design Evaluation}
 
-While it would appear to be the case that an ADAS with both decision making and control assistance at the linear acceleration and steering level would be the optimal choice for the driver assistance system, there are no guarantees that this is true. As such, an evaluation and comparison of all the possible designs must be performed in order to determine the best option which can then be compared to the human driver in Chapter~\ref{sec:results}. To do so, it is necessary to establish multi-objective metrics and some meaningful test cases (as testing all the options would be infeasible).
+While it would appear to be the case that an ADAS with both decision making and control assistance at the linear acceleration and steering level would be the optimal choice for the driver assistance system, there are no guarantees that this is true. As such, an evaluation and comparison of all the possible designs must be performed in order to determine the best option which can then be compared to the human driver model in Chapter~\ref{sec:results}. To do so, it is necessary to establish multi-objective metrics and some meaningful test cases (as testing all the options would be infeasible).
 
 \subsection{Multi-Objective Metrics}
 \label{sec:multi_obj_metrics}
