@@ -10,7 +10,7 @@ The first step towards the comparison between the human driver model and the ful
 \subsection{State Space and Building Time Results}
 \label{sec:res_state}
 
-A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1, x_{1,0})$, where $d_{type} \in \{1,2,3\}$ is the driver class considered (aggressive, average or cautious, respectively). In practice, this means that, for a road segment of $500m$ and considering $v, v_1 \in \{15,...,34\}$ and $x_{1,0} \in \{1,...,500\}$, there are $20 \times 20 \times 500 \times 3 = 600,000$ different scenarios to consider. Assuming that the building time of each of those scenarios for both the human driver and the full system takes 5 minutes each, this task would take approximately 2083 days to complete. Given the time frame of this dissertation, this would be infeasible. As such, a sample population of 10 random scenarios were generated and the results in terms of the number of states (\#S), the number of transitions (\#T) of the built model and time, in seconds, (t [s]) it took to build the model\footnote{The models were built using a Macbook Pro with a 2,6 GHz Intel Core i7 (quad core). The human model results were obtained using Storm's sparse engine, while the full system results were obtained using PRISM's hybrid engine.} are presented in Table~\ref{tab:state_space_res}.
+A scenario, in both cases, can be uniquely defined as a tuple $(d_{type}, v, v_1, x_{1,0})$, where $d_{type} \in \{1,2,3\}$ is the driver class considered (aggressive, average or cautious, respectively). In practice, this means that, for a road segment of $500m$ and considering $v, v_1 \in \{15,...,34\}$ and $x_{1,0} \in \{1,...,500\}$, there are $20 \times 20 \times 500 \times 3 = 600,000$ different scenarios to consider. Assuming that the building time of each of those scenarios for both the human driver model and the full system is 5 minutes in total, this task of building all the possible scenarios would take approximately $2,083$ days to complete. Given the time frame of this dissertation, this would be infeasible. As such, a sample population of 10 random scenarios was generated and the results in terms of the number of states (\#S), the number of transitions (\#T) of the built model and time, in seconds, (t [s]) it took to build the model\footnote{The models were built using a Macbook Pro with a 2,6 GHz Intel Core i7 (quad core). The human model results were obtained using Storm's sparse engine, while the full system results were obtained using PRISM's hybrid engine.} are presented in Table~\ref{tab:state_space_res}.
 
 \vspace{1em}
 \bgroup
@@ -64,7 +64,7 @@ Pmin=? [F crashed]
 
 These properties are directly comparable, as they represent the same quantitative value (this is not the case with the liveness properties). It should be noted that the lower the value of this property, the safer the system is. This means that these properties can be used not only for comparisons between the human driver alone and the full system (human and driver assistance system) for a given scenario, but also for inter-situational comparisons (i.e. with different initial conditions).
 
-As such, three other methods where designed as a way to compare both systems: 
+As explained in Section~\ref{sec:res_state}, it would be infeasible to obtain the results of model checking the safety property in all the possible scenarios. As such, three other methods where designed as a way to compare both systems: 
 
 \begin{itemize}
 	\item \textbf{Main vehicle initial velocity test cases}: for two randomly selected tuples $(v_1, x_{1,0})$, the variation of the value of the safety properties for each driver profile with the variation of $v$ were obtained. This directly compares 20 different scenarios for each driver class. The two tuples were randomly generated as $(v_1, x_{1,0}) = (20, 35)$ and $(v_1, x_{1,0}) = (22, 40)$, and the results are presented in Figures~\ref{fig:plot1} and \ref{fig:plot2}, respectively.
@@ -174,7 +174,7 @@ since intuitively the interest is in adversaries which maximise the conditional 
 	p_{\max, s} (\text{\texttt{F (x=length) \& (t<T)}} \bigmid \text{\texttt{F (x=length)}}) \geq \frac{p_{\max, s} (\text{\texttt{F (x=length) \& (t<T)}})}{p_{\max, s} (\text{\texttt{F (x=length)}})}
 \end{equation}
 
-Therefore, a lower bound on the conditional probability, $\zeta$, can be obtained using the quantitative properties:
+Therefore, a lower bound on the conditional probability, $\zeta(T)$, can be obtained using the quantitative properties:
 
 \begin{equation}
 	\zeta(T) = \frac{\text{\texttt{Pmax=? [F (x=length) \& (t<T)]}}}{\text{\texttt{Pmax=? [F (x=length)]}}}
@@ -192,14 +192,17 @@ so long as $p_{\max, s} (\text{\texttt{F (crashed | x = length)}}) = p_{\min, s}
 	\zeta(T) = \frac{\text{\texttt{Pmax=? [F (x=length) \& (t<T)]}}}{1 - \text{\texttt{Pmin=? [F crashed]}}}
 \end{equation}
 
-As was the case with the safety properties, model checking the entire space of possible initial conditions would be infeasible given the time frame of this dissertation. Similarly, two methods were designed to compare both systems at the liveness level:
+Once more, model checking the entire space of possible initial conditions would be infeasible given the time frame of this dissertation. Similarly to the safety properties, two methods were designed to compare both systems at the liveness level:
 
 \begin{itemize}
 	\item \textbf{Temporal variation of liveness}: for two randomly selected tuples $(v, v_1, x_{1,0})$, the value of all the pertinent liveness properties ($T \in \{16,...,28\}$) was obtained. The two tuples were randomly generated as $(v, v_1, x_{1,0}) = (21, 19, 70)$ and $(v, v_1, x_{1,0}) = (26, 22, 46)$, and the results are presented in Figures~\ref{fig:plot4} and \ref{fig:plot5}, respectively.
 	\item \textbf{Box plots}: for a randomly generated sample of 100 different initial conditions of $(v, v_1, x_{1,0})$, obtain box plot which represents the distribution of the values of two liveness properties using appropriate values of $T$ (given the sample) for this sample and for each driver profile. After the sample was generated, it was determined that $T=21$ and $T=22$ were representative values (in the sense that they are great enough to avoid a significant portion of the values of both properties being 0, and not so large that a significant portion of the values for all scenarios are 1; these situations would make it impossible to compare the human and the full system). The results are presented in Figures~\ref{fig:plot7} and \ref{fig:plot8} for $T=21$ and $T=22$, respectively.
 \end{itemize}
 
+\clearpage
+
 \begin{figure}[H]
+\vspace{4em}
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -232,6 +235,7 @@ As was the case with the safety properties, model checking the entire space of p
 \end{figure}
 
 \begin{figure}[H]
+\vspace{4em}
 \centering
 \begin{subfigure}{0.49\textwidth}
   \centering
@@ -265,7 +269,7 @@ As was the case with the safety properties, model checking the entire space of p
 
 \subsection{Discussion}
 
-The discussion of the results presented in Sections~\ref{sec:res_safety} and \ref{sec:res_liveness} is threefold in nature. Firstly, the comparison between the different driver classes within each of the individual systems (i.e. human driver model and the human and ADAS system) is presented. Secondly, the results of the experiments of the human driver alone and the full system in both safety and liveness are discussed and compared (within the same driver profile). Finally, an overall discussion is presented on the extent of the validity of such comparisons through the drawbacks of the metrics used.
+The discussion of the results presented in Sections~\ref{sec:res_safety} and \ref{sec:res_liveness} is threefold in nature. Firstly, the comparison between the different driver profiles within each of the individual systems (i.e. human driver model and the human and ADAS system) is presented. Secondly, the results of the experiments of the human driver alone and the full system in both safety and liveness are discussed and compared (within the same driver class). Finally, an overall discussion is presented on the extent of the validity of such comparisons through the drawbacks of the metrics used.
 
 With respect to the individual driver classes presented in both the human driver model and the human and ADAS system, the results overwhelmingly support the initial idea that aggressive drivers perform the worse in terms of the safety metrics, followed by average drivers and finally cautious ones. While this is observable in the individual test cases (Figures~\ref{fig:plot1} and \ref{fig:plot2}), Figure~\ref{fig:plot6} firmly supports this conclusion within both systems. In terms of liveness, the reverse is true, with aggressive drivers outperforming average drivers who in turn outperform cautious drivers. Once more, while individual test cases support this result (Figures~\ref{fig:plot4} and \ref{fig:plot5}), Figures~\ref{fig:plot7} and \ref{fig:plot8} emphatically reinforce it. Intuitively, this is what was expected from the construction of the human driver model, and it is still noticeable even using the ADAS designed.
 
@@ -277,18 +281,18 @@ With respect to liveness, the comparison needs to be carefully drawn, as the con
 
 Despite the results pointing to the improvements in terms of the safety and liveness properties the ADAS designed brings, they should be taken with care, as there are drawbacks in the metrics used. 
 
-The first drawback has to do with the fact that the comparison in the human and ADAS deals with minimal and maximal properties due to the existence of adversaries in MDPs. Thus, the fact that the safety property is lower in this case than in the human driver model and the liveness properties are higher, does not mean that there is a feasible strategy where both safety and liveness are optimal and outperform the human driver (there might be a trade-off). This is not the case with the human driver model, where it is known that both quantitative properties are satisfied simultaneously. In order to evaluate this feasibility properly, Pareto curves should be generated for each individual scenario and it should be seen whether there exists a Pareto point where both values outperform the human driver. This analysis is time consuming with the tools currently available (i.e. PRISM and Storm) and was therefore infeasible in the time frame of this dissertation. 
+The first drawback has to do with the fact that the comparison in the full system (i.e. human driver model and ADAS system) deals with minimal and maximal properties due to the existence of adversaries in MDPs. Thus, the fact that the safety property is lower in this case than in the human driver model and the liveness properties are higher, does not mean that there exists a feasible strategy where both safety and liveness are optimal and outperform the human driver (there might be a trade-off). This is not the case with the human driver model, where it is known that both quantitative properties are satisfied simultaneously. In order to evaluate the feasibility properly, Pareto curves should be generated for each individual scenario and it should be seen whether there exists a Pareto point where both values outperform the human driver. This analysis is time consuming with the tools currently available (i.e. PRISM and Storm) and was therefore infeasible in the time frame of this dissertation. 
 
-An additional drawback in terms of the liveness properties in the full system (i.e. human driver and ADAS system) case is that these are defined as lower bounds which are not proven to be tight. In fact, in Figure~\ref{fig:plot8}, while the $25\%$ and $75\%$ quartiles appear to be higher in the case of the full system than the human driver model, this is not the case with the median, which is at similar values (or even lower for the class of cautious drivers). From the rest of the data, it would appear that this value might be the result of the fact that the lower bound is not tight and might be underestimating the value of the maximal conditional property for the sample population used. However, this is not certain, and it might also be that the full system is outperformed, in terms of the liveness properties, by the human driver in certain conditions. The use of the unconditional liveness properties here would be meaningless, as it would incur in the safety bias first presented in Section~\ref{sec:live_props}. A solution to this problem would be to develop the tools to model check conditional properties in MDPs, however, this was outside the scope of this dissertation and would be highly time consuming.
+An additional drawback in terms of the liveness properties in the full system case is that these are defined as lower bounds which are not proven to be tight. In fact, in Figure~\ref{fig:plot8}, while the $25\%$ and $75\%$ quartiles appear to be higher in the case of the full system than the human driver model, this is not the case with the median, which is at similar values (or even lower for the class of cautious drivers). From the rest of the data, it would appear that this value might be the result of the fact that the lower bound is not tight and might be underestimating the value of the maximal conditional property for the sample population used. However, this is not certain, and it might also be that the full system is outperformed, in terms of the liveness properties, by the human driver in certain conditions. The use of the unconditional liveness properties here would be meaningless, as it would incur in the safety bias first presented in Section~\ref{sec:live_props}. A solution to this problem would be to develop the tools to model check conditional properties in MDPs, however, this was outside the scope of this dissertation and would be highly time consuming.
 
 \section{Demonstration of Possible Extensions}
 \label{sec:add_exp}
 
-While outside the scope of the main goal of the dissertation of evaluating safety and liveness, extensions of the work presented can be obtained fairly easily. They can be achieved through additional properties that can be used to synthesise strategies for the ADAS which enforce other types of behaviours or through minor modifications of the model to encompass different assumptions.
+While outside the scope of the main goal of the dissertation of evaluating safety and liveness, extensions of the work presented can be obtained fairly easily. They can be achieved through additional properties that can be used to synthesise strategies for the ADAS which enforce other types of behaviours, or through minor modifications of the model to encompass different assumptions.
 
 \subsection{Left Lane Penalising}
 
-When a driver attempts an overtake of the lead vehicle, it should do so by performing two lane changes, one from the current lane to the one immediately to the left, and another one to return to the original lane after it has passed the lead vehicle. The manoeuvre should be performed safely, yet as quickly as possible \cite{carr}. With this in mind, properties can be specified to assert such a regulation to the ADAS to guarantee compliance.
+When a driver attempts an overtake, it should do so by performing two lane changes, one from the current lane to the one immediately to the left, and another one to return to the original lane after it has passed the lead vehicle. The manoeuvre should be performed safely, yet as quickly as possible \cite{carr}. With this in mind, properties can be specified to assert such a regulation to the ADAS to guarantee compliance.
 
 In particular, the property should penalise the usage of the left lane ($lane = 2$). For this purpose, the following reward structure was designed:
 
@@ -370,7 +374,7 @@ yields an adversary which can be used to generate a sample path in the model. Si
   \centering
   \includegraphics[width=1\linewidth]{results/additional/snap_6.png}
 \end{subfigure}
-\caption{Snapshots of the simulator for one of the paths of the model.}
+\caption{Snapshots of the simulator for one of the paths of the model for $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$, obtained using the left lane penalising property.}
 \label{fig:lane_penalising_sim}
 \end{figure}
 
@@ -392,7 +396,7 @@ As observed, minimal time is spent in the left lane, with the main vehicle retur
 
 \subsection{Unsafe by Construction}
 
-Until this point, the assumption has been that the goal of the assistance system was to enforce safety and liveness. However, assume a bad actor has access to the model and the deployment process used in the vehicle. In such a case, it becomes important to evaluate the extent of the damage that such an actor could do. Take the same scenario as above, $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$. Let's also assume that the bad actor wants the accident to happen after the the driver has driven between the $100$ and $200m$, for a road segment of $400m$. The following property can be considered:
+Until this point, the assumption has been that the goal of the assistance system was to enforce safety and liveness. However, assume a bad actor has access to the model and the deployment process used in the vehicle. In such a case, it becomes important to evaluate the extent of the damage that such an actor could do. Take the same scenario as above, $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$. Let's also assume that the bad actor wants the accident to happen after the the driver has driven between $100$ and $200m$ (for a road segment of $400m$). The following property can be considered:
 
 \begin{minipage}{\linewidth}
 {\vspace{1em}
@@ -438,7 +442,7 @@ This property maximises the probability of crashing, while requiring the vehicle
   \centering
   \includegraphics[width=1\linewidth]{results/additional/crash_3.png}
 \end{subfigure}
-\caption{Snapshots of the simulator for one of the paths of the model.}
+\caption{Snapshots of the simulator for one of the paths of the model for $(d_{type}, v, v_1, x_{1,0}) = (1, 30, 22, 50)$ obtained using the unsafe property.}
 \label{fig:unsafe_sim}
 \end{figure}
 
@@ -473,7 +477,7 @@ posDist(t) =
 
 As soon as the main vehicle overtakes the first vehicle successfully, $focusVehicle$ becomes $2$ and the formulas switch from the first to the second vehicle. 
 
-This constitutes an efficient way of introducing an additional vehicle in the model, as it is essentially achieved through the use of a single variable and the modifying of the required formulas. It should be noted that, despite this, the reachable states in the model will increase as well as the size of the model definition from the need to include more of the lane changing look-up table (for $v_1$ and $v_2$). 
+This constitutes an efficient way of introducing an additional vehicle in the model, as it is essentially achieved through the use of a single variable and the modifying of the required formulas. It should be noted that, despite this, the reachable states in the model will increase as well as the size of the model definition (and, consequently, the building time of the model) from the need to include more of the lane changing look-up table (for $v_1$ and $v_2$). 
 
 Take, as an example, the case $(d_{type}, v, v_1, x_{1,0}, v_2, x_{2,0}) = (3, 24, 17, 35, 18, 140)$, that is, a cautious driver going at $24m/s$ and two lead vehicles, one starting $35m$ in front of the main and going at $17m/s$, and the other one starting at $140m$ and going at $18m/s$. In this scenario, for simulation purposes, it is considered that the length of the road segment is $400m$. Building the model, an MDP with $52,059$ states is obtained. By verifying the property \texttt{Pmin=? [F crashed]}, the value of this property comes out to be $0.1580$ and \texttt{Pmax=? [F (x=length) \& (t<16)]} is the property with the lowest $T$ with a non-zero value, with a value of $0.1193$. As such, the following multi-objective property:
 
@@ -485,7 +489,7 @@ multi(Pmax=? [F x=400 & t < 16], P<=0.158 [F crashed])
 }
 \end{minipage}
 
-generates an adversary which maximises this liveness property while guaranteeing the minimum value possible for the liveness property. The adversary obtained permits the generation of paths such as the one presented in the simulator frames in Figure~\ref{fig:three_vehicle_sim} (for a slightly modified simulator which includes information about the two other vehicles). It should be noted that, while the simulation continues after $400m$, the model is considers a road segment of length $400m$ (it continues past this point in this case because the main vehicle is performing a lane change).
+generates an adversary which maximises this liveness property while guaranteeing the minimum possible value for the safety property. The adversary obtained permits the generation of paths such as the one presented in the simulator frames in Figure~\ref{fig:three_vehicle_sim} (for a slightly modified simulator which includes information about the two other vehicles). It should be noted that, while the simulation continues after $400m$, the model considered has a road segment of length $400m$ (it continues past this point in this case because the main vehicle is performing a lane change).
 
 \begin{figure}[H]
 \centering
@@ -513,7 +517,7 @@ generates an adversary which maximises this liveness property while guaranteeing
   \centering
   \includegraphics[width=1\linewidth]{results/additional/two_6.png}
 \end{subfigure}
-\caption{Snapshots of the simulator for one of the paths of the model.}
+\caption{Snapshots of the simulator for one of the paths of the three vehicle highway model for $(d_{type}, v, v_1, x_{1,0}, v_2, x_{2,0}) = (3, 24, 17, 35, 18, 140)$.}
 \label{fig:three_vehicle_sim}
 \end{figure}
 
