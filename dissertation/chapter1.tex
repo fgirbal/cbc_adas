@@ -115,7 +115,8 @@ A \textit{discrete-time Markov chain} is a tuple $\mathcal{M} = (S, \mathbf{P}, 
 		\begin{equation}
 			\sum_{s \in S} p_{init}(s) = 1
 		\end{equation}
-	\item $AP$ is a set of atomic propositions and $L: S \to 2^{AP}$ is a labelling function. 
+	\item $AP$ is a set of atomic propositions, and 
+	\item $L: S \to 2^{AP}$ is a labelling function. 
 \end{itemize}
 
 $\mathcal{M}$ is denoted \textit{finite} if $S$ and $AP$ are finite sets.
@@ -139,7 +140,8 @@ A \textit{Markov decision process} is a tuple $\mathcal{M} = (S, Act, \mathbf{P}
 		\begin{equation}
 			\sum_{s \in S} p_{init}(s) = 1
 		\end{equation}
-	\item $AP$ is a set of atomic propositions and $L: S \to 2^{AP}$ is a labelling function. 
+	\item $AP$ is a set of atomic propositions, and
+	\item $L: S \to 2^{AP}$ is a labelling function. 
 \end{itemize}
 
 An action $\alpha \in Act$ is enabled in a state $s$ if, and only if, $\sum_{s' \in S} \mathbf{P}(s,\alpha,s') = 1$. Let $Act(s)$ denote the set of actions enabled in a state $s$. It must be that for all states $s \in S$, $Act(s) \neq \emptyset$.
@@ -200,7 +202,7 @@ An adversary $\sigma$ is called memoryless if, and only if, for any $\pi_1 = s_0
 
 In order to verify properties in models, there needs to be a way of expressing those properties formally and unequivocally. While some reachability and reward-based properties come directly from the definition of DTMCs, MDPs and reward structures \cite{fknp11}, more interesting and complex properties require the use of a temporal logic. A propositional temporal logic is essentially an extension of propositional logic by temporal operators \cite{bk08}. In this context, one can consider time as being \textit{linear} or \textit{branching}. In linear time, at every moment in time there must only exist a single successor moment, whereas from the branching perspective, there may exist multiple ones, forming a tree-like structure of alternatives. Linear Temporal Logic (LTL) is a temporal logic which assumes the first, while Computation Tree Logic (CTL) is based on the branching perspective. Probabilistic Computational Tree Logic (PCTL) is an extension of CTL that takes into account a probabilistic operator.
 
-Given the definition of a path in a MC and an MDP, it is possible to define the syntax for LTL, CTL and PCTL (adapted from \cite{bk08, fknp11}).
+Given the definition of a path in a MC and an MDP, it is possible to define the syntax for LTL and PCTL, as shown below (adapted from \cite{bk08, fknp11}).
 
 {\begin{defi}
 {\vspace{1em}
@@ -237,59 +239,59 @@ The operator F (eventually) can also be defined as:
 }
 \end{defi}}
 
-It can be noticed that, as a result of the linear time consideration in LTL, all the formulas are taken over paths. This is not the case in CTL which can have both path and state formulae, as shown below.
+It can be noticed that, as a result of the linear time consideration in LTL, all the formulas are taken over paths. This is not the case in PCTL which can have both path and state formulae, as shown below.
 
-{\begin{defi}
-{\vspace{1em}
-\textbf{Syntax and Semantics of CTL}}
-{
-
-A \textit{CTL state formulae} $\Phi$ over a set of atomic propositions $AP$ can formed according to the following grammar:
-
-\begin{equation}
-	\Phi ::= \text{\texttt{true}} \bigmid a \bigmid \Phi_1 \wedge \Phi_2 \bigmid \neg \Phi \bigmid \text{E} \varphi \bigmid \text{A} \varphi
-\end{equation}
-
-where $a \in AP$, $\varphi$ is a path formula, $\Phi_i$ are state formulas, E is the exists operator, and A is the all operator as defined below for Markov chains and decision processes.
-
-For a given state $s \in S$ in a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
-\begin{itemize}
-	\item $s \models $\texttt{true} always.
-	\item $s \models a$ if, and only if, $a \in L(s)$.
-	\item $s \models \Phi_1 \wedge \Phi_2$ if, and only if, $s \models \Phi_1 \wedge s \models \Phi_2$.
-	\item $s \models \neg \Phi$ if, and only if, $s \not\models \Phi$.
-	\item $s \models \text{E} \varphi$ if, and only if, $\exists \pi \in Paths(s): \pi \models \varphi$.
-	\item $s \models \text{A} \varphi$ if, and only if, $\forall \pi \in Paths(s): \pi \models \varphi$
-\end{itemize}
-
-A \textit{CTL path formulae} $\varphi$ over a set of atomic propositions $AP$ can formed according to the following grammar:
-
-\begin{equation}
-	\varphi ::= \text{X} \Phi \bigmid \Phi_1 \text{ U } \Phi_2
-\end{equation}
-
-where $a \in AP$, $\Phi_i$ are state formulas, X is the next operator, and U is the until operator as defined below for Markov chains and decision processes.
-
-For a given path $\pi = s_0s_1s_2...$ in a Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
-\begin{itemize}
-	\item $\pi \models \text{X}\Phi$ if, and only if, $s_1 \models \Phi$.
-	\item $\pi \models \Phi_1\text{ U }\Phi_2$ if, and only if:
-	 \begin{equation}
-	 	\exists i \geq 0 \text{ s.t. } (s_i \models \Phi_2) \wedge (\forall j < i: s_j \models \Phi_1)
-	\end{equation}
-\end{itemize}
-
-It is also possible to define the operators F (eventually) and G (globally) as:
-
-\begin{equation}
-\begin{aligned}
-	\text{F} \Phi & = \text{\texttt{true}} \text{ U } \Phi \\
-	\text{G} \Phi & = \neg \text{E} (\neg \Phi)
-\end{aligned}
-\end{equation}
-
-}
-\end{defi}}
+%{\begin{defi}
+%{\vspace{1em}
+%\textbf{Syntax and Semantics of CTL}}
+%{
+%
+%A \textit{CTL state formulae} $\Phi$ over a set of atomic propositions $AP$ can formed according to the following grammar:
+%
+%\begin{equation}
+%	\Phi ::= \text{\texttt{true}} \bigmid a \bigmid \Phi_1 \wedge \Phi_2 \bigmid \neg \Phi \bigmid \text{E} \varphi \bigmid \text{A} \varphi
+%\end{equation}
+%
+%where $a \in AP$, $\varphi$ is a path formula, $\Phi_i$ are state formulas, E is the exists operator, and A is the all operator as defined below for Markov chains and decision processes.
+%
+%For a given state $s \in S$ in a discrete-time Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
+%\begin{itemize}
+%	\item $s \models $\texttt{true} always.
+%	\item $s \models a$ if, and only if, $a \in L(s)$.
+%	\item $s \models \Phi_1 \wedge \Phi_2$ if, and only if, $s \models \Phi_1 \wedge s \models \Phi_2$.
+%	\item $s \models \neg \Phi$ if, and only if, $s \not\models \Phi$.
+%	\item $s \models \text{E} \varphi$ if, and only if, $\exists \pi \in Paths(s): \pi \models \varphi$.
+%	\item $s \models \text{A} \varphi$ if, and only if, $\forall \pi \in Paths(s): \pi \models \varphi$
+%\end{itemize}
+%
+%A \textit{CTL path formulae} $\varphi$ over a set of atomic propositions $AP$ can formed according to the following grammar:
+%
+%\begin{equation}
+%	\varphi ::= \text{X} \Phi \bigmid \Phi_1 \text{ U } \Phi_2
+%\end{equation}
+%
+%where $a \in AP$, $\Phi_i$ are state formulas, X is the next operator, and U is the until operator as defined below for Markov chains and decision processes.
+%
+%For a given path $\pi = s_0s_1s_2...$ in a Markov chain $\mathcal{M} = (S, \mathbf{P}, p_{init}, AP, L)$ (generalising trivially to a Markov decision process):
+%\begin{itemize}
+%	\item $\pi \models \text{X}\Phi$ if, and only if, $s_1 \models \Phi$.
+%	\item $\pi \models \Phi_1\text{ U }\Phi_2$ if, and only if:
+%	 \begin{equation}
+%	 	\exists i \geq 0 \text{ s.t. } (s_i \models \Phi_2) \wedge (\forall j < i: s_j \models \Phi_1)
+%	\end{equation}
+%\end{itemize}
+%
+%It is also possible to define the operators F (eventually) and G (globally) as:
+%
+%\begin{equation}
+%\begin{aligned}
+%	\text{F} \Phi & = \text{\texttt{true}} \text{ U } \Phi \\
+%	\text{G} \Phi & = \neg \text{E} (\neg \Phi)
+%\end{aligned}
+%\end{equation}
+%
+%}
+%\end{defi}}
 
 {\begin{defi}
 {\vspace{1em}
@@ -483,10 +485,12 @@ P=? [ F x=2 || F y=2 ]
 This property can be interpreted as \textit{"what is the probability that the model eventually reaches the state} \texttt{x = 2}\textit{, given that it eventually reaches the state} \texttt{y = 2}\textit{"}. These properties, in DTMCs, correspond simply to the application of Bayes' theorem of conditional probability, which states that:
 
 \begin{equation}
-	P_s (\varphi_1 \bigmid \varphi_2) = \frac{P_s (\varphi_1 \wedge \varphi_2)}{P_s (\varphi_2)}
+	P_s (\varphi_1 \cond \varphi_2) = \frac{P_s (\varphi_1 \wedge \varphi_2)}{P_s (\varphi_2)}
 \end{equation}
 
 For $P_s (\varphi_2) \neq 0$. It must be emphasised that this is \textbf{not} the case for MDPs, where the existence of multiple adversaries complicates the calculations of conditional probabilities.
+
+\textbf{Note}: while uncommon in mathematical notation, the event \textit{"A conditioned on B"} will be represented throughout the dissertation by $A \cond B$, so as to be distinguishable from the boolean disjunction operator which is represented as $A\mid B$ (reads \textit{"A or B"}).
 
 This does not mean that it is not possible to reason over conditional probabilities in MDPs. For some specific scenarios, it is possible to obtain meaningful bounds which allow comparisons between the ones obtained in DTMCs and MDPs. One of those scenarios is defined in the proposition below, with the proof following it.
 
@@ -495,7 +499,7 @@ This does not mean that it is not possible to reason over conditional probabilit
 Consider a Markov decision process $\mathcal{M} = (S, Act, \mathbf{P}, p_{init}, AP, L)$ which admits adversaries $\sigma \in Adv$. Let $\varphi_1, \varphi_2$ be two PCTL path formulas, such that, for any path $\pi \in Paths(s)$: $\pi \models \varphi_1 \Rightarrow \pi \models \varphi_2$. Assume as well that:
 
 \begin{equation}
-	\sigma' \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \bigmid \varphi_2)
+	\sigma' \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \cond \varphi_2)
 \end{equation}
 
 And that:
@@ -507,13 +511,13 @@ And that:
 That is, an adversary which maximises the probability of $\varphi_1 \bigmid \varphi_2$ also maximises the probability of $\varphi_1$. In this case it holds that:
 
 \begin{equation}
-	p_{\max, s} (\varphi_1 \bigmid \varphi_2) \geq \frac{p_{\max, s} (\varphi_1)}{p_{\max, s} (\varphi_2)}
+	p_{\max, s} (\varphi_1 \cond \varphi_2) \geq \frac{p_{\max, s} (\varphi_1)}{p_{\max, s} (\varphi_2)}
 \end{equation}
 
 with:
 
 \begin{equation}
-	p_{\max, s} (\varphi_1 \bigmid \varphi_2) = \sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \bigmid \varphi_2)
+	p_{\max, s} (\varphi_1 \cond \varphi_2) = \sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \cond \varphi_2)
 \end{equation}
 
 \end{proposition}
@@ -537,13 +541,13 @@ Consider $\sigma_2 \in Adv$ such that:
 Assume, for the sake of contradiction, that:
 
 \begin{equation}
-	p_{\max, s} (\varphi_1 \bigmid \varphi_2) < \frac{p_{\max, s} (\varphi_1)}{p_{\max, s} (\varphi_2)}
+	p_{\max, s} (\varphi_1 \cond \varphi_2) < \frac{p_{\max, s} (\varphi_1)}{p_{\max, s} (\varphi_2)}
 \end{equation}
 
 Under adversary $\sigma'$, it can be written that, through Bayes' theorem of conditional probability:
 
 \begin{equation}
-	p_{\max, s} (\varphi_1 \bigmid \varphi_2) = P^{\sigma'} _s(\varphi_1 \bigmid \varphi_2) = \frac{P^{\sigma'}_s (\varphi_1 \wedge \varphi_2)}{P^{\sigma'}_s (\varphi_2)} = \frac{P^{\sigma'}_s (\varphi_1)}{P^{\sigma'}_s (\varphi_2)}
+	p_{\max, s} (\varphi_1 \cond \varphi_2) = P^{\sigma'} _s(\varphi_1 \cond \varphi_2) = \frac{P^{\sigma'}_s (\varphi_1 \wedge \varphi_2)}{P^{\sigma'}_s (\varphi_2)} = \frac{P^{\sigma'}_s (\varphi_1)}{P^{\sigma'}_s (\varphi_2)}
 \end{equation}
 
 Therefore, it follows that:
@@ -618,7 +622,7 @@ Thus, the result of the verification of a multi-objective optimisation property 
 Each of the values resulting of the verification of quantitative properties in MDPs (whether they be a single value from a single-objective optimisation, or a Pareto vector) is the result of an adversary which solves the nondeterminism and converts the MDP into a DTMC \cite{bk08}. The process of obtaining the adversary which satisfies certain properties is denoted by \textbf{strategy synthesis} or \textbf{adversary generation}, and it is formally defined below.
 
 {\begin{defi}
-{\vspace{1em}
+{\vspace{3em}
 \textbf{Strategy Synthesis (alternatively Adversary Generation)}}
 {
 

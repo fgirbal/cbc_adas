@@ -17,14 +17,14 @@ One of the aims of this dissertation is to obtain correct-by-construction driver
 
 It is assumed that the assistance system can not change the decision making (as it is a human cognitive process), but it can influence it to a certain degree through suggestion. This would be the ideal way of implementing the ADAS, as it would not require any intervention in the physical systems of the vehicle. Therefore, the first possibilities explored are based on this option. However, in the interest of safety and efficiency, incremental control based options are also developed, both at the level of linear acceleration (influencing $a$ through $\Delta a_{as}$), as well as at the level of steering control (by influencing $v$ and $a$ through $\Delta v_{as}$ and $\Delta a_{as}$, respectively). 
 
-\subsection{Decision Making based ADAS}
+\subsection{Decision Making-based ADAS}
 
 \subsubsection{Decision Making with Fully Compliant Drivers}
 
 At the decision making level, the human driver model considered has two options: it either changes lanes, or it does not. These options can be influenced using suggestions (e.g. through visual or auditive cues) which can lead to either one or the other being taken. Salvucci in \cite{salvucci_1} does not consider accelerating and decelerating as part of the decision making because he argues they happen instinctively and therefore they should be exclusively part of the control. However, if a driver can be influenced to make a conscious decision to decelerate, for example, through the driver assistance system, then there is an argument for including this action in the decision making. Thus, a 3-option ADAS was designed, where an action $\alpha$ is defined as:
 
 \begin{equation}
-	\alpha \in A := \{(lc) \bigmid (\neg lc \wedge a = a_p) \bigmid (\neg lc \wedge a = a_d)\}
+	\alpha \in A := \{(lc) \vee (\neg lc \wedge a = a_p) \vee (\neg lc \wedge a = a_d)\}
 \end{equation}
 
 where $lc$ corresponds to the decision to perform a lane change, $a$ is the acceleration in the next state, $a_p$ is the acceleration the vehicle is currently holding and $a_d$ is a constant value for deceleration that a driver applies when suggested to decelerate. In this dissertation, it was assumed that $a_d = -1$ (minimum decelerating value).
@@ -49,7 +49,7 @@ s'_i = \gamma: \alpha_i + (1-\gamma)\cdot p:(lC) + (1-\gamma)\cdot (1-p):(\neg l
 
 Given that $\gamma, p \in [0,1]$, the transitions are guaranteed to sum up to one for every case. The decision making with fully compliant drivers corresponds to the case where $\gamma = 1$. The code presented in Appendix~\ref{sec:adas_idm} corresponds to the implementation of a generator for this particular ADAS.
 
-\subsection{Control based ADAS}
+\subsection{Control-based ADAS}
 
 While the decision making under the assumption of fully compliant drivers appears to be a powerful option in terms of safety and liveness, the weakening of the assumption to partially compliant drivers is expected to reduce performance substantially, particularly for lower values of $\gamma$. As such, control based assistance is added on top of the decision making assistance considered for partially compliant drivers, so as to improve performance. It should be noted that this type of assistance does not require human intervention, as per the assumptions noted in Figure~\ref{fig:adas_possibilities}.
 
@@ -130,7 +130,7 @@ It is therefore possible to obtain the Pareto curve with the conditional propert
 
 \subsection{Test Cases}
 
-Due to the infeasibility of generating all the possible combinations of test cases, two test cases were considered when comparing the four different ADAS designed in the previous section. For each of these test cases, the unconditional and conditional Pareto curves for each driver type are presented for a $T$ representative of the scenario and which allows for comparison between the ADAS considered. In terms of parameters of the model, the same values were used as in the human driver model part of the implementation, and $\gamma$ was set to 0.1.
+Due to the infeasibility of generating all the possible combinations of test cases, two test cases were considered when comparing the four different ADAS designed in the previous section: the first test case in the scenario $(v, v_1, x_{1,0}) = (21, 19, 70)$ and the second in the scenario $(v, v_1, x_{1,0}) = (30, 22, 50)$. For each of these test cases, the unconditional and conditional Pareto curves for each driver type are presented for a $T$ representative of the scenario and which allows for comparison between the ADAS considered, with Figures~\ref{fig:test_case_1_uncond} and \ref{fig:test_case_1_cond} referring to the first test case, and Figures~\ref{fig:test_case_2_uncond} and \ref{fig:test_case_2_cond} referring to the second test case. In terms of parameters of the model, the same values were used as in the human driver model part of the implementation, and $\gamma$ was set to 0.1.
 
 For the sake of brevity, the following numbering will be assumed in the captions and discussion of the Pareto curves presented in the test cases:
 
@@ -141,7 +141,7 @@ For the sake of brevity, the following numbering will be assumed in the captions
 	\item Decision making with partially compliant drivers + linear acceleration control + steering control ADAS (varies with classes of drivers)
 \end{enumerate}
 
-\subsubsection{$v = 21$ m/s, $v_1 = 19$ m/s, $x_{1,0} = 70$ m ($T=20$)}
+%\subsubsection{$v = 21$ m/s, $v_1 = 19$ m/s, $x_{1,0} = 70$ m ($T=20$)}
 
 \begin{figure}[H]
 \centering
@@ -195,7 +195,7 @@ For the sake of brevity, the following numbering will be assumed in the captions
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/4_3.pdf}
   \subcaption{4 (Cautious drivers)}
 \end{subfigure}
-\caption{Pareto curves for the unconditional properties, for $T = 20$.}
+\caption{Pareto curves of the unconditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$.}
 \label{fig:test_case_1_uncond}
 \end{figure}
 
@@ -225,6 +225,7 @@ For the sake of brevity, the following numbering will be assumed in the captions
 %\end{figure}
 
 \begin{figure}[H]
+\vspace{3em}
 \centering
 \begin{subfigure}{0.32\textwidth}
   \centering
@@ -276,7 +277,7 @@ For the sake of brevity, the following numbering will be assumed in the captions
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/4_3.pdf}
   \subcaption{4 (Cautious drivers)}
 \end{subfigure}
-\caption{Pareto curves for the conditional properties, for $T = 20$.}
+\caption{Pareto curves of the conditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$.}
 \label{fig:test_case_1_cond}
 \end{figure}
 
@@ -305,9 +306,10 @@ For the sake of brevity, the following numbering will be assumed in the captions
 %\caption{Pareto curves for the conditional properties, for $T = 20$ (cont.).}
 %\end{figure}
 
-\subsubsection{$v = 30$ m/s, $v_1 = 22$ m/s, $x_{1,0} = 50$ m ($T=19$)}
+%\subsubsection{$v = 30$ m/s, $v_1 = 22$ m/s, $x_{1,0} = 50$ m ($T=19$)}
 
 \begin{figure}[H]
+\vspace{3em}
 \centering
 \begin{subfigure}{0.32\textwidth}
   \centering
@@ -359,7 +361,8 @@ For the sake of brevity, the following numbering will be assumed in the captions
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_3.pdf}
   \subcaption{4 (Cautious drivers)}
 \end{subfigure}
-\caption{Pareto curves for the unconditional properties, for $T = 19$.}
+\caption{Pareto curves of the unconditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$.}
+\label{fig:test_case_2_uncond}
 \end{figure}
 
 %\begin{figure}[H] \ContinuedFloat
@@ -441,8 +444,8 @@ For the sake of brevity, the following numbering will be assumed in the captions
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_3.pdf}
   \subcaption{4 (Cautious drivers)}
 \end{subfigure}
-
-\caption{Pareto curves for the conditional properties, for $T = 19$.}
+\caption{Pareto curves of the conditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$.}
+\label{fig:test_case_2_cond}
 \end{figure}
 
 %\begin{figure}[H] \ContinuedFloat
