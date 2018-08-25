@@ -3,11 +3,9 @@ step,t,crashed,actrState,lC,x,v,a,k_chosen,focusVehicle,lane,_da,__da
 1,1,false,2,false,24,24,0,1,1,1,0,2
 2,1,false,1,true,24,24,0,1,1,1,0,2
 3,7,false,2,false,185,27,0,1,1,2,0,2
-4,7,false,1,false,185,27,0,1,1,2,0,2
-5,8,false,2,false,212,27,0,1,1,2,0,2
-6,8,false,1,true,212,27,0,1,1,2,0,2
-7,12,false,2,false,284,27,0,3,2,1,0,2
-8,12,false,1,true,284,27,0,3,2,1,0,2
-9,16,false,2,false,397,27,0,3,2,2,0,2
-10,16,false,1,false,397,27,0,3,2,2,0,2
-11,17,false,2,false,400,27,0,3,2,2,0,2
+4,7,false,1,true,185,27,0,1,1,2,0,2
+5,13,false,2,false,320,27,0,1,2,1,0,2
+6,13,false,1,false,320,27,0,1,2,1,0,2
+7,14,false,2,false,347,27,1,1,2,1,0,2
+8,14,false,1,true,347,27,1,1,2,1,0,2
+9,18,false,2,false,400,27,0,3,2,2,0,2

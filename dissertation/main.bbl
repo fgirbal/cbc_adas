@@ -5,8 +5,8 @@ S.~Singh, ``Critical reasons for crashes investigated in the national motor
   vehicle crash causation survey,'' tech. rep., 2015.
 
 \bibitem{wired}
-M.~Burgess, ``When does a car become truly autonomous? levels of self-driving
-  technology explained.''
+M.~Burgess, ``{When does a car become truly autonomous? Levels of self-driving
+  technology explained}.''
   \url{https://www.wired.co.uk/article/autonomous-car-levels-sae-ranking}, Mar
   2018 (accessed August 18, 2018).
 
@@ -15,19 +15,28 @@ M.~Burgess, ``When does a car become truly autonomous? levels of self-driving
   2018).
 
 \bibitem{ford}
-A.~J. Hawkins, ``Ford's new driver-assist system isn't autopilot, but it's a
-  step in the right direction.''
+A.~J. Hawkins, ``{Ford's new driver-assist system isn't Autopilot, but it's a
+  step in the right direction}.''
   \url{http://www.theverge.com/2018/3/15/17126162/ford-driver-assist-technology-copilot-360},
   Mar 2018 (accessed August 18, 2018).
 
 \bibitem{autopilot2}
-R.~Lawler, ``Tesla: Autopilot was engaged in fatal model x crash.''
+R.~Lawler, ``{Tesla: Autopilot was engaged in fatal Model X crash}.''
   \url{http://www.engadget.com/2018/03/30/tesla-autopilot-model-x-crash-mountain-view/},
   Mar 2018 (accessed August 18, 2018).
+
+\bibitem{autopilot3}
+``{HWY18FH011 Preliminary Accident Report}.''
+  \url{https://www.ntsb.gov/investigations/AccidentReports/Pages/HWY18FH011-preliminary.aspx},
+  Jun 2018 (accessed August 18, 2018).
 
 \bibitem{bk08}
 C.~Baier and J.-P. Katoen, {\em Principles of model checking}.
 \newblock MIT press, 2008.
+
+\bibitem{actr_1}
+J.~R. Anderson, {\em The {Architecture} of {Cognition}}.
+\newblock Psychology Press, 2013.
 
 \bibitem{driving-to-safety}
 N.~Kalra and S.~M. Paddock, ``Driving to safety: How many miles of driving
@@ -91,9 +100,9 @@ M.~Mazo, A.~Davitian, and P.~Tabuada, ``Pessoa: A tool for embedded controller
   Verification}, pp.~566--569, Springer, 2010.
 
 \bibitem{games}
-T.~Chen, M.~Kwiatkowska, A.~Simaitis, and C.~Wiltsche, ``Synthesis for
+T.~Chen, M.~Kwiatkowska, A.~Simaitis, and C.~Wiltsche, ``{Synthesis for
   multi-objective stochastic games: An application to autonomous urban
-  driving,'' in {\em International Conference on Quantitative Evaluation of
+  driving},'' in {\em International Conference on Quantitative Evaluation of
   Systems}, pp.~322--337, Springer, 2013.
 
 \bibitem{fv2}
@@ -120,8 +129,8 @@ P.~Nilsson, O.~Hussien, Y.~Chen, A.~Balkan, M.~Rungger, A.~Ames, J.~Grizzle,
   Conference on}, pp.~816--823, IEEE, 2014.
 
 \bibitem{lam}
-C.~Lam, ``Driver assistance using cognitive modelling and strategy synthesis,''
-  2017.
+C.~Lam, ``{Driver Assistance Using Cognitive Modelling and Strategy
+  Synthesis},'' 2017.
 
 \bibitem{salvucci_1}
 D.~D. Salvucci, ``Modeling driver behavior in a cognitive architecture,'' {\em
@@ -143,8 +152,8 @@ A.~Liu and D.~Salvucci, ``Modeling and prediction of human driver behavior,''
   in {\em Intl. Conference on HCI}, 2001.
 
 \bibitem{older_3}
-D.~D. Salvucci and A.~Liu, ``The time course of a lane change: Driver control
-  and eye-movement behavior,'' {\em Transportation research part F: traffic
+D.~D. Salvucci and A.~Liu, ``{The time course of a lane change: Driver control
+  and eye-movement behavior},'' {\em Transportation research part F: traffic
   psychology and behaviour}, vol.~5, no.~2, pp.~123--132, 2002.
 
 \bibitem{salvucci_0}
@@ -153,18 +162,14 @@ D.~Salvucci, E.~Boer, and A.~Liu, ``Toward an integrated model of driver
   Journal of the Transportation Research Board}, no.~1779, pp.~9--16, 2001.
 
 \bibitem{cog_arch_1}
-I.~Kotseruba and J.~K. Tsotsos, ``A review of 40 years of cognitive
-  architecture research: Core cognitive abilities and practical applications,''
-  {\em arXiv preprint arXiv:1610.08602}, 2016.
+I.~Kotseruba and J.~K. Tsotsos, ``{A review of 40 years of cognitive
+  architecture research: Core cognitive abilities and practical
+  applications},'' {\em arXiv preprint arXiv:1610.08602}, 2016.
 
 \bibitem{cog_arch_2}
 R.~Sun, ``The importance of cognitive architectures: An analysis based on
   {CLARION},'' {\em Journal of Experimental \& Theoretical Artificial
   Intelligence}, vol.~19, no.~2, pp.~159--193, 2007.
-
-\bibitem{actr_1}
-J.~R. Anderson, {\em The {Architecture} of {Cognition}}.
-\newblock Psychology Press, 2013.
 
 \bibitem{actr_2}
 J.~R. Anderson, M.~Matessa, and C.~Lebiere, ``{ACT-R}: A theory of higher level
@@ -177,9 +182,9 @@ T.~Balke and N.~Gilbert, ``How do agents make decisions? {A} survey,'' {\em
   p.~13, 2014.
 
 \bibitem{older_2}
-E.~R. Boer and M.~Hoedemaeker, ``Modeling driver behavior with different
+E.~R. Boer and M.~Hoedemaeker, ``{Modeling driver behavior with different
   degrees of automation: A hierarchical decision framework of interacting
-  mental models,'' in {\em Proceedings of the 17th European annual conference
+  mental models},'' in {\em Proceedings of the 17th European annual conference
   on human decision making and manual control}, pp.~63--72, 1998.
 
 \bibitem{fknp11}
@@ -194,14 +199,14 @@ M.~Kwiatkowska, G.~Norman, and D.~Parker, ``Stochastic model checking,'' in
   Communication and Software Systems}, pp.~220--270, Springer, 2007.
 
 \bibitem{prism}
-M.~Kwiatkowska, G.~Norman, and D.~Parker, ``Prism 4.0: Verification of
-  probabilistic real-time systems,'' in {\em International conference on
+M.~Kwiatkowska, G.~Norman, and D.~Parker, ``{PRISM 4.0: Verification of
+  probabilistic real-time systems},'' in {\em International conference on
   computer aided verification}, pp.~585--591, Springer, 2011.
 
 \bibitem{prism_1}
-M.~Kwiatkowska, G.~Norman, and D.~Parker, ``Prism: Probabilistic symbolic model
-  checker,'' in {\em International Conference on Modelling Techniques and Tools
-  for Computer Performance Evaluation}, pp.~200--204, Springer, 2002.
+M.~Kwiatkowska, G.~Norman, and D.~Parker, ``{PRISM: Probabilistic symbolic
+  model checker},'' in {\em International Conference on Modelling Techniques
+  and Tools for Computer Performance Evaluation}, pp.~200--204, Springer, 2002.
 
 \bibitem{prism_example}
 ``{PRISM} {Manual} $\mid$ {The} {PRISM} {Language} $\mid$ {Example} 1.''
@@ -225,8 +230,8 @@ E.~M. Clarke, W.~Klieber, M.~Nov{\'a}{\v{c}}ek, and P.~Zuliani, ``Model
   Software Verification}, pp.~1--30, Springer, 2012.
 
 \bibitem{abstraction_1}
-L.~Li, T.~J. Walsh, and M.~L. Littman, ``Towards a unified theory of state
-  abstraction for mdps.,'' in {\em ISAIM}, 2006.
+L.~Li, T.~J. Walsh, and M.~L. Littman, ``{Towards a unified theory of state
+  abstraction for MDPs.},'' in {\em ISAIM}, 2006.
 
 \bibitem{abstraction_2}
 A.~Mohr, ``A survey of state abstraction techniques for markov decision
@@ -243,8 +248,8 @@ J.~Carr, ``State "keep right" laws.'' \url{http://www.mit.edu/~jfc/right.html},
   (accessed August 18, 2018).
 
 \bibitem{prism_games}
-T.~Chen, V.~Forejt, M.~Kwiatkowska, D.~Parker, and A.~Simaitis, ``Prism-games:
-  A model checker for stochastic multi-player games,'' in {\em International
+T.~Chen, V.~Forejt, M.~Kwiatkowska, D.~Parker, and A.~Simaitis, ``{PRISM-games:
+  A model checker for stochastic multi-player games},'' in {\em International
   Conference on Tools and Algorithms for the Construction and Analysis of
   Systems}, pp.~185--191, Springer, 2013.
 

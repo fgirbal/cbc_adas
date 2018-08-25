@@ -9,6 +9,9 @@ A level-1 auxiliary file: chapter2.aux
 A level-1 auxiliary file: chapter3.aux
 A level-1 auxiliary file: chapter4.aux
 A level-1 auxiliary file: conclusion.aux
+A level-1 auxiliary file: appendix1.aux
+A level-1 auxiliary file: appendix2.aux
+A level-1 auxiliary file: appendix3.aux
 The style file: ieeetr.bst
 Database file #1: refs.bib
 Warning--empty institution in crashes
@@ -16,36 +19,36 @@ Warning--empty journal in fv2
 Warning--empty journal in lam
 Warning--empty journal in abstraction_2
 Warning--empty year in abstraction_2
-You've used 49 entries,
+You've used 50 entries,
             1876 wiz_defined-function locations,
-            750 strings with 12521 characters,
-and the built_in function-call counts, 12942 in all, are:
-= -- 1239
-> -- 508
+            759 strings with 12896 characters,
+and the built_in function-call counts, 13049 in all, are:
+= -- 1249
+> -- 509
 < -- 0
-+ -- 191
++ -- 192
 - -- 142
-* -- 898
-:= -- 1786
-add.period$ -- 50
-call.type$ -- 49
-change.case$ -- 48
+* -- 904
+:= -- 1796
+add.period$ -- 51
+call.type$ -- 50
+change.case$ -- 49
 chr.to.int$ -- 0
-cite$ -- 54
-duplicate$ -- 678
-empty$ -- 1317
+cite$ -- 55
+duplicate$ -- 682
+empty$ -- 1335
 format.name$ -- 142
-if$ -- 3162
+if$ -- 3192
 int.to.chr$ -- 0
-int.to.str$ -- 49
+int.to.str$ -- 50
 missing$ -- 42
-newline$ -- 152
+newline$ -- 155
 num.names$ -- 47
-pop$ -- 232
+pop$ -- 239
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 439
+skip$ -- 443
 stack$ -- 0
 substring$ -- 827
 swap$ -- 243
@@ -55,6 +58,6 @@ top$ -- 0
 type$ -- 0
 warning$ -- 5
 while$ -- 132
-width$ -- 51
-write$ -- 458
+width$ -- 52
+write$ -- 465
 (There were 5 warnings)

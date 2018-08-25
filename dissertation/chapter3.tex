@@ -132,14 +132,14 @@ It is therefore possible to obtain the Pareto curve with the conditional propert
 
 Due to the infeasibility of generating all the possible combinations of test cases, two test cases were considered when comparing the four different ADAS designed in the previous section: the first test case in the scenario $(v, v_1, x_{1,0}) = (21, 19, 70)$ and the second in the scenario $(v, v_1, x_{1,0}) = (30, 22, 50)$. For each of these test cases, the unconditional and conditional Pareto curves for each driver type are presented for a $T$ representative of the scenario and which allows for comparison between the ADAS considered, with Figures~\ref{fig:test_case_1_uncond} and \ref{fig:test_case_1_cond} referring to the first test case, and Figures~\ref{fig:test_case_2_uncond} and \ref{fig:test_case_2_cond} referring to the second test case. In terms of parameters of the model, the same values were used as in the human driver model part of the implementation, and $\gamma$ was set to 0.1.
 
-For the sake of brevity, the following numbering will be assumed in the captions and discussion of the Pareto curves presented in the test cases:
-
-\begin{enumerate}
-	\item Decision making based ADAS with fully compliant drivers
-	\item Decision making based ADAS with partially compliant drivers (varies with classes of drivers)
-	\item Decision making with partially compliant drivers + linear acceleration control ADAS (varies with classes of drivers)
-	\item Decision making with partially compliant drivers + linear acceleration control + steering control ADAS (varies with classes of drivers)
-\end{enumerate}
+%For the sake of brevity, the following numbering will be assumed in the captions and discussion of the Pareto curves presented in the test cases:
+%
+%\begin{enumerate}
+%	\item Decision making based ADAS with fully compliant drivers
+%	\item Decision making based ADAS with partially compliant drivers (varies with classes of drivers)
+%	\item Decision making with partially compliant drivers + linear acceleration control ADAS (varies with classes of drivers)
+%	\item Decision making with partially compliant drivers + linear acceleration control + steering control ADAS (varies with classes of drivers)
+%\end{enumerate}
 
 %\subsubsection{$v = 21$ m/s, $v_1 = 19$ m/s, $x_{1,0} = 70$ m ($T=20$)}
 
@@ -148,54 +148,54 @@ For the sake of brevity, the following numbering will be assumed in the captions
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/1.pdf}
-  \subcaption{1}
+  \subcaption{(1)}
 \end{subfigure}\\
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/2_1.pdf}
-  \subcaption{2 (Aggressive drivers)}
+  \subcaption{(2) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/2_2.pdf}
-  \subcaption{2 (Average drivers)}
+  \subcaption{(2) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/2_3.pdf}
-  \subcaption{2 (Cautious drivers)}
+  \subcaption{(2) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/3_1.pdf}
-  \subcaption{3 (Aggressive drivers)}
+  \subcaption{(3) - Aggressive drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/3_2.pdf}
-  \subcaption{3 (Average drivers)}
+  \subcaption{(3) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/3_3.pdf}
-  \subcaption{3 (Cautious drivers)}
+  \subcaption{(3) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/4_1.pdf}
-  \subcaption{4 (Aggressive drivers)}
+  \subcaption{(4) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/4_2.pdf}
-  \subcaption{4 (Average drivers)}
+  \subcaption{(4) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/4_3.pdf}
-  \subcaption{4 (Cautious drivers)}
+  \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the unconditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$.}
+\caption{Pareto curves of the unconditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
 \label{fig:test_case_1_uncond}
 \end{figure}
 
@@ -225,59 +225,59 @@ For the sake of brevity, the following numbering will be assumed in the captions
 %\end{figure}
 
 \begin{figure}[H]
-\vspace{3em}
+%\vspace{3em}
 \centering
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/1.pdf}
-  \subcaption{1}
+  \subcaption{(1)}
 \end{subfigure}\\
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/2_1.pdf}
-  \subcaption{2 (Aggressive drivers)}
+  \subcaption{(2) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/2_2.pdf}
-  \subcaption{2 (Average drivers)}
+  \subcaption{(2) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/2_3.pdf}
-  \subcaption{2 (Cautious drivers)}
+  \subcaption{(2) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/3_1.pdf}
-  \subcaption{3 (Aggressive drivers)}
+  \subcaption{(3) - Aggressive drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/3_2.pdf}
-  \subcaption{3 (Average drivers)}
+  \subcaption{(3) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/3_3.pdf}
-  \subcaption{3 (Cautious drivers)}
+  \subcaption{(3) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/4_1.pdf}
-  \subcaption{4 (Aggressive drivers)}
+  \subcaption{(4) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/4_2.pdf}
-  \subcaption{4 (Average drivers)}
+  \subcaption{(4) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/4_3.pdf}
-  \subcaption{4 (Cautious drivers)}
+  \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the conditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$.}
+\caption{Pareto curves of the conditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
 \label{fig:test_case_1_cond}
 \end{figure}
 
@@ -309,59 +309,59 @@ For the sake of brevity, the following numbering will be assumed in the captions
 %\subsubsection{$v = 30$ m/s, $v_1 = 22$ m/s, $x_{1,0} = 50$ m ($T=19$)}
 
 \begin{figure}[H]
-\vspace{3em}
+%\vspace{3em}
 \centering
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/1.pdf}
-  \subcaption{1}
+  \subcaption{(1)}
 \end{subfigure}\\
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/2_1.pdf}
-  \subcaption{2 (Aggressive drivers)}
+  \subcaption{(2) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/2_2.pdf}
-  \subcaption{2 (Average drivers)}
+  \subcaption{(2) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/2_3.pdf}
-  \subcaption{2 (Cautious drivers)}
+  \subcaption{(2) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/3_1.pdf}
-  \subcaption{3 (Aggressive drivers)}
+  \subcaption{(3) - Aggressive drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/3_2.pdf}
-  \subcaption{3 (Average drivers)}
+  \subcaption{(3) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/3_3.pdf}
-  \subcaption{3 (Cautious drivers)}
+  \subcaption{(3) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_1.pdf}
-  \subcaption{4 (Aggressive drivers)}
+  \subcaption{(4) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_2.pdf}
-  \subcaption{4 (Average drivers)}
+  \subcaption{(4) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_3.pdf}
-  \subcaption{4 (Cautious drivers)}
+  \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the unconditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$.}
+\caption{Pareto curves of the unconditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
 \label{fig:test_case_2_uncond}
 \end{figure}
 
@@ -397,54 +397,54 @@ For the sake of brevity, the following numbering will be assumed in the captions
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/1.pdf}
-  \subcaption{1}
+  \subcaption{(1)}
 \end{subfigure}\\
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/2_1.pdf}
-  \subcaption{2 (Aggressive drivers)}
+  \subcaption{(2) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/2_2.pdf}
-  \subcaption{2 (Average drivers)}
+  \subcaption{(2) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/2_3.pdf}
-  \subcaption{2 (Cautious drivers)}
+  \subcaption{(2) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/3_1.pdf}
-  \subcaption{3 (Aggressive drivers)}
+  \subcaption{(3) - Aggressive drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/3_2.pdf}
-  \subcaption{3 (Average drivers)}
+  \subcaption{(3) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/3_3.pdf}
-  \subcaption{3 (Cautious drivers)}
+  \subcaption{(3) - Cautious drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_1.pdf}
-  \subcaption{4 (Aggressive drivers)}
+  \subcaption{(4) - Aggressive drivers}
 \end{subfigure} 
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_2.pdf}
-  \subcaption{4 (Average drivers)}
+  \subcaption{(4) - Average drivers}
 \end{subfigure}
 \begin{subfigure}{0.32\textwidth}
   \centering
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_3.pdf}
-  \subcaption{4 (Cautious drivers)}
+  \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the conditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$.}
+\caption{Pareto curves of the conditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
 \label{fig:test_case_2_cond}
 \end{figure}
 

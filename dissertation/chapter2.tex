@@ -141,7 +141,7 @@ where $\alpha$ is a parameter unique to each population of drivers.
 The same logic can be applied for a driver in the left lane overtaking a vehicle behind it in the left lane, except in this case the opposite effect will be seen in the decision making. In such a case, the probability of changing lane can be modelled as a normalised logarithmic function over the distance of the vehicles (it doesn't make sense to define time headway in this context):
 
 \begin{equation}
-	\text{P[}lC = true\text{]}_{d} = P_{lC}(d) = \frac{1}{\log(\beta*\max_d + 1)}\cdot \log(\beta*d + 1)
+	\text{P[}lC = true\text{]}_{d} = P_{lC}(d) = \frac{1}{\log(\beta\cdot \max_d + 1)}\cdot \log(\beta\cdot d + 1)
 \end{equation}
 
 where $\max_d$ is the maximum length considered and $\beta$ is a parameter unique to each population of drivers.
@@ -204,7 +204,7 @@ The code presented in Appendix~\ref{sec:dm_abs} corresponds to the methods used 
 
 In light of the uncertainty introduced in the decision making and monitoring module regarding the visual perception of distance, it becomes only natural that this would be extended to the control module as well. In order to cope with this, a probabilistic version of the control module was designed, where the noise $n$ presented in the previous section is taken into consideration. 
 
-In order to obtain the equivalent look-up tables for the probabilisitic control module, the Monte Carlo method can be used. In this case, the noise can be simulated in repeated trials, and an average can be obtained for the crashing probability, the estimated final difference in position, the estimated difference in time and estimated final velocity of the vehicle. In the case of this dissertation, the tables generated (for linear and lane changing control) were the result of 100 trials.
+In order to obtain the equivalent look-up tables for the probabilisitic control module, the \textbf{Monte Carlo method} can be used. In this case, the noise can be simulated in repeated trials, and an average can be obtained for the crashing probability, the estimated final difference in position, the estimated difference in time and estimated final velocity of the vehicle. In the case of this dissertation, the tables generated (for linear and lane changing control) were the result of 100 trials.
 
 The code presented in Appendix~\ref{sec:control_abs} corresponds to the simulation of this probabilistic version of the control, which generates the linear and steering control tables.
 
