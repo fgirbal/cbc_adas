@@ -159,7 +159,7 @@ for a given constant $T$.
 In the case of the full system (human driver and ADAS), the model becomes an MDP and, as mentioned in Chapter~\ref{sec:background}, conditional properties are not so easily calculated in MDPs due to the existence of multiple adversaries. Despite this, it is possible to reason over lower bounds of these types of properties under the conditions of Proposition~\ref{pro:cond_props}. For the PCTL formulas $\varphi_1 = $\texttt{ F (x=length) \& (t<T)} and $\varphi_2 = $\texttt{ F (x=length)}, it is trivial that for any path $\pi \in Paths(s)$: $\pi \models \varphi_1 \Rightarrow \pi \models \varphi_2$. Furthermore, it can also be assumed that for:
 
 \begin{equation}
-	\sigma' \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \bigmid \varphi_2)
+	\sigma' \in \arg\sup_{\sigma \in Adv} P^{\sigma}_s (\varphi_1 \cond \varphi_2)
 \end{equation}
 
 it is true that:
@@ -171,7 +171,7 @@ it is true that:
 since intuitively the interest is in adversaries which maximise the conditional property through the maximisation of the probability of eventually reaching \texttt{(x=length) \& (t<T)} (as this is the comparable case in the human driver model). Thus, under the conditions of Proposition~\ref{pro:cond_props}, it is possible to write:
 
 \begin{equation}
-	p_{\max, s} (\text{\texttt{F (x=length) \& (t<T)}} \bigmid \text{\texttt{F (x=length)}}) \geq \frac{p_{\max, s} (\text{\texttt{F (x=length) \& (t<T)}})}{p_{\max, s} (\text{\texttt{F (x=length)}})}
+	p_{\max, s} (\text{\texttt{F (x=length) \& (t<T)}} \cond \text{\texttt{F (x=length)}}) \geq \frac{p_{\max, s} (\text{\texttt{F (x=length) \& (t<T)}})}{p_{\max, s} (\text{\texttt{F (x=length)}})}
 \end{equation}
 
 Therefore, a lower bound on the conditional probability, $\zeta(T)$, can be obtained using the quantitative properties:
@@ -292,7 +292,7 @@ While outside the scope of the main goal of the dissertation of evaluating safet
 
 \subsection{Left Lane Penalising}
 
-When a driver attempts an overtake, it should do so by performing two lane changes, one from the current lane to the one immediately to the left, and another one to return to the original lane after it has passed the lead vehicle. The manoeuvre should be performed safely, yet as quickly as possible \cite{carr}. With this in mind, properties can be specified to assert such a regulation to the ADAS to guarantee compliance.
+When a driver attempts an overtake, they should do so by performing two lane changes, one from the current lane to the one immediately to the left, and another one to return to the original lane after it has passed the lead vehicle. The manoeuvre should be performed safely, yet as quickly as possible \cite{carr}. With this in mind, properties can be specified to assert such a regulation to the ADAS to guarantee compliance.
 
 In particular, the property should penalise the usage of the left lane ($lane = 2$). For this purpose, the following reward structure was designed:
 
@@ -489,7 +489,7 @@ multi(Pmax=? [F x=400 & t < 16], P<=0.158 [F crashed])
 }
 \end{minipage}
 
-generates an adversary which maximises this liveness property while guaranteeing the minimum possible value for the safety property. The adversary obtained permits the generation of paths such as the one presented in the simulator frames in Figure~\ref{fig:three_vehicle_sim} (for a slightly modified simulator which includes information about the two other vehicles). It should be noted that, while the simulation continues after $400m$, the model considered has a road segment of length $400m$ (it continues past this point in this case because the main vehicle is performing a lane change).
+generates an adversary which maximises this liveness property while guaranteeing the minimum possible value for the safety property. The adversary obtained permits the generation of paths such as the one presented in the simulator frames in Figure~\ref{fig:three_vehicle_sim} (for a slightly modified simulator which includes information about the two other vehicles). It should be noted that, while the simulation continues after $400m$, the model considered has a road segment of length $400m$ (it continues past this point in this case because the main vehicle is performing a lane change to overtake the second vehicle).
 
 \begin{figure}[H]
 \centering

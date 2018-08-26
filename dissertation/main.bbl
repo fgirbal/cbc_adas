@@ -181,12 +181,6 @@ T.~Balke and N.~Gilbert, ``How do agents make decisions? {A} survey,'' {\em
   Journal of Artificial Societies and Social Simulation}, vol.~17, no.~4,
   p.~13, 2014.
 
-\bibitem{older_2}
-E.~R. Boer and M.~Hoedemaeker, ``{Modeling driver behavior with different
-  degrees of automation: A hierarchical decision framework of interacting
-  mental models},'' in {\em Proceedings of the 17th European annual conference
-  on human decision making and manual control}, pp.~63--72, 1998.
-
 \bibitem{fknp11}
 V.~Forejt, M.~Kwiatkowska, G.~Norman, and D.~Parker, ``Automated verification
   techniques for probabilistic systems,'' in {\em International School on
@@ -217,6 +211,12 @@ M.~Kwiatkowska, G.~Norman, and D.~Parker, ``{PRISM: Probabilistic symbolic
 C.~Dehnert, S.~Junges, J.-P. Katoen, and M.~Volk, ``A storm is coming: {A}
   modern probabilistic model checker,'' in {\em International Conference on
   Computer Aided Verification}, pp.~592--600, Springer, 2017.
+
+\bibitem{cond_prob}
+C.~Baier, J.~Klein, S.~Kl{\"u}ppelholz, and S.~M{\"a}rcker, ``{Computing
+  conditional probabilities in Markovian models efficiently},'' in {\em
+  International Conference on Tools and Algorithms for the Construction and
+  Analysis of Systems}, pp.~515--530, Springer, 2014.
 
 \bibitem{pareto}
 T.~Chen, V.~Forejt, M.~Kwiatkowska, A.~Simaitis, and C.~Wiltsche, ``On

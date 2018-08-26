@@ -1,7 +1,7 @@
 \chapter{Literature Review and Definitions}
 \label{sec:background}
 
-This chapter presents the concepts and theory required to understand the methodology, rationale and contributions of this dissertation. It starts by defining a Cognitive Architecture, and goes into more detail about Adaptive Control of Thought - Rational, which is the underlying framework used in the Integrated Driver Modelling described in Section \ref{sec:salvucci} and the basis for the system developed in Chapter 3. The chapter concludes with the introduction of several important concepts in the area of Probabilistic Model Checking, which are essential for modelling, verification and synthesis in this context.
+This chapter presents the concepts and theory required to understand the methodology, rationale and contributions of this dissertation. It starts by defining a Cognitive Architecture, and goes into more detail about Adaptive Control of Thought - Rational (ACT-R), which is the underlying framework used in the Integrated Driver Modelling described in Section \ref{sec:salvucci} and the basis for the system developed in Chapter 3. The chapter concludes with the introduction of several important concepts in the area of Probabilistic Model Checking, which are essential for modelling, verification and synthesis in this context.
 
 \section{Cognitive Architectures}
 
@@ -20,15 +20,14 @@ Adaptive Control of Thought - Rational (or ACT-R as it is commonly known as) is 
     \label{fig:act_r_1}
 \end{figure}
 
-The architecture can be generally described as two distinct layers: a \textit{perceptual-motor} layer and a \textit{cognitive} layer, as presented in Figure~\ref{fig:act_r_1}. The perceptual-motor layer corresponds to the interface of the cognition with the environment (which plays a key role in ACT-R), being comprised of modules such as vision and motor actions. The cognitive layer is focused on memory, which can be divided into two different categories: \textit{declarative} (consisting of factual knowledge and goals - e.g. \textit{"The maximum driving speed in a typical UK motorway is 70 mph"} or \textit{"Try get to point B"}) and \textit{procedural} (consisting of rules/procedures - e.g. \textit{"If the lead vehicle is going slowly, attempt an overtake"}) \cite{actr_4}. Furthermore, declarative memory is composed of \textit{chunks}, which are smaller pieces of information, divided into categories and attributes, that form more complex memories. In the example \textit{"The maximum driving speed in a typical UK motorway is 70 mph"}, \texttt{maximum driving speed in a typical UK motorway} is a category, whereas \texttt{70 mph} is an attribute. Another possible attribute for this category could be \texttt{112 km/h} (since $70 mph = 112 km/h$).
+The architecture can be generally described as two distinct layers: a \textit{perceptual-motor} layer and a \textit{cognitive} layer, as presented in Figure~\ref{fig:act_r_1}. The perceptual-motor layer corresponds to the interface of the cognition with the environment (which plays a key role in ACT-R), being comprised of modules such as vision and motor actions. The cognitive layer is focused on memory, which can be divided into two different categories: \textit{declarative} (consisting of factual knowledge and goals - e.g. \textit{"The maximum driving speed in a typical UK motorway is 70 mph"} or \textit{"Try get to point B"}) and \textit{procedural} (consisting of rules/procedures - e.g. \textit{"If the lead vehicle is going slowly, attempt an overtake"}) \cite{actr_4}. Furthermore, declarative memory is composed of \textit{chunks}, which are smaller pieces of information, divided into categories and attributes, that form more complex memories. In the example \textit{"The maximum driving speed in a typical UK motorway is 70 mph"}, \texttt{maximum driving speed in a typical UK motorway} is a category, whereas \texttt{70 mph} is an attribute. Another possible attribute for this category could be \texttt{113 km/h} (since $70 mph \simeq 113 km/h$).
 
 \section{Integrated Driver Modelling in ACT-R}
 \label{sec:salvucci}
 
-The first integrated approaches to this problem, proposed in \cite{older_1,older_2,older_3}, rely on modelling human behaviour through continuous controllers and specifically engineered frameworks. However, these methods lack the human behaviour variability attributed to the discrete nature of the control actions performed by the drivers. With this in mind, in \cite{salvucci_0} Salvucci \textit{et al.} proposed a proof-of-concept of the introduction of human constrains in the driver model through the use of the cognitive architecture ACT-R. In \cite{salvucci_1}, Salvucci proposed an updated version of the human driver model initially introduced in \cite{salvucci_0}, which was improved using the advances in ACT-R (the model uses version 5.0 of the architecture) and re-designed elements (e.g. lane changing behaviour or distraction) resulting from validation performed by empirical studies.
+The human driver model Salvucci introduced in \cite{salvucci_1} was developed with a specific scenario in mind: \textit{"(...) driving a standard midsize vehicle on a multilane highway with moderate traffic"} \cite{salvucci_1}. It consists of three distinct modules interacting in a sequential way: \textbf{control}, \textbf{monitoring}, and \textbf{decision making}. A high level schematic of the model can be found in Figure~\ref{fig:high_level_salvucci}.
 
-The model Salvucci introduced in \cite{salvucci_1} was developed with a specific scenario in mind: \textit{"(...) driving a standard midsize vehicle on a multilane highway with moderate traffic"} \cite{salvucci_1}. It consists of three distinct modules interacting in a sequential way: \textbf{control}, \textbf{monitoring}, and \textbf{decision making}. A high level schematic of the model can be found in Figure~\ref{fig:high_level_salvucci}.
-
+\vspace{1em}
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{high_level_salvucci.pdf}
@@ -38,7 +37,7 @@ The model Salvucci introduced in \cite{salvucci_1} was developed with a specific
 
 The \textbf{control} component manages both the lower level perception cues and the physical manipulation of the vehicle (e.g. steering, accelerating or breaking). The module can be divided into lateral (i.e. steering) and longitudinal (i.e. velocity) control, each modelled by a separate control law. 
 
-The lateral control is determined by the existence of two artefacts that the driver obtains using lower level perception cues: the \textit{near point} and the \textit{far point}. In this model,  \textit{"the near point represents the vehicle’s current lane position, used to judge how close the vehicle is to the center of the roadway (...) [and] is characterized as a point in the center of the near lane visible in front of the vehicle, set at a distance of 10 m from the vehicle’s center"} while \textit{"the far point indicates the curvature of the upcoming roadway, used to judge what the driver should execute to anticipate the upcoming curvature and remain in the current lane} \cite{salvucci_1}. At any cycle $i > 0$, the model works by using perception to determine the visual angles $\theta_{near}^{(i)}$ and $\theta_{far}^{(i)}$ and calculates:
+The lateral control is determined by the existence of two artefacts that the driver obtains using lower level perception cues: the \textit{near point} and the \textit{far point}. In this model,  \textit{"the near point represents the vehicle’s current lane position, used to judge how close the vehicle is to the center of the roadway (...) [and] is characterized as a point in the center of the near lane visible in front of the vehicle, set at a distance of 10 m from the vehicle’s center"} while \textit{"the far point indicates the curvature of the upcoming roadway, used to judge what the driver should execute to anticipate the upcoming curvature and remain in the current lane"} \cite{salvucci_1}. At any cycle $i > 0$, the model works by using perception to determine the visual angles $\theta_{near}^{(i)}$ and $\theta_{far}^{(i)}$ and calculates:
 
 \begin{equation}
 \begin{split}
@@ -75,14 +74,14 @@ The \textbf{monitoring} component maintains situational awareness through the aw
 
 Finally, the \textbf{decision making} module uses the information gathered in the monitoring and control stage (if any is available) to determine which tactical decision should be taken. In this model, the decision corresponds to determining when and where a lane change should occur. Salvucci describes this process in \cite{salvucci_1} as: \textit{"If the driver’s vehicle is in the right lane, the model checks the current time headway to the lead vehicle (if any); if the lead car time headway drops below a desired time headway $thw_{pass}$, the model decides to change lanes to pass the vehicle. If the driver vehicle is in the left lane, the model checks instead simply for the presence of a lead vehicle. If there is a lead vehicle, the model remains in the left lane (because this vehicle is also passing other vehicles); otherwise it decides to [try to] change lanes to return to the right lane"}. This process is summarised in the flowchart presented in Figure~\ref{fig:flowchart_dm}, and the value of $thw_{pass}$ is defined in \cite{salvucci_1}.
 
-\begin{figure}[h]
+Even after this decision to change lanes is taken, the model must then determine whether it is actually safe to do so. In order to verify that it is, the model initially attempts to recall, from the declarative memory, the nearest vehicle to it in the destination lane. If one is recalled at a distance closer than $d_{safe}$, then the change is aborted. If not, then the vehicle performs a safety monitoring of the destination lane. If this monitoring does not observe a vehicle at a distance closer than $d_{safe}$, then the vehicle initiates the execution of the lane change. The parameter $d_{safe}$ is as defined in \cite{salvucci_1}.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{flowchart_dm.pdf}
     \caption{Flowchart of part of the decision making process of the model.}
     \label{fig:flowchart_dm}
 \end{figure}
-
-Even after this decision to change lanes is taken, the model must then determine whether it is actually safe to do so. In order to verify that it is, the model initially attempts to recall, from the declarative memory, the nearest vehicle to it in the destination lane. If one is recalled at a distance closer than $d_{safe}$, then the change is aborted. If not, then the vehicle performs a safety monitoring of the destination lane. If this monitoring does not observe a vehicle at a distance closer than $d_{safe}$, then the vehicle initiates the execution of the lane change. The parameter $d_{safe}$ is as defined in \cite{salvucci_1}.
 
 \section{Probabilistic Model Checking}
 
@@ -95,7 +94,7 @@ Probabilistic model checking is a generalisation of model checking for the autom
 
 Probabilistic model checking begins with the appropriate modelling of the system in a stochastic finite state-transition representation. There are several ways to do this according to the type of system to be modelled. 
 
-In \textit{discrete-time Markov Chains} (DTMCs), all choices (i.e. transitions) are probabilistic \cite{bk08}. While this is useful in some cases, others require nondeterminism, which is where \textit{Markov Decision Processes} (MDPs) come in. In MDPs, nondeterministic probabilistic choices coexist. Essentially, a DTMC is an MDP with a uniquely determined probabilistic distribution \cite{bk08}. Both DTMCs and MDPs can be augmented with reward structures, which correspond to real positive values assigned to states, transitions or actions that can be interpreted as bonuses or costs \cite{bk08}.
+In \textit{discrete-time Markov Chains} (DTMCs), all choices (i.e. transitions) are probabilistic \cite{bk08}. While this is useful in some cases, others require nondeterminism, which is where \textit{Markov Decision Processes} (MDPs) come in. In MDPs, nondeterministic probabilistic choices coexist. Essentially, a DTMC is an MDP with a uniquely determined probability distribution \cite{bk08}. Both DTMCs and MDPs can be augmented with reward structures, which correspond to real positive values assigned to states, transitions or actions that can be interpreted as bonuses or costs \cite{bk08}.
 
 The formal definitions of DTMCs, MDPs and reward structures follow (adapted from \cite{bk08, fknp11, kp07}).
 
@@ -202,7 +201,7 @@ An adversary $\sigma$ is called memoryless if, and only if, for any $\pi_1 = s_0
 
 In order to verify properties in models, there needs to be a way of expressing those properties formally and unequivocally. While some reachability and reward-based properties come directly from the definition of DTMCs, MDPs and reward structures \cite{fknp11}, more interesting and complex properties require the use of a temporal logic. A propositional temporal logic is essentially an extension of propositional logic by temporal operators \cite{bk08}. In this context, one can consider time as being \textit{linear} or \textit{branching}. In linear time, at every moment in time there must only exist a single successor moment, whereas from the branching perspective, there may exist multiple ones, forming a tree-like structure of alternatives. Linear Temporal Logic (LTL) is a temporal logic which assumes the first, while Computation Tree Logic (CTL) is based on the branching perspective. Probabilistic Computational Tree Logic (PCTL) is an extension of CTL that takes into account a probabilistic operator.
 
-Given the definition of a path in a MC and an MDP, it is possible to define the syntax for LTL and PCTL, as shown below (adapted from \cite{bk08, fknp11}).
+Given the definition of a path in a MC and an MDP, it is possible to define the syntax and semantics of LTL and PCTL, as shown below (adapted from \cite{bk08, fknp11}).
 
 {\begin{defi}
 {\vspace{1em}
@@ -488,9 +487,11 @@ This property can be interpreted as \textit{"what is the probability that the mo
 	P_s (\varphi_1 \cond \varphi_2) = \frac{P_s (\varphi_1 \wedge \varphi_2)}{P_s (\varphi_2)}
 \end{equation}
 
-For $P_s (\varphi_2) \neq 0$. It must be emphasised that this is \textbf{not} the case for MDPs, where the existence of multiple adversaries complicates the calculations of conditional probabilities.
+For $P_s (\varphi_2) \neq 0$. 
 
 \textbf{Note}: while uncommon in mathematical notation, the event \textit{"A conditioned on B"} will be represented throughout the dissertation by $A \cond B$, so as to be distinguishable from the boolean disjunction operator which is represented as $A\mid B$ (reads \textit{"A or B"}).
+
+It must be emphasised that this is \textbf{not} the case for MDPs, where the existence of multiple adversaries complicates the calculations of conditional probabilities. Despite this, \cite{cond_prob} presents a polynomial-time algorithm for computing conditional properties in MDPs which is yet to be implemented in any model checking tool.
 
 This does not mean that it is not possible to reason over conditional probabilities in MDPs. For some specific scenarios, it is possible to obtain meaningful bounds which allow comparisons between the ones obtained in DTMCs and MDPs. One of those scenarios is defined in the proposition below, with the proof following it.
 

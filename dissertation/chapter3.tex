@@ -70,7 +70,7 @@ and the final acceleration applied to the vehicle becomes (considering as well t
 
 The restriction to the values of $\Delta a_{as}$ presented in Equation~\ref{eq:delta_as_rest} allows the system to be incremental (i.e. corrective) instead of enforcing the specific values chosen by the control assistance system. This is important to avoid strategies for the control assistance system which sharply contrast in terms of the values chosen, e.g. a strategy which at a certain time chooses an acceleration of $3$ and in the next time step chooses one of $-2$ (not allowed for a small enough range of $\Delta a_{as}$ and according to the linear control abstraction obtained in Chapter~\ref{sec:human_driver}). In this dissertation, it is assumed that $\Delta a_{as} \in \{-1,0,1\}$.
 
-The implementation of such system consists in replacing the existing linear control at each step of the control module by the resulting accelerations of applying all the possible values of $\Delta a_{as}$ to the acceleration decided by the human control module, obtaining an MDP with at most three actions at the linear acceleration control level (and at least two). The code presented in Appendix~\ref{sec:adas_lc} corresponds to the implementation of a generator for this ADAS (with the decision making assistance for partially compliant drivers).
+The implementation of such a system consists in replacing the existing linear control at each step of the control module by the resulting accelerations of applying all the possible values of $\Delta a_{as}$ to the acceleration decided by the human control module, obtaining an MDP with at most three actions at the linear acceleration control level (and at least two). The code presented in Appendix~\ref{sec:adas_lc} corresponds to the implementation of a generator for this ADAS (with the decision making assistance for partially compliant drivers).
 
 \subsubsection{Active Steering Control}
 
@@ -195,7 +195,7 @@ Due to the infeasibility of generating all the possible combinations of test cas
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/uncond/4_3.pdf}
   \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the unconditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
+\caption{Pareto curves of the unconditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + active linear acceleration control, and (4) decision making with partially compliant drivers + active linear acceleration control + active steering control.}
 \label{fig:test_case_1_uncond}
 \end{figure}
 
@@ -277,7 +277,7 @@ Due to the infeasibility of generating all the possible combinations of test cas
   \includegraphics[width=1\textwidth]{test_cases/21_19_70/cond/4_3.pdf}
   \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the conditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
+\caption{Pareto curves of the conditional properties for the scenario $v = 21m/s$, $v_1 = 19m/s$, $x_{1,0} = 70m$ and for $T = 20$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + active linear acceleration control, and (4) decision making with partially compliant drivers + active linear acceleration control + active steering control.}
 \label{fig:test_case_1_cond}
 \end{figure}
 
@@ -361,7 +361,7 @@ Due to the infeasibility of generating all the possible combinations of test cas
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/uncond/4_3.pdf}
   \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the unconditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
+\caption{Pareto curves of the unconditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + active linear acceleration control, and (4) decision making with partially compliant drivers + active linear acceleration control + active steering control.}
 \label{fig:test_case_2_uncond}
 \end{figure}
 
@@ -392,7 +392,7 @@ Due to the infeasibility of generating all the possible combinations of test cas
 %\end{figure}
 
 \begin{figure}[H]
-\vspace{3em}
+%\vspace{3em}
 \centering
 \begin{subfigure}{0.32\textwidth}
   \centering
@@ -444,7 +444,7 @@ Due to the infeasibility of generating all the possible combinations of test cas
   \includegraphics[width=1\textwidth]{test_cases/30_22_50/cond/4_3.pdf}
   \subcaption{(4) - Cautious drivers}
 \end{subfigure}
-\caption{Pareto curves of the conditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + linear acceleration control, and (4) decision making with partially compliant drivers + linear acceleration control + steering control.}
+\caption{Pareto curves of the conditional properties for the scenario $v = 30m/s$, $v_1 = 22m/s$, $x_{1,0} = 50m$ and for $T = 19$. The ADAS are represented using the following numbering: (1) decision making-based with fully compliant drivers, (2) decision making-based with partially compliant drivers, (3) decision making with partially compliant drivers + active linear acceleration control, and (4) decision making with partially compliant drivers + active linear acceleration control + active steering control.}
 \label{fig:test_case_2_cond}
 \end{figure}
 
