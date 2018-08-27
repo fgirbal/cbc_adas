@@ -1,6 +1,9 @@
 *.m~
 *.aux
-*.syntex.gz
+*.synctex.gz
 *.log
 *.toc
+*.bbl
+*.blg
+*.lof
 .DS_Store
