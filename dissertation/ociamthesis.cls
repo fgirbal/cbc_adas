@@ -99,16 +99,16 @@
     \renewcommand{\footnotesize}{\small}
     \renewcommand{\footnoterule}{\relax}
     \thispagestyle{empty}
-  \null\vfill
+  \null
   \begin{center}
     { \Huge {\bfseries {\@title}} \par}
-{\large \vspace*{30mm} {\logo \par} \vspace*{20mm}}
+{\large \vspace*{25mm} {\logo \par} \vspace*{30mm}}
     {{\Large \@author} \par}
 {\large \vspace*{1ex}
     {{\@college}, University of Oxford \par}
 \vspace*{10mm}
     {Supervised by:\\\vspace{0.3em} \@supervisor \par}
-\vspace*{25mm}
+\vspace*{18mm}
     {{\submittedtext} \par}
 \vspace*{1ex}
     {\it {\@degree} \par}

@@ -119,6 +119,14 @@
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 
 {\setlength{\parskip}{0em} \maketitle}                  % create a title page from the preamble info
+
+% empty page
+\begingroup
+  \pagestyle{empty}
+  \null
+  \newpage
+\endgroup
+
 % \include{dedication}        % include a dedication.tex file
 \include{acknowledgements}  % include an acknowledgements.tex file
 \include{abstract}          % include the abstract
