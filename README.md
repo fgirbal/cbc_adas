@@ -23,13 +23,15 @@ In order to run the source code, the following are necessary (or newer version o
 
 * [Matlab 2016a](https://uk.mathworks.com/products/new_products/release2016a.html)
 * [python 3.6.5](https://www.python.org/downloads/)
-* numpy 1.14.3 (`pip3 install numpy`)
-* matplotlib 2.2.2 (`pip3 install matplotlib`)
-* pygame 1.9.3 (`pip3 install pygame`)
+* `numpy>=1.14.3`
+* `matplotlib>=2.2.2`
+* `pygame>=1.9.3`
 
 Most of the python scripts include a help section which can be obtained by running:
 
-```python3 [SCRIPT_NAME] -h```
+```bash
+python3 [SCRIPT_NAME] -h
+```
 
 ## <span></span>
 
